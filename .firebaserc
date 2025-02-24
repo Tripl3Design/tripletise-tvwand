@@ -1,13 +1,13 @@
 {
   "projects": {
-    "VanWoerden": "vanwoerdenwonen-tripletise",
-    "default": "vanwoerdenwonen-tripletise"
+    "default": "tv-wand",
+    "tv-wand": "tv-wand"
   },
   "targets": {
-    "vanwoerdenwonen-tripletise": {
+    "tv-wand": {
       "hosting": {
-        "vanwoerdenwonen": [
-          "vanwoerdenwonen-levante"
+        "tv-wand": [
+          "tv-wand"
         ]
       }
     }

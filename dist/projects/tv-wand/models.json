@@ -2,7 +2,7 @@
   {
     "id": 1,
     "name": "bank evan",
-    "image": "projects/vanwoerdenwonen-levante/img/thumbnails/voorbeeld-opstelling-4.jpg",
+    "image": "projects/tv-wand/img/thumbnails/voorbeeld-opstelling-4.jpg",
     "background": {
       "original": "d4d4d4"
     },
@@ -12,13 +12,13 @@
     "upholstery": {
       "hexColor": "4f4934",
       "type": "adore",
-      "path": "projects/vanwoerdenwonen-levante/Textures/vww/adore/moss-59.jpg"
+      "path": "projects/tv-wand/Textures/vww/adore/moss-59.jpg"
     }
   },
   {
     "id": 2,
     "name": "bank evan",
-    "image": "projects/vanwoerdenwonen-levante/img/thumbnails/voorbeeld-opstelling-2.jpg",
+    "image": "projects/tv-wand/img/thumbnails/voorbeeld-opstelling-2.jpg",
     "background": {
       "original": "d4d4d4"
     },
@@ -28,13 +28,13 @@
     "upholstery": {
       "hexColor": "c1bca8",
       "type": "dream",
-      "path": "projects/vanwoerdenwonen-levante/Textures/vww/dream/nature-01.jpg"
+      "path": "projects/tv-wand/Textures/vww/dream/nature-01.jpg"
     }
   },
   {
     "id": 2,
     "name": "bank evan",
-    "image": "projects/vanwoerdenwonen-levante/img/thumbnails/voorbeeld-opstelling-3.jpg",
+    "image": "projects/tv-wand/img/thumbnails/voorbeeld-opstelling-3.jpg",
     "background": {
       "original": "d4d4d4"
     },
@@ -45,12 +45,12 @@
     "upholstery": {
       "hexColor": "a2706a",
       "type": "essa",
-      "path": "projects/vanwoerdenwonen-levante/Textures/vww/essa/cabernet-205.jpg"
+      "path": "projects/tv-wand/Textures/vww/essa/cabernet-205.jpg"
     },
     "upholsteryDuotone": {
       "hexColor": "78531a",
       "type": "adore",
-      "path": "projects/vanwoerdenwonen-levante/Textures/vww/adore/darkgrey-68.jpg"
+      "path": "projects/tv-wand/Textures/vww/adore/darkgrey-68.jpg"
     }
   }
 ]

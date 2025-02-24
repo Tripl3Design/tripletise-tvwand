@@ -19,22 +19,24 @@
   <script src="https://cdn.jsdelivr.net/npm/ua-parser-js@2.0.0/dist/ua-parser.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
-  <!-- Three.js importmap -->
+  <!-- Three.js importmap  -->
   <script type="importmap">
     {
       "imports": {
-        "three": "https://cdn.jsdelivr.net/npm/three@v0.173.0/build/three.module.js",
-        "three/addons/": "https://cdn.jsdelivr.net/npm/three@v0.173.0/examples/jsm/"
+        "three": "https://cdn.jsdelivr.net/npm/three@0.173.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.173.0/examples/jsm/",
+        "three-mesh-bvh": "https://cdn.jsdelivr.net/npm/three-mesh-bvh@0.9.0/build/index.module.min.js",
+        "three-bvh-csg": "https://cdn.jsdelivr.net/npm/three-bvh-csg@0.0.16/build/index.module.min.js"
       }
     }
-  </script>
+    </script>
 
-  <!-- Kritieke kleine scripts -->
+
   <script>
     console.log('%cThis configurator is made by TripleDesign. Visit tripledesign.nl for more info!', 'background:red;color:#fff;font-weight: bold;');
-    const brand = 'vanwoerdenwonen';
-    const product = 'levante';
-    const title = 'Bank Evan';
+    const brand = 'tv';
+    const product = 'wand';
+    const title = 'Stel je tv wand samen';
 
     const capitalizeFirstLetter = (str) => str.charAt(0).toUpperCase() + str.slice(1);
     document.title = `${capitalizeFirstLetter(title)} | ${capitalizeFirstLetter(brand)}`;
@@ -56,7 +58,10 @@
 </head>
 
 <body onload="bodyOnload();">
-
+  <video id="tvVideo" height="0px" autoplay loop muted>
+  <source src="video/test.mp4" type="video/mp4" >
+  Your browser does not support the video tag.
+</video>
 
   <div class="container-fluid m-0 p-0">
     <div class="row m-0 p-0 overflow-hidden">
@@ -98,6 +103,8 @@
 <div id="loader" style="display: none;">
   <div class="spinner"></div>
 </div>
+
+
 `);
         // mobile version
         if (windowHeight > windowWidth) {
@@ -138,7 +145,7 @@
           let htmlContent = `
   <div style="height: 100%; background: #d4d4d4;" class="col-md-6 col-12 vh-100 m-0 p-0" id="modelviewerCol">
     <div class="brandlogo position-absolute top-0 start-0 pt-5 ps-5">
-      <img src="img/logo_${brand}.webp" class="img-fluid">
+      <img src="img/logo_${brand}.svg">
     </div>
 
     <div class="row m-0 p-0">
@@ -412,12 +419,12 @@
   </div>
 
   <!-- Externe scripts met `defer` -->
-  <script src="projects/vanwoerdenwonen-levante/pdf.js" defer></script>
-  <script src="projects/vanwoerdenwonen-levante/pricing.js" defer></script>
+  <script src="projects/tv-wand/pdf.js" defer></script>
+  <script src="projects/tv-wand/pricing.js" defer></script>
   <script src="js/controlpanel.js" defer></script>
   <script src="js/colorChanger.js" defer></script>
 
-  <script src="projects/vanwoerdenwonen-levante/settings.js" defer></script>
+  <script src="projects/tv-wand/settings.js" defer></script>
 
   <!-- PDFMake -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.12/pdfmake.min.js"></script>
@@ -431,12 +438,12 @@
     import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
 
     const firebaseConfig = {
-      apiKey: "AIzaSyC0XTl5lSTSN0mxCqGsYxsrIpFtoU-ooEI",
-      authDomain: "vanwoerdenwonen-tripletise.firebaseapp.com",
-      projectId: "vanwoerdenwonen-tripletise",
-      storageBucket: "vanwoerdenwonen-tripletise.appspot.com",
-      messagingSenderId: "663075472335",
-      appId: "1:663075472335:web:bde178dfb46caaf1f808ba"
+      apiKey: "AIzaSyA9oBVEUxEVroVn_DsZxvw3h-RkMXPDVPQ",
+      authDomain: "tv-wand.firebaseapp.com",
+      projectId: "tv-wand",
+      storageBucket: "tv-wand.firebasestorage.app",
+      messagingSenderId: "620454996182",
+      appId: "1:620454996182:web:45894a06686823e9ec8177"
     };
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);

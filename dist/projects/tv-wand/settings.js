@@ -99,7 +99,7 @@ async function shareTroughQr() {
 }
 
 function updateFeaturedModel(model) {
-    import('/projects/vanwoerdenwonen-levante/threeModel.js')
+    import('/projects/tv-wand/threeModel.js')
         .then(main => {
             const viewer = document.getElementById('modelviewer');
 

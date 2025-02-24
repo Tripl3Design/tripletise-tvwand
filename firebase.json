@@ -6,7 +6,7 @@
         "headers": [
           {
             "key": "Content-Security-Policy",
-            "value": "frame-ancestors https://www.tripledesign.nl https://tripledesign.nl https://www.vanwoerdenwonen.nl https://vanwoerdenwonen.nl https://vanwoerdenwonen-tripletise.web.app/ https://www.vanwoerdenwonen-tripletise.web.app/ http://127.0.0.1:5000"
+            "value": "frame-ancestors https://www.tripledesign.nl https://tripledesign.nl https://www.tvwand.nl https://tvwand.nl http://127.0.0.1:5000"
           },
           {
             "key": "Access-Control-Allow-Origin",
@@ -27,7 +27,7 @@
         ]
       }
     ],
-    "target": "vanwoerdenwonen",
+    "target": "tv-wand",
     "public": "dist",
     "ignore": [
       "firebase.json",
@@ -35,7 +35,7 @@
       "package-lock.json",
       "package.json",
       "**/TemplateData/**",
-      "**/projects/vanwoerdenwonen-levante/"
+      "**/projects/tv-wand/"
     ]
   },
   "functions": [
