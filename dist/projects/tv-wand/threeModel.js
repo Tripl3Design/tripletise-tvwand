@@ -225,8 +225,6 @@ function createCinewall(width, height, depth, wallColor, soundbar, fireplace, tv
 
 }
 
-
-
 const models = [];
 
 export async function loadModelData(model) {

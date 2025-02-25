@@ -82,7 +82,7 @@ async function shareTroughQr() {
         // QR-code genereren in de modal
         let qrCanvas = document.getElementById("qrCanvas");
         qrCanvas.innerHTML = ""; // Leegmaken voordat we een nieuwe genereren
-        
+
         new QRCode(qrCanvas, {
             text: configuratorUrl,
             width: 200,
@@ -127,237 +127,59 @@ function updateControlPanel(model, selectedLayer, expandedLayer) {
         controlPanel(settings, ALLMODELS, elem, expandedLayer);
     }
 
-    // type
-    let typeRadios = document.querySelectorAll(`input[type=radio][name="type"]`);
-    typeRadios.forEach(radio => radio.addEventListener('click', () => {
-        model.type = radio.value;
+    // width
+    document.getElementById("wallWidth").value = model.width;
+    document.getElementById("wallInputWidth").value = model.width;
 
-        updateControlPanel(model, `type`);
-        updateFeaturedModel(model);
-        showSelected(false);
-    }));
-    const numberOfSeats = ALLCOMPONENTS.elements[model.type].seats;
-    const width = ALLCOMPONENTS.elements[model.type].width;
-    const depth = ALLCOMPONENTS.elements[model.type].depth;
-    document.getElementById(model.type).checked = true;
-    document.getElementById('numberOfSeatsText').textContent = numberOfSeats + ' zits';
-    document.getElementById('dimensionsText').textContent = `${width} x ${depth} cm`;
-
-    // seatHeight
-    let seatHeightRadios = document.querySelectorAll(`input[type=radio][name="seatHeight"]`);
-    seatHeightRadios.forEach(radio => radio.addEventListener('click', () => {
-        model.seatHeight = radio.value;
-
-        updateControlPanel(model, `options`);
-        updateFeaturedModel(model);
-        showSelected(false);
-    }));
-    document.getElementById(`seatHeight_${model.seatHeight}`).checked = true;
-    document.getElementById('seatHeightText').textContent = `${model.seatHeight} cm`;
-    /*
-        // legs
-        let legRadios = document.querySelectorAll(`input[type=radio][name="leg"]`);
-        legRadios.forEach(radio => radio.addEventListener('click', () => {
-            model.legs = radio.value;
-    
-            updateControlPanel(model, `options`);
-            updateFeaturedModel(model);
-            showSelected(false);
-        }));
-        if (model.legs == 'legsStraight') {
-            document.getElementById('legsText').textContent = 'rechte poten';
-            document.getElementById('legsStraight').checked = true;
-        } else {
-            document.getElementById('legsText').textContent = 'gebogen poten';
-            document.getElementById('legsBent').checked = true;
+    document.getElementById("wallWidth").addEventListener("input", function (event) {
+        let newWidth = parseInt(event.target.value, 10);
+        if (newWidth >= 150 && newWidth <= 270) {
+            document.getElementById("wallInputWidth").value = newWidth;
+            model.width = newWidth; // Update de width in het model
         }
-    */
-    // duotone
-    let duotoneCheckbox = document.getElementById('duotone');
-    if (model.upholsteryDuotone) {
-        duotoneCheckbox.checked = true;
-    } else {
-        duotoneCheckbox.checked = false;
-    }
-
-    duotoneCheckbox.addEventListener('click', () => {
-        if (duotoneCheckbox.checked) {
-            model.upholsteryDuotone = { "hexColor": "323232", "type": "adore" };
-
-            document.getElementById('duotoneText').textContent = 'duotone';
-        } else {
-            delete model.upholsteryDuotone;
-            document.getElementById('duotoneText').textContent = '';
-        }
-
-        updateControlPanel(model, undefined, 'options');
-        updateFeaturedModel(model);
-        showSelected(false);
     });
 
-    if (duotoneCheckbox.checked) {
-        document.getElementById('duotoneText').textContent = 'duotone';
-    } else {
-        delete model.upholsteryDuotone;
-        document.getElementById('duotoneText').textContent = '';
-    }
-
-    // footstool
-    let footstoolCheckbox = document.getElementById('footstool');
-    if (model.footstool) {
-        footstoolCheckbox.checked = true;
-    } else {
-        footstoolCheckbox.checked = false;
-    }
-
-    footstoolCheckbox.addEventListener('click', () => {
-        if (footstoolCheckbox.checked) {
-            model.footstool = true;
-
-            document.getElementById('footstoolText').textContent = 'voetenbank';
-        } else {
-            delete model.footstool;
-            document.getElementById('footstoolText').textContent = '';
+    document.getElementById("wallInputWidth").addEventListener("input", function (event) {
+        let newWidth = parseInt(event.target.value, 10);
+        if (newWidth >= 150 && newWidth <= 270) {
+            document.getElementById("wallWidth").value = newWidth;
+            model.width = newWidth; // Update de width in het model
         }
+    });
+    console.log(model.width);
 
-        updateControlPanel(model, undefined, 'options');
-        updateFeaturedModel(model);
-        showSelected(false);
+    // height
+    document.getElementById("wallHeight").value = model.height;
+    document.getElementById("wallInputHeight").value = model.height;
+
+    document.getElementById("wallHeight").addEventListener("input", function (event) {
+        let newHeight = parseInt(event.target.value, 10);
+        if (newHeight >= 150 && newHeight <= 270) {
+            document.getElementById("wallInputHeight").value = newHeight;
+            model.width = newHeight; // Update de width in het model
+        }
     });
 
-    if (footstoolCheckbox.checked) {
-        document.getElementById('footstoolText').textContent = 'voetenbank';
-    } else {
-        delete model.footstool;
-        document.getElementById('footstoolText').textContent = '';
-    }
-
-    // upholstery
-    //let upholsteryCategory = document.querySelectorAll(`input[type=radio][name="upholsteriesCategory"]`);
-    //upholsteryCategory.forEach(radio => { radio.replaceWith(radio.cloneNode(true)) });
-    //upholsteryCategory = document.querySelectorAll(`input[type=radio][name="upholsteriesCategory"]`);
-    //document.getElementById(`upholsteriesCategory_${model.upholstery.category}`).checked = true;
-
-    //upholsteryCategory.forEach(radio => radio.addEventListener('click', () => {
-    //    model.upholstery.category = radio.value;
-    //    document.getElementById(`upholsteriesCategory_${model.upholstery.category}`).checked = true;
-
-    //    updateControlPanel(model, `upholstery`);
-    //    updateFeaturedModel(model);
-    //    showSelected(false);
-    //}));
-
-    const upholstery = model.upholstery.path;
-    let upholsteryIndex = ALLCOLORS.upholsteries.findIndex(item => item.colorPath === upholstery);
-    var upholsteryValue = document.querySelectorAll(`.upholsteryColors_colorButton`);
-    model.upholstery.type = ALLCOLORS.upholsteries[upholsteryIndex].colorType;
-    model.upholstery.name = ALLCOLORS.upholsteries[upholsteryIndex].colorName;
-    model.upholstery.path = ALLCOLORS.upholsteries[upholsteryIndex].colorPath;
-    model.upholstery.pricegroup = ALLCOLORS.upholsteries[upholsteryIndex].colorPricegroup;
-    model.upholstery.structure = ALLCOLORS.upholsteries[upholsteryIndex].colorStructure;
-    model.upholstery.pathThumb = ALLCOLORS.upholsteries[upholsteryIndex].colorPathThumb;
-
-    if (uap.getDevice().type === 'mobile' || uap.getDevice().type === 'tablet' || uap.getDevice().withFeatureCheck().type === 'tablet') {
-        upholsteryValue.forEach(item => item.addEventListener('mouseover', () => {
-            upholsteryValue.forEach(item => { item.classList.remove('colorButtonActive') });
-            const upholsteryId = item.id.split('_');
-            upholsteryIndex = upholsteryId[1];
-            document.getElementById(`upholsteryText`).style.visibility = 'visible';
-            document.getElementById(`colorText`).innerHTML = '<img src="' + ALLCOLORS.upholsteries[upholsteryIndex].colorPathThumb + '" class="rounded-pill shadow" style="width: calc(1rem + 1vw);">&nbsp;&nbsp;&nbsp;&nbsp;' + ALLCOLORS.upholsteries[upholsteryIndex].colorName;
-            document.getElementById(`colorText`).classList.add('fst-italic');
-            showSelected(true);
-        }));
-
-        upholsteryValue.forEach(item => item.addEventListener('mouseout', () => {
-            document.getElementById(`upholsteryText`).style.visibility = 'hidden';
-            document.getElementById(`colorText`).innerHTML = '<img src="' + model.upholstery.pathThumb + '" class="rounded-pill shadow" style="width: calc(1rem + 1vw);">&nbsp;&nbsp;&nbsp;&nbsp;' + model.upholstery.type + ' ' + model.upholstery.name;
-            document.getElementById(`colorText`).classList.remove('fst-italic');
-            showSelected(true);
-        }));
-    }
-
-    upholsteryValue.forEach(item => item.addEventListener('click', () => {
-        upholsteryValue.forEach(item => { item.classList.remove('colorButtonActive') });
-        const upholsteryId = item.id.split('_');
-        upholsteryIndex = upholsteryId[1];
-
-        model.upholstery.path = ALLCOLORS.upholsteries[upholsteryIndex].colorPath;
-        document.getElementById(`upholsteryColorsIndex_${upholsteryIndex}`).classList.add('colorButtonActive');
-
-        updateControlPanel(model, `upholstery`);
-        updateFeaturedModel(model);
-        showSelected(true);
-    }));
-    document.getElementById(`colorText`).innerHTML = '<img src="' + model.upholstery.pathThumb + '" class="rounded-pill shadow" style="width: calc(1rem + 1vw);">&nbsp;&nbsp;&nbsp;&nbsp;' + model.upholstery.type + ' ' + model.upholstery.name;
-    document.getElementById(`upholsteryColorsIndex_${upholsteryIndex}`).classList.remove('colorButton');
-    document.getElementById(`upholsteryColorsIndex_${upholsteryIndex}`).classList.add('colorButtonActive');
-
-    // upholsteryDuotone
-    if (model.upholsteryDuotone) {
-        /*
-        let upholsteryDuotoneCategory = document.querySelectorAll(`input[type=radio][name="upholsteriesDuotoneCategory"]`);
-        upholsteryDuotoneCategory.forEach(radio => { radio.replaceWith(radio.cloneNode(true)) });
-        upholsteryDuotoneCategory = document.querySelectorAll(`input[type=radio][name="upholsteriesDuotoneCategory"]`);
-        document.getElementById(`upholsteriesDuotoneCategory_${model.upholsteryDuotone.category}`).checked = true;
-
-        upholsteryDuotoneCategory.forEach(radio => radio.addEventListener('click', () => {
-            model.upholsteryDuotone.category = radio.value;
-            document.getElementById(`upholsteriesDuotoneCategory_${model.upholsteryDuotone.category}`).checked = true;
-
-            updateControlPanel(model, `upholsteryDuotone`);
-            updateFeaturedModel(model);
-            showSelected(false);
-        }));
-*/
-
-        const upholsteryDuotone = model.upholsteryDuotone.path;
-        let upholsteryDuotoneIndex = ALLCOLORS.upholsteries.findIndex(item => item.colorPath === upholsteryDuotone);
-        var upholsteryDuotoneValue = document.querySelectorAll(`.upholsteryDuotoneColors_colorButton`);
-        if (upholsteryDuotoneIndex === -1) {
-            upholsteryDuotoneIndex = 0;
+    document.getElementById("wallInputHeight").addEventListener("input", function (event) {
+        let newHeight = parseInt(event.target.value, 10);
+        if (newHeight >= 150 && newHeight <= 270) {
+            document.getElementById("wallHeight").value = newHeight;
+            FEATUREDMODEL.width = newHeight; // Update de width in het model
         }
-        model.upholsteryDuotone.type = ALLCOLORS.upholsteries[upholsteryDuotoneIndex].colorType;
-        model.upholsteryDuotone.name = ALLCOLORS.upholsteries[upholsteryDuotoneIndex].colorName;
-        model.upholsteryDuotone.path = ALLCOLORS.upholsteries[upholsteryDuotoneIndex].colorPath;
-        model.upholsteryDuotone.pricegroup = ALLCOLORS.upholsteries[upholsteryDuotoneIndex].colorPricegroup;
-        model.upholsteryDuotone.structure = ALLCOLORS.upholsteries[upholsteryDuotoneIndex].colorStructure;
-        model.upholsteryDuotone.pathThumb = ALLCOLORS.upholsteries[upholsteryDuotoneIndex].colorPathThumb;
+    });
+    console.log(model.height);
 
-        if (uap.getDevice().type === 'mobile' || uap.getDevice().type === 'tablet' || uap.getDevice().withFeatureCheck().type === 'tablet') {
-            upholsteryDuotoneValue.forEach(item => item.addEventListener('mouseover', () => {
-                upholsteryDuotoneValue.forEach(item => { item.classList.remove('colorButtonActive') });
-                const upholsteryDuotoneId = item.id.split('_');
-                upholsteryDuotoneIndex = upholsteryDuotoneId[1];
-                document.getElementById(`upholsteryDuotoneText`).style.visibility = 'visible';
-                document.getElementById(`colorDuotoneText`).innerHTML = '<img src="' + ALLCOLORS.upholsteries[upholsteryDuotoneIndex].colorPathThumb + '" class="rounded-pill shadow" style="width: calc(1rem + 1vw);">&nbsp;&nbsp;&nbsp;&nbsp;' + ALLCOLORS.upholsteries[upholsteryDuotoneIndex].colorName;
-                document.getElementById(`colorDuotoneText`).classList.add('fst-italic');
-                showSelected(true);
-            }));
+    document.getElementById('widthText').textContent = 'b: ' + model.width + ' cm';
+    document.getElementById('heightText').textContent = 'h: ' + model.height + ' cm';
+    document.getElementById('depthText').textContent = 'd: ' + model.depth + ' cm';
 
-            upholsteryDuotoneValue.forEach(item => item.addEventListener('mouseout', () => {
-                document.getElementById(`upholsteryDuotoneText`).style.visibility = 'hidden';
-                document.getElementById(`colorDuotoneText`).innerHTML = '<img src="' + model.upholsteryDuotone.pathThumb + '" class="rounded-pill shadow" style="width: calc(1rem + 1vw);">&nbsp;&nbsp;&nbsp;&nbsp;' + model.upholsteryDuotone.type + ' ' + model.upholsteryDuotone.name;
-                document.getElementById(`colorDuotoneText`).classList.remove('fst-italic');
-                showSelected(true);
-            }));
-        }
 
-        upholsteryDuotoneValue.forEach(item => item.addEventListener('click', () => {
-            upholsteryDuotoneValue.forEach(item => { item.classList.remove('colorButtonActive') });
-            const upholsteryDuotoneId = item.id.split('_');
-            upholsteryDuotoneIndex = upholsteryDuotoneId[1];
 
-            model.upholsteryDuotone.path = ALLCOLORS.upholsteries[upholsteryDuotoneIndex].colorPath;
-            document.getElementById(`upholsteryDuotoneColorsIndex_${upholsteryDuotoneIndex}`).classList.add('colorButtonActive');
 
-            updateControlPanel(model, `upholsteryDuotone`);
-            updateFeaturedModel(model);
-            showSelected(true);
-        }));
-        document.getElementById(`colorDuotoneText`).innerHTML = '<img src="' + model.upholsteryDuotone.pathThumb + '" class="rounded-pill shadow" style="width: calc(1rem + 1vw);">&nbsp;&nbsp;&nbsp;&nbsp;' + model.upholsteryDuotone.type + ' ' + model.upholsteryDuotone.name;
-        document.getElementById(`upholsteryDuotoneColorsIndex_${upholsteryDuotoneIndex}`).classList.remove('colorButton');
-        document.getElementById(`upholsteryDuotoneColorsIndex_${upholsteryDuotoneIndex}`).classList.add('colorButtonActive');
-    }
+    //tv diagonal
+    //var tvSize = document.getElementById('tvSize');
+    //var tvSizeValues = ['32 inch', '40 inch', '42 inch', '43 inch', '45 inch', '48 inch', '49 inch', '50 inch', '55 inch', '58 inch', '60 inch', '65 inch', '70 inch', '75 inch', '82 inch', '85 inch'];
+
     pricing(model);
 
     // is global FEATUREDMODEL for pdf really necessary?
@@ -423,347 +245,124 @@ async function handleModelSelection() {
     }
 }
 
-
 function initSettings(model) {
     const accordions = {};
 
-    accordions.type = {
-        title: "type",
+    accordions.size = {
+        title: "afmeting",
+        options: ['width', 'height'],
+        display: "d-block",
+        code: /*html*/`
+
+        <div class="row m-0 p-0 pb-xxl-4 pb-xl-4 pb-3">
+        <div class="justify-content-start m-0 p-0">
+    
+            <div class="wall-width-selector">
+                <label for="wallWidth">breedte (cm):</label>
+                <div class="input-group">
+                    <input type="range" id="wallWidth" min="150" max="270" value="#" step="1">
+                    <input type="number" id="wallInputWidth" min="150" max="270" value="150" step="1">
+                </div>
+            </div>
+
+            <div class="wall-width-selector">
+            <label for="wallHeight">hoogte (cm):</label>
+            <div class="input-group">
+                <input type="range" id="wallHeight" min="200" max="280" value="#" step="1">
+                <input type="number" id="wallInputHeight" min="200" max="280" value="#" step="1">
+            </div>
+        </div>
+    
+        </div>
+    </div>
+    
+    <style>
+        .wall-width-selector {
+           
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            width: 100%;
+            border-radius: 0;
+        }
+    
+        .input-group {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            gap: 10px;
+        }
+    
+        input[type="range"] {
+            flex-grow: 1;
+        }
+    
+        input[type="number"] {
+            width: 80px;
+            text-align: center;
+        }
+    </style>
+
+            </div>
+        </div>`
+
+    };
+
+
+    accordions.tv = {
+        title: "tv",
         options: ['numberOfSeats', 'dimensions'],
         display: "d-block",
         code: /*html*/`
         <div class="row m-0 p-0 pb-xxl-4 pb-xl-4 pb-3">
-            <div class="fst-italic mt-3 mb-2">2,5 zits banken</div>
-            <div class="d-flex justify-content-start m-0 p-0">
-                <div class="card border-0 grid gap row-gap-3 me-5">
-                    <div class="h6 fw-normal form-check">
-                        <input type="radio" class="form-check-input" name="type" value="art2502" id="art2502">
-                        <label class="form-check-label" for="art2502">${ALLCOMPONENTS.elements.art2502.width} x ${ALLCOMPONENTS.elements.art2502.depth} cm ${ALLCOMPONENTS.elements.art2502.name}</label>
-                    </div>
+            <div class="justify-content-start m-0 p-0">
+
+                <div style="width: 100%;" class="m-0 p-3">
+                <label for="tempB">Choose a comfortable temperature:</label><br />
+                <input type="range" id="tempB" name="temp" list="values" />
+                
+                <datalist id="values">
+                  <option value="0" label="very cold!"></option>
+                  <option value="25" label="cool"></option>
+                  <option value="50" label="medium"></option>
+                  <option value="75" label="getting warm!"></option>
+                  <option value="100" label="hot!"></option>
+                </datalist>
+    <style>
+                datalist {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-between;
+                    writing-mode: vertical-lr;
+                    width: 200px;
+                  }
+                  
+                  option {
+                    padding: 0;
+                  }
+                  
+                  input[type="range"] {
+                    width: 200px;
+                    margin: 0;
+                  }
+        
+    </style>
                 </div>
-            </div>            
+
+                <div class="mb-1">kies video (ter indicatie):</div>
+                <div>
+                    <video id="tvVideo" height="100px" autoplay loop muted>
+                        <source src="video/test.mp4" type="video/mp4" >
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+
+     
             
-            <div class="fst-italic mt-3 mb-2">3 zits banken</div>
-            <div class="d-flex justify-content-start m-0 p-0">
-                <div class="card border-0 grid gap row-gap-3 me-5">
-                    <div class="h6 fw-normal form-check">
-                        <input type="radio" class="form-check-input" name="type" value="art3002" id="art3002">
-                        <label class="form-check-label" for="art3002">${ALLCOMPONENTS.elements.art3002.width} x ${ALLCOMPONENTS.elements.art3002.depth} cm ${ALLCOMPONENTS.elements.art3002.name}</label>
-                    </div>
-                </div>
-            </div>
 
-            <div class="fst-italic mt-3 mb-2">3,5 zits banken met longchair</div>
-            <div class="d-flex justify-content-start m-0 p-0">
-                <div class="card border-0 grid gap row-gap-3 me-5">
-                    <div class="h6 fw-normal form-check">
-                        <input type="radio" class="form-check-input" name="type" value="art846" id="art846">
-                        <label class="form-check-label" for="art846">${ALLCOMPONENTS.elements.art846.width} x ${ALLCOMPONENTS.elements.art846.depth} cm ${ALLCOMPONENTS.elements.art846.name}</label>
-                    </div>
-                </div>
-                <div class="card border-0 grid gap row-gap-3 me-5">
-                    <div class="h6 fw-normal form-check">
-                        <input type="radio" class="form-check-input" name="type" value="art553" id="art553">
-                        <label class="form-check-label" for="art553">${ALLCOMPONENTS.elements.art553.width} x ${ALLCOMPONENTS.elements.art553.depth} cm ${ALLCOMPONENTS.elements.art553.name}</label>
-                    </div>
-                </div>
-            </div>
-
-            <div class="fst-italic mt-3 mb-2">4 zits banken met longchair</div>
-            <div class="d-flex justify-content-start m-0 p-0">
-                <div class="card border-0 grid gap row-gap-3 me-5">
-                    <div class="h6 fw-normal form-check">
-                        <input type="radio" class="form-check-input" name="type" value="art598" id="art598">
-                        <label class="form-check-label" for="art598">${ALLCOMPONENTS.elements.art598.width} x ${ALLCOMPONENTS.elements.art598.depth} cm ${ALLCOMPONENTS.elements.art598.name}</label>
-                    </div>
-                </div>
-                <div class="card border-0 grid gap row-gap-3 me-5">
-                    <div class="h6 fw-normal form-check">
-                        <input type="radio" class="form-check-input" name="type" value="art860" id="art860">
-                        <label class="form-check-label" for="art860">${ALLCOMPONENTS.elements.art860.width} x ${ALLCOMPONENTS.elements.art860.depth} cm ${ALLCOMPONENTS.elements.art860.name}</label>
-                    </div>
-                </div>
-            </div>
-
-            <div class="fst-italic mt-3 mb-2">5 zits hoekbanken</div>
-            <div class="d-flex justify-content-start m-0 p-0">
-                <div class="card border-0 grid gap row-gap-3 me-5">
-                    <div class="h6 fw-normal form-check">
-                        <input type="radio" class="form-check-input" name="type" value="art5310" id="art5310">
-                        <label class="form-check-label" for="art5310">${ALLCOMPONENTS.elements.art5310.width} x ${ALLCOMPONENTS.elements.art5310.depth} cm ${ALLCOMPONENTS.elements.art5310.name}</label>
-                    </div>
-                </div>
-                <div class="card border-0 grid gap row-gap-3 me-5">
-                    <div class="h6 fw-normal form-check">
-                        <input type="radio" class="form-check-input" name="type" value="art5314" id="art5314">
-                        <label class="form-check-label" for="art5314">${ALLCOMPONENTS.elements.art5314.width} x ${ALLCOMPONENTS.elements.art5314.depth} cm ${ALLCOMPONENTS.elements.art5314.name}</label>
-                    </div>
-                </div>
-            </div>
-
-            <div class="fst-italic mt-3 mb-2">5,5 zits hoekbanken</div>
-            <div class="d-flex justify-content-start m-0 p-0">
-                <div class="card border-0 grid gap row-gap-3 me-5">
-                    <div class="h6 fw-normal form-check">
-                        <input type="radio" class="form-check-input" name="type" value="art5311" id="art5311">
-                        <label class="form-check-label" for="art5311">${ALLCOMPONENTS.elements.art5311.width} x ${ALLCOMPONENTS.elements.art5311.depth} cm ${ALLCOMPONENTS.elements.art5311.name}</label>
-                    </div>
-                </div>
-                <div class="card border-0 grid gap row-gap-3 me-5">
-                    <div class="h6 fw-normal form-check">
-                        <input type="radio" class="form-check-input" name="type" value="art5316" id="art5316">
-                        <label class="form-check-label" for="art5316">${ALLCOMPONENTS.elements.art5316.width} x ${ALLCOMPONENTS.elements.art5316.depth} cm ${ALLCOMPONENTS.elements.art5316.name}</label>
-                    </div>
-                </div>
-            </div>
-            <div class="d-flex justify-content-start m-0 p-0">
-                <div class="card border-0 grid gap row-gap-3 me-5">
-                    <div class="h6 fw-normal form-check">
-                        <input type="radio" class="form-check-input" name="type" value="art5312" id="art5312">
-                        <label class="form-check-label" for="art5312">${ALLCOMPONENTS.elements.art5312.width} x ${ALLCOMPONENTS.elements.art5312.depth} cm ${ALLCOMPONENTS.elements.art5312.name}</label>
-                    </div>
-                </div>
-                <div class="card border-0 grid gap row-gap-3 me-5">
-                    <div class="h6 fw-normal form-check">
-                        <input type="radio" class="form-check-input" name="type" value="art5315" id="art5315">
-                        <label class="form-check-label" for="art5315">${ALLCOMPONENTS.elements.art5315.width} x ${ALLCOMPONENTS.elements.art5315.depth} cm ${ALLCOMPONENTS.elements.art5315.name}</label>
-                    </div>
-                </div>
-            </div>
-
-            <div class="fst-italic mt-3 mb-2">6 zits hoekbanken</div>
-            <div class="d-flex justify-content-start m-0 p-0">
-                <div class="card border-0 grid gap row-gap-3 me-5">
-                    <div class="h6 fw-normal form-check">
-                        <input type="radio" class="form-check-input" name="type" value="art5313" id="art5313">
-                        <label class="form-check-label" for="art5313">${ALLCOMPONENTS.elements.art5313.width} x ${ALLCOMPONENTS.elements.art5313.depth} cm ${ALLCOMPONENTS.elements.art5313.name}</label>
-                    </div>
-                </div>
-                <div class="card border-0 grid gap row-gap-3 me-5">
-                    <div class="h6 fw-normal form-check">
-                        <input type="radio" class="form-check-input" name="type" value="art5317" id="art5317">
-                        <label class="form-check-label" for="art5317">${ALLCOMPONENTS.elements.art5317.width} x ${ALLCOMPONENTS.elements.art5317.depth} cm ${ALLCOMPONENTS.elements.art5317.name}</label>
-                    </div>
-                </div>
-            </div>
-
-            <div class="fst-italic mt-3 mb-2">recamieres</div>
-            <div class="d-flex justify-content-start m-0 p-0">
-                <div class="card border-0 grid gap row-gap-3 me-5">
-                    <div class="h6 fw-normal form-check">
-                        <input type="radio" class="form-check-input" name="type" value="art6093" id="art6093">
-                        <label class="form-check-label" for="art6093">${ALLCOMPONENTS.elements.art6093.width} x ${ALLCOMPONENTS.elements.art6093.depth} cm ${ALLCOMPONENTS.elements.art6093.name}</label>
-                    </div>
-                </div>
-                <div class="card border-0 grid gap row-gap-3 me-5">
-                    <div class="h6 fw-normal form-check">
-                        <input type="radio" class="form-check-input" name="type" value="art6091" id="art6091">
-                        <label class="form-check-label" for="art6091">${ALLCOMPONENTS.elements.art6091.width} x ${ALLCOMPONENTS.elements.art6091.depth} cm ${ALLCOMPONENTS.elements.art6091.name}</label>
-                    </div>
-                </div> 
-            </div>
-            <!--
-            <div class="fst-italic mt-3 mb-2">voetenbank</div>
-            <div class="d-flex justify-content-start m-0 p-0">
-                <div class="card border-0 grid gap row-gap-3 me-5">
-                    <div class="h6 fw-normal form-check">
-                        <input type="radio" class="form-check-input" name="type" value="art9085110" id="art9085110">
-                        <label class="form-check-label" for="art9085110">${ALLCOMPONENTS.elements.art9085110.width} x ${ALLCOMPONENTS.elements.art9085110.depth} cm ${ALLCOMPONENTS.elements.art9085110.name}</label>
-                    </div>
-                </div>
-            </div>
-            -->
 
         </div>`
     };
-
-    accordions.options = {
-        title: "opties",
-        options: ['seatHeight', 'duotone', 'footstool'],
-        display: "d-block",
-        code: /*html*/`
-        <div class="row m-0 p-0 pb-xxl-4 pb-xl-4 pb-3">
-            <div class="d-flex justify-content-start m-0 p-0">
-                <div class="card border-0 grid gap row-gap-3 me-5">
-                    <div class="fst-italic">zithoogte:</div>
-                    <div class="h6 fw-normal form-check">
-                        <input type="radio" class="form-check-input" name="seatHeight" value="44" id="seatHeight_44">
-                        <label class="form-check-label" for="seatHeight_44">44 cm</label>
-                    </div>
-                    <div class="h6 fw-normal form-check">
-                        <input type="radio" class="form-check-input" name="seatHeight" value="47" id="seatHeight_47">
-                        <label class="form-check-label" for="seatHeight_47">47 cm</label>
-                    </div>
-                </div>
-                <div class="card border-0 grid gap row-gap-3 me-5">
-                <div class="fst-italic">duotone:</div>
-                    <div class="h6 fw-normal form-check form-switch">
-                    <input type="checkbox" class="form-check-input" name="duotone" id="duotone">
-                   <!-- <label class="form-check-label" for="duotone"></label>-->
-                </div>
-            </div>
-                <!--
-                <div class="card border-0 grid gap row-gap-3 me-5">
-                    <div class="fst-italic">poten:</div>
-                        <div class="h6 fw-normal form-check">
-                        <input type="radio" class="form-check-input" name="legoption" value="legsStraight" id="legsStraight">
-                        <label class="form-check-label" for="legsStraight">rechte poten</label>
-                    </div>
-                    <div class="h6 fw-normal form-check">
-                        <input type="radio" class="form-check-input" name="legoption" value="legsBent" id="legsBent">
-                        <label class="form-check-label" for="legsBent">gebogen poten</label>
-                    </div>
-                </div>
-                -->
-                <div class="card border-0 grid gap row-gap-3 me-5">
-                    <div class="fst-italic">voetenbank:</div>
-                        <div class="h6 fw-normal form-check form-switch">
-                        <input type="checkbox" class="form-check-input" name="footstool" id="footstool">
-                    </div>
-                </div>
-             
-               
-            </div>
-        </div>`
-
-    }
-    accordions.upholstery = {
-        title: "bekleding",
-        options: [`color`],
-        display: "d-block",
-        code: /*html*/`
-                <div class="row m-0 p-0 pb-xxl-4 pb-xl-4 pb-3">
-                <!--
-                    <div>
-                        <div class="h6 fw-normal">categorie</div>
-                        <div class="h6 fw-normal form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="upholsteriesCategory" id="upholsteriesCategory_2" value="2">
-                            <label class="form-check-label" for="upholsteriesCategory_2">2</label>
-                        </div>
-                        <div class="h6 fw-normal form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="upholsteriesCategory" id="upholsteriesCategory_3" value="3">
-                            <label class="form-check-label" for="upholsteriesCategory_3">3</label>
-                        </div>
-                        <div class="h6 fw-normal form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="upholsteriesCategory" id="upholsteriesCategory_4" value="4">
-                            <label class="form-check-label" for="upholsteriesCategory_4">4</label>
-                        </div>
-                        <div class="h6 fw-normal form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="upholsteriesCategory" id="upholsteriesCategory_5" value="5">
-                            <label class="form-check-label" for="upholsteriesCategory_5">5</label>
-                        </div>
-                        <div class="h6 fw-normal form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="upholsteriesCategory" id="upholsteriesCategory_6" value="6">
-                            <label class="form-check-label" for="upholsteriesCategory_6">6</label>
-                        </div>
-                        <div class="h6 fw-normal form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="upholsteriesCategory" id="upholsteriesCategory_7" value="7">
-                            <label class="form-check-label" for="upholsteriesCategory_7">7</label>
-                        </div>
-                        <div class="h6 fw-normal form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="upholsteriesCategory" id="upholsteriesCategory_8" value="8">
-                            <label class="form-check-label" for="upholsteriesCategory_8">8</label>
-                        </div>
-                        <div class="h6 fw-normal form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="upholsteriesCategory" id="upholsteriesCategory_9" value="9">
-                            <label class="form-check-label" for="upholsteriesCategory_9">9</label>
-                        </div>
-                    </div>
-                    -->
-                    <div class="h6 fw-normal">stofgroep adore</div>
-                    <div class="col-12 m-0 p-0">
-                        <div id="upholsteriesAdorePicker" class="m-0 p-0"></div>
-                    </div>
-                    <div class="h6 fw-normal">stofgroep dream</div>
-                    <div class="col-12 m-0 p-0">
-                        <div id="upholsteriesDreamPicker" class="m-0 p-0"></div>
-                    </div>
-                    <div class="h6 fw-normal">stofgroep essa</div>
-                    <div class="col-12 m-0 p-0">
-                        <div id="upholsteriesEssaPicker" class="m-0 p-0"></div>
-                    </div>
-                </div>`,
-        "onload": function () {
-            let containerElemsAdoreUpholsteries = document.getElementById(`upholsteriesAdorePicker`);
-            addTextures(`upholsteryColors`, 'adore', ALLCOLORS.upholsteries, containerElemsAdoreUpholsteries);
-
-            let containerElemsDreamUpholsteries = document.getElementById(`upholsteriesDreamPicker`);
-            addTextures(`upholsteryColors`, 'dream', ALLCOLORS.upholsteries, containerElemsDreamUpholsteries);
-
-            let containerElemsEssaUpholsteries = document.getElementById(`upholsteriesEssaPicker`);
-            addTextures(`upholsteryColors`, 'essa', ALLCOLORS.upholsteries, containerElemsEssaUpholsteries);
-        }
-    }
-    if (model.upholsteryDuotone) {
-        accordions.upholsteryDuotone = {
-            title: "bekleding rug",
-            options: [`colorDuotone`],
-            display: "d-block",
-            code: /*html*/`
-                <div class="row m-0 p-0 pb-xxl-4 pb-xl-4 pb-3">
-                <!--
-                    <div>
-                        <div class="h6 fw-normal">categorie</div>
-                        <div class="h6 fw-normal form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="upholsteriesDuotoneCategory" id="upholsteriesDuotoneCategory_2" value="2">
-                            <label class="form-check-label" for="upholsteriesDuotoneCategory_2">2</label>
-                        </div>
-                        <div class="h6 fw-normal form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="upholsteriesDuotoneCategory" id="upholsteriesDuotoneCategory_3" value="3">
-                            <label class="form-check-label" for="upholsteriesDuotoneCategory_3">3</label>
-                        </div>
-                        <div class="h6 fw-normal form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="upholsteriesDuotoneCategory" id="upholsteriesDuotoneCategory_4" value="4">
-                            <label class="form-check-label" for="upholsteriesDuotoneCategory_4">4</label>
-                        </div>
-                        <div class="h6 fw-normal form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="upholsteriesDuotoneCategory" id="upholsteriesDuotoneCategory_5" value="5">
-                            <label class="form-check-label" for="upholsteriesDuotoneCategory_5">5</label>
-                        </div>
-                        <div class="h6 fw-normal form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="upholsteriesDuotoneCategory" id="upholsteriesDuotoneCategory_6" value="6">
-                            <label class="form-check-label" for="upholsteriesDuotoneCategory_6">6</label>
-                        </div>
-                        <div class="h6 fw-normal form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="upholsteriesDuotoneCategory" id="upholsteriesDuotoneCategory_7" value="7">
-                            <label class="form-check-label" for="upholsteriesDuotoneCategory_7">7</label>
-                        </div>
-                        <div class="h6 fw-normal form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="upholsteriesDuotoneCategory" id="upholsteriesDuotoneCategory_8" value="8">
-                            <label class="form-check-label" for="upholsteriesDuotoneCategory_8">8</label>
-                        </div>
-                        <div class="h6 fw-normal form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="upholsteriesDuotoneCategory" id="upholsteriesDuotoneCategory_9" value="9">
-                            <label class="form-check-label" for="upholsteriesDuotoneCategory_9">9</label>
-                        </div>
-                    </div>
-                    -->
-                    <div class="h6 fw-normal">stofgroep adore</div>
-                    <div class="col-12 m-0 p-0">
-                        <div id="upholsteriesDuotoneAdorePicker" class="m-0 p-0"></div>
-                    </div>
-                    <div class="h6 fw-normal">stofgroep dream</div>
-                    <div class="col-12 m-0 p-0">
-                        <div id="upholsteriesDuotoneDreamPicker" class="m-0 p-0"></div>
-                    </div>
-                    <div class="h6 fw-normal">stofgroep essa</div>
-                    <div class="col-12 m-0 p-0">
-                        <div id="upholsteriesDuotoneEssaPicker" class="m-0 p-0"></div>
-                    </div>
-                </div>`,
-            "onload": function () {
-                let containerElemsDuotoneAdoreUpholsteries = document.getElementById(`upholsteriesDuotoneAdorePicker`);
-                addTextures(`upholsteryDuotoneColors`, 'adore', ALLCOLORS.upholsteries, containerElemsDuotoneAdoreUpholsteries);
-
-                let containerElemsDuotoneDreamUpholsteries = document.getElementById(`upholsteriesDuotoneDreamPicker`);
-                addTextures(`upholsteryDuotoneColors`, 'dream', ALLCOLORS.upholsteries, containerElemsDuotoneDreamUpholsteries);
-
-                let containerElemsDuotoneEssaUpholsteries = document.getElementById(`upholsteriesDuotoneEssaPicker`);
-                addTextures(`upholsteryDuotoneColors`, 'essa', ALLCOLORS.upholsteries, containerElemsDuotoneEssaUpholsteries);
-            }
-        }
-    }
-
 
     return { accordions };
 }

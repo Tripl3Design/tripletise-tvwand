@@ -19,6 +19,58 @@
   <script src="https://cdn.jsdelivr.net/npm/ua-parser-js@2.0.0/dist/ua-parser.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
+  <!-- multirange slider -->
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.1/nouislider.min.js'></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.1/nouislider.css">
+
+  <style>
+    .multipleRangeSlider {
+      padding: 0 11px;
+      border-radius: 0px;
+      border: none;
+      height: 6px;
+      background: #ccc;
+    }
+
+    .multipleRangeSlider .noUi-connect {
+      border: 0px;
+      background: #000;
+    }
+
+    .multipleRangeSlider .noUi-handle {
+      box-shadow: none;
+      border: none;
+      background: #000;
+      height: 22px;
+      width: 22px;
+      top: -8px;
+      right: -11px;
+      /* half the width */
+      border-radius: 22px;
+    }
+
+    .multipleRangeSlider .noUi-handle-lower {
+      right: 0;
+      /* prevent overlap of handles */
+    }
+
+    .multipleRangeSlider .noUi-handle-upper {
+      right: -22px;
+      /* prevent overlap of handles */
+    }
+
+    .multipleRangeSlider .noUi-handle::before,
+    .multipleRangeSlider .noUi-handle::after {
+      display: none;
+    }
+
+    .multipleRangeSlider .noUi-tooltip {
+      background: transparent;
+      border: none;
+      font-weight: bold;
+    }
+  </style>
+
   <!-- Three.js importmap  -->
   <script type="importmap">
     {
@@ -58,11 +110,6 @@
 </head>
 
 <body onload="bodyOnload();">
-  <video id="tvVideo" height="0px" autoplay loop muted>
-  <source src="video/test.mp4" type="video/mp4" >
-  Your browser does not support the video tag.
-</video>
-
   <div class="container-fluid m-0 p-0">
     <div class="row m-0 p-0 overflow-hidden">
       <script>
