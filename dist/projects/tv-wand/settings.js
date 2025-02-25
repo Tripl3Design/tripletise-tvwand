@@ -146,7 +146,7 @@ function updateControlPanel(model, selectedLayer, expandedLayer) {
             model.width = newWidth; // Update de width in het model
         }
     });
-    //console.log(model.width);
+    console.log(model.width);
 
     // height
     document.getElementById("wallHeight").value = model.height;
@@ -165,6 +165,27 @@ function updateControlPanel(model, selectedLayer, expandedLayer) {
         if (newHeight >= 150 && newHeight <= 270) {
             document.getElementById("wallHeight").value = newHeight;
             FEATUREDMODEL.width = newHeight; // Update de width in het model
+        }
+    });
+    console.log(model.height);
+
+    // depth
+    document.getElementById("wallDepth").value = model.depth;
+    document.getElementById("wallInputDepth").value = model.depth;
+
+    document.getElementById("wallDepth").addEventListener("input", function (event) {
+        let newDepth = parseInt(event.target.value, 10);
+        if (newDepth >= 150 && newDepth <= 270) {
+            document.getElementById("wallInputDepth").value = newDepth;
+            model.width = newDepth; // Update de width in het model
+        }
+    });
+
+    document.getElementById("wallInputDepth").addEventListener("input", function (event) {
+        let newDepth = parseInt(event.target.value, 10);
+        if (newDepth >= 150 && newHeight <= 270) {
+            document.getElementById("wallDepth").value = newDepth;
+            FEATUREDMODEL.width = newDepth; // Update de width in het model
         }
     });
     console.log(model.height);
@@ -250,14 +271,14 @@ function initSettings(model) {
 
     accordions.size = {
         title: "afmeting",
-        options: ['width', 'height'],
+        options: ['width', 'height', 'depth'],
         display: "d-block",
         code: /*html*/`
 
         <div class="row m-0 p-0 pb-xxl-4 pb-xl-4 pb-3">
         <div class="justify-content-start m-0 p-0">
     
-            <div class="wall-width-selector">
+            <div class="wall-selector">
                 <label for="wallWidth">breedte (cm):</label>
                 <div class="input-group">
                     <input type="range" id="wallWidth" min="150" max="270" value="#" step="1">
@@ -265,19 +286,28 @@ function initSettings(model) {
                 </div>
             </div>
 
-            <div class="wall-width-selector">
-            <label for="wallHeight">hoogte (cm):</label>
-            <div class="input-group">
-                <input type="range" id="wallHeight" min="200" max="280" value="#" step="1">
-                <input type="number" id="wallInputHeight" min="200" max="280" value="#" step="1">
+            <div class="wall-selector">
+                <label for="wallHeight">hoogte (cm):</label>
+                <div class="input-group">
+                    <input type="range" id="wallHeight" min="200" max="280" value="#" step="1">
+                    <input type="number" id="wallInputHeight" min="200" max="280" value="#" step="1">
+                </div>
             </div>
-        </div>
+
+            
+            <div class="wall-selector">
+                <label for="wallDepth">diepte (cm):</label>
+                <div class="input-group">
+                    <input type="range" id="wallDepth" min="20" max="60" value="#" step="1">
+                    <input type="number" id="wallInputDepth" min="20" max="60" value="#" step="1">
+                </div>
+            </div>
     
         </div>
     </div>
     
     <style>
-        .wall-width-selector {
+        .wall-selector {
            
             display: flex;
             flex-direction: column;
