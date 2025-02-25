@@ -146,7 +146,7 @@ function updateControlPanel(model, selectedLayer, expandedLayer) {
             model.width = newWidth; // Update de width in het model
         }
     });
-    console.log(model.width);
+    //console.log(model.width);
 
     // height
     document.getElementById("wallHeight").value = model.height;
