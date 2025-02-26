@@ -194,7 +194,7 @@ function updateControlPanel(model, selectedLayer, expandedLayer) {
             document.getElementById("wallInputDepth").value = newDepth;
             model.depth = newDepth;
             
-            updateControlPanel(model, 'size');
+            updateControlPanel(model,  'size');
             updateFeaturedModel(model);
             showSelected(false);
         }
