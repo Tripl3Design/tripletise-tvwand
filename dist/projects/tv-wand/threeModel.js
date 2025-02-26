@@ -49,7 +49,7 @@ export function initThree(containerElem) {
         renderer.toneMappingExposure = exposure;
     });
 
-    const ambientLight = new THREE.AmbientLight(0x404040, 0.5);
+    const ambientLight = new THREE.AmbientLight(0xffffff, 1);
     scene.add(ambientLight);
 
     const directionalLight = new THREE.DirectionalLight(0xffcc00, 1);
@@ -66,6 +66,7 @@ export function initThree(containerElem) {
     controls.minDistance = 2;
     controls.maxDistance = 10;
     controls.maxPolarAngle = Math.PI / 2 - 0.1;
+    controls.target.set(0, 1.2, 0);
     controls.update();
 
     // Ground plane setup
@@ -76,13 +77,15 @@ export function initThree(containerElem) {
         document.getElementById('fullscreen').addEventListener('click', fullscreenToggle);
     }
 
-    // Start the render loop
     render();
 }
 
 function addGround() {
     groundGeometry = new THREE.PlaneGeometry(20, 20);
     groundMaterial = new THREE.ShadowMaterial({ opacity: 0.3 });
+
+    groundMaterial = new THREE.MeshBasicMaterial({ color: 0x000000 });
+
     ground = new THREE.Mesh(groundGeometry, groundMaterial);
     ground.rotation.x = -Math.PI / 2;
     ground.position.y = 0;
@@ -98,66 +101,78 @@ if (windowHeight < windowWidth) {
 }
 
 
-function createCinewall(width, height, depth, wallColor, soundbar, fireplace, tvSize) {
-    // Maak de wand (CSG Brush object)
-    const wallGeometry = new THREE.BoxGeometry(width, height, depth);
+function createCinewall(width, height, depth, tvSize, wallColor, soundbar, fireplaceWidth, fireplaceHeight, fireplaceType) {
+
+    let widthInMeters = width / 100;
+    let heightInMeters = height / 100;
+    let depthInMeters = depth / 100;
+    let fireplaceWidthInMeters = fireplaceWidth / 100;
+    let fireplaceHeightInMeters = fireplaceHeight / 100;
+
+    // Maak een rode kubus (1x1x1 meter)
+    const cubeGeometry = new THREE.BoxGeometry(1, 0.2, 1);
+    const cubeMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 }); // Rood
+    const cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
+
+    // Verplaats de kubus 1 meter naar rechts (x = 1)
+    cube.position.set(1, 0.1, 0); // y = 0.5 zodat hij op de grond staat
+
+    // Voeg de kubus toe aan de scene
+    scene.add(cube);
+
+    const evaluator = new Evaluator();
+
+    const wallGeometry = new THREE.BoxGeometry(widthInMeters, heightInMeters, depthInMeters);
     let wall = new Brush(wallGeometry);
     wall.updateMatrixWorld();
 
-    // ✅ Bereken de afmetingen van de TV-uitsparing
     const tvWidth = tvSize * (16 / 18.3576) * 0.0254;
     const tvHeight = tvSize * (9 / 18.3576) * 0.0254;
     const recessWidth = tvWidth + 0.03;
     const recessHeight = tvHeight + 0.03;
 
-    // ✅ Maak een Brush voor de uitsparing van de TV
-    const tvRecess = new Brush(new THREE.BoxGeometry(recessWidth, recessHeight, 1));
-    tvRecess.position.set(0, 1 - (tvHeight / 2), 0);
+    const tvRecess = new Brush(new THREE.BoxGeometry(recessWidth, recessHeight, 0.15));
+    tvRecess.position.set(0, 1 - (heightInMeters / 2) + (recessHeight / 2), depthInMeters / 2);
     tvRecess.updateMatrixWorld();
 
-    // ✅ Boolean-operatie om de TV-uitsparing te maken
-    const evaluator = new Evaluator();
-    const wallResult = evaluator.evaluate(wall, tvRecess, SUBTRACTION);
+    let wallResult = evaluator.evaluate(wall, tvRecess, SUBTRACTION);
 
-
-
-
-
-
-    // ✅ Voeg de soundbar toe (indien gewenst)
     if (soundbar) {
-        console.log('soundbar');
-        // ✅ Maak een Brush voor de uitsparing van de TV
-        const soundbarRecess = new Brush(new THREE.BoxGeometry(recessWidth, 0.1, 1));
-        soundbarRecess.position.set(0, 0.8 - (tvHeight / 2), 0);
+        // recess
+        const soundbarRecess = new Brush(new THREE.BoxGeometry(recessWidth, 0.1, 0.15));
+        soundbarRecess.position.set(0, 0.8 - (heightInMeters / 2) + 0.05, (depthInMeters / 2) - 0.075);
         soundbarRecess.updateMatrixWorld();
 
-        // ✅ Boolean-operatie om de TV-uitsparing te maken
-        const evaluator = new Evaluator();
-        const wallResult = evaluator.evaluate(wall, soundbarRecess, SUBTRACTION);
+        wallResult = evaluator.evaluate(wallResult, soundbarRecess, SUBTRACTION);
 
-        scene.add(soundbarRecess);
+        // geometry
+        const soundbarGeometry = new THREE.CylinderGeometry(0.04, 0.04, recessWidth - 0.03, 32);;
+        const soundbarMaterial = new THREE.MeshBasicMaterial({ color: 0x000000 });
 
-
-
-        const soundbarGeometry = new THREE.BoxGeometry(tvWidth - 0.1, 0.1, 0.04);
-        const soundbarMaterial = new THREE.MeshStandardMaterial({ color: 0x000000 });
-        const soundbarMesh = new THREE.Mesh(soundbarGeometry, soundbarMaterial);
-        soundbarMesh.position.set(0, -height / 4, -depth + 0.15);
+        const soundbar = new THREE.Mesh(soundbarGeometry, soundbarMaterial);
+        soundbar.rotation.z = Math.PI / 2;
+        soundbar.position.set(0, .84, (depthInMeters / 2) - 0.075);
+        scene.add(soundbar);
     }
 
-    // ✅ Voeg de haard toe (indien gewenst)
-    if (fireplace) {
-        const fireplaceGeometry = new THREE.BoxGeometry(width - 0.1, 0.6, 0.4);
-        const fireplaceMaterial = new THREE.MeshStandardMaterial({ color: 0x333333 });
-        const fireplaceMesh = new THREE.Mesh(fireplaceGeometry, fireplaceMaterial);
-        fireplaceMesh.position.set(0, height / 4, -depth + 0.25);
-        scene.add(fireplaceMesh);
+    if (fireplaceWidth) {
+        // recess
+        const fireplaceRecess = new Brush(new THREE.BoxGeometry(fireplaceWidthInMeters, fireplaceHeightInMeters, 0.30));
+        fireplaceRecess.position.set(0, 0.2 - (heightInMeters / 2) + (fireplaceHeightInMeters / 2), (depthInMeters / 2) - 0.075);
+        fireplaceRecess.updateMatrixWorld();
+
+        wallResult = evaluator.evaluate(wallResult, fireplaceRecess, SUBTRACTION);
+
+        // geometry
+        const fireplaceGeometry = new THREE.BoxGeometry(fireplaceWidthInMeters, fireplaceHeightInMeters, 0.30);
+        const fireplaceMaterial = new THREE.MeshBasicMaterial({ color: 0x000000 });
+
+        const fireplace = new THREE.Mesh(fireplaceGeometry, fireplaceMaterial);
+        fireplace.position.set(0, 0.2, (depthInMeters / 2) - 0.15);
+        scene.add(fireplace);
+
     }
 
-
-
-    // ✅ Kleurverwerking
     const sanitizedColor = wallColor.startsWith("#") ? wallColor : `#${wallColor}`;
     const color = new THREE.Color(sanitizedColor);
     const material = new THREE.MeshStandardMaterial({
@@ -165,94 +180,74 @@ function createCinewall(width, height, depth, wallColor, soundbar, fireplace, tv
         roughness: 0.9
     });
 
-
-
-    // ✅ Controleer of de boolean operatie is geslaagd
     if (wallResult) {
         console.log("Boolean operatie geslaagd!");
         const wallMesh = new THREE.Mesh(wallResult.geometry, material);
-        wallMesh.position.set(0, 0, 0); // Zorg dat het resultaat ook op de grond begint
-        scene.add(wallMesh);
-    } else {
-        console.error("Boolean operatie voor TV-uitsparing mislukt. Valt terug op standaard wand.");
-        const wallMesh = new THREE.Mesh(wall.geometry, material);
-        wallMesh.position.set(0, 0, 0); // Zorg dat de standaard wand op de grond begint
+        wallMesh.position.set(0, heightInMeters / 2, 0);
         scene.add(wallMesh);
     }
 
-
-    // ✅ Voeg de TV toe in de uitsparing
-    const tvDepth = 0.02; // Diepte van de TV
-    const bezelThickness = 0.015; // 5mm randje rondom het scherm
+    const tvDepth = 0.02;
+    const bezelThickness = 0.015;
 
     const tvFrameMesh = new Brush(new THREE.BoxGeometry(tvWidth + bezelThickness, tvHeight + bezelThickness, tvDepth));
     const tvMesh = new Brush(new THREE.BoxGeometry(tvWidth, tvHeight, tvDepth));
     const tvResult = evaluator.evaluate(tvFrameMesh, tvMesh, SUBTRACTION);
 
     if (tvResult) {
-        console.log("Boolean operatie geslaagd!");
         const tvFrameMesh = new THREE.Mesh(tvResult.geometry, new THREE.MeshStandardMaterial({ color: 0x000000, roughness: 0.9, metalness: 0.6 }));
-        tvFrameMesh.position.set(0, -depth / 2 + 1.03, 0);
+        tvFrameMesh.position.set(0, 1 + (tvHeight / 2) + 0.015, (depthInMeters / 2) - 0.02);
         scene.add(tvFrameMesh);
     }
 
-    scene.add(tvFrameMesh);
-
-    // Verkrijg het video-element
     const videoElement = document.getElementById('tvVideo');
 
-    // Maak een VideoTexture met het video-element
     const videoTexture = new THREE.VideoTexture(videoElement);
-
-    // Zorg ervoor dat de textuur goed wordt herhaald en gespiegeld
     videoTexture.minFilter = THREE.LinearFilter;
     videoTexture.magFilter = THREE.LinearFilter;
     videoTexture.format = THREE.RGBFormat;
 
-    // Maak het materiaal voor het TV-scherm
     const tvScreenMaterial = new THREE.MeshBasicMaterial({
-        map: videoTexture, // Gebruik de video als textuur
-        emissive: 0x555555 // Lichte gloed om de video beter zichtbaar te maken
+        map: videoTexture,
+        //emissive: 0x555555
     });
 
-    // Maak de geometrie voor het TV-scherm
     const tvScreenGeometry = new THREE.BoxGeometry(tvWidth, tvHeight, tvDepth - 0.005);
-
-    // Maak de mesh en voeg deze toe aan de scene
     const tvScreenMesh = new THREE.Mesh(tvScreenGeometry, tvScreenMaterial);
-    tvScreenMesh.position.set(0, -depth / 2 + 1.03, 0);
+    tvScreenMesh.position.set(0, 1 + (tvHeight / 2) + 0.015, depthInMeters / 2 - 0.02);
     scene.add(tvScreenMesh);
-
 }
 
-const models = [];
 
-export async function loadModelData(model) {
-    // Remove old models from the scene
-    models.forEach(modelGroup => {
-        if (scene.children.includes(modelGroup)) {
-            scene.remove(modelGroup);
-            modelGroup.traverse(child => {
-                if (child.isMesh) {
-                    if (child.geometry) {
-                        child.geometry.dispose();
-                    }
-                    if (child.material) {
-                        child.material.dispose();
-                    }
+export async function clearScene() {
+    scene.traverse((child) => {
+        if (child.isMesh) {
+            scene.remove(child);
+
+            if (child.geometry) {
+                child.geometry.dispose();
+            }
+            if (child.material) {
+                if (Array.isArray(child.material)) {
+                    child.material.forEach(material => material.dispose());
+                } else {
+                    child.material.dispose();
                 }
-            });
+            }
         }
     });
+}
 
-    models.length = 0;
 
+export async function loadModelData(model) {
+    clearScene();
     const group = new THREE.Group();
+    createCinewall(model.width, model.height, model.depth, 64, model.color, model.soundbar, model.fireplace.width ?? 0, model.fireplace.height ?? 0, model.fireplace.type ?? "none");
 
-    createCinewall(3, 2, 0.3, '808000', true, false, 64);
+
+    //addGround();
 
     scene.add(group);
-    models.push(group);
 }
 
 function render() {

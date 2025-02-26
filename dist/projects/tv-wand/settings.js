@@ -136,8 +136,14 @@ function updateControlPanel(model, selectedLayer, expandedLayer) {
         let newWidth = parseInt(event.target.value, 10);
         if (newWidth >= 150 && newWidth <= 270) {
             document.getElementById("wallInputWidth").value = newWidth;
+        }
+    });
+    
+    document.getElementById("wallWidth").addEventListener("change", function (event) {
+        let newWidth = parseInt(event.target.value, 10);
+        if (newWidth >= 150 && newWidth <= 270) {
             model.width = newWidth;
-            
+    
             updateControlPanel(model, 'size');
             updateFeaturedModel(model);
             showSelected(false);
@@ -162,8 +168,14 @@ function updateControlPanel(model, selectedLayer, expandedLayer) {
 
     document.getElementById("wallHeight").addEventListener("input", function (event) {
         let newHeight = parseInt(event.target.value, 10);
-        if (newHeight >= 150 && newHeight <= 270) {
+        if (newHeight >= 200 && newHeight <= 280) {
             document.getElementById("wallInputHeight").value = newHeight;
+        }
+    });
+
+    document.getElementById("wallHeight").addEventListener("change", function (event) {
+        let newHeight = parseInt(event.target.value, 10);
+        if (newHeight >= 200 && newHeight <= 280) {
             model.height = newHeight;
 
             updateControlPanel(model, 'size');
@@ -174,8 +186,7 @@ function updateControlPanel(model, selectedLayer, expandedLayer) {
 
     document.getElementById("wallInputHeight").addEventListener("input", function (event) {
         let newHeight = parseInt(event.target.value, 10);
-        if (newHeight >= 150 && newHeight <= 270) {
-            document.getElementById("wallHeight").value = newHeight;
+        if (newHeight >= 200 && newHeight <= 280) {
             model.height = newHeight;
 
             updateControlPanel(model, 'size');
@@ -190,11 +201,17 @@ function updateControlPanel(model, selectedLayer, expandedLayer) {
 
     document.getElementById("wallDepth").addEventListener("input", function (event) {
         let newDepth = parseInt(event.target.value, 10);
-        if (newDepth >= 150 && newDepth <= 270) {
+        if (newDepth >= 20 && newDepth <= 50) {
             document.getElementById("wallInputDepth").value = newDepth;
+        }
+    });
+
+    document.getElementById("wallDepth").addEventListener("change", function (event) {
+        let newDepth = parseInt(event.target.value, 10);
+        if (newDepth >= 20 && newDepth <= 50) {
             model.depth = newDepth;
             
-            updateControlPanel(model,  'size');
+            updateControlPanel(model, 'size');
             updateFeaturedModel(model);
             showSelected(false);
         }
@@ -202,7 +219,7 @@ function updateControlPanel(model, selectedLayer, expandedLayer) {
 
     document.getElementById("wallInputDepth").addEventListener("input", function (event) {
         let newDepth = parseInt(event.target.value, 10);
-        if (newDepth >= 150 && newDepth <= 270) {
+        if (newDepth >= 20 && newDepth <= 50) {
             document.getElementById("wallDepth").value = newDepth;
             model.depth = newDepth;
                         
@@ -212,10 +229,7 @@ function updateControlPanel(model, selectedLayer, expandedLayer) {
         }
     });
 
-
-    document.getElementById('widthText').textContent = 'b: ' + model.width + ' cm';
-    document.getElementById('heightText').textContent = 'h: ' + model.height + ' cm';
-    document.getElementById('depthText').textContent = 'd: ' + model.depth + ' cm';
+    document.getElementById('sizeText').textContent = 'b: ' + model.width + ' cm h: ' + model.height + ' cm d: ' + model.depth + ' cm';
 
 
 
@@ -228,6 +242,8 @@ function updateControlPanel(model, selectedLayer, expandedLayer) {
 
     // is global FEATUREDMODEL for pdf really necessary?
     FEATUREDMODEL = model;
+
+    console.log(model);
 }
 
 function toggleFeaturedModels() {
@@ -289,6 +305,7 @@ async function handleModelSelection() {
     }
 }
 
+
 function initSettings(model) {
     const accordions = {};
 
@@ -300,64 +317,20 @@ function initSettings(model) {
 
         <div class="row m-0 p-0 pb-xxl-4 pb-xl-4 pb-3">
         <div class="justify-content-start m-0 p-0">
-    
-            <div class="wall-selector">
-                <label for="wallWidth">breedte (cm):</label>
-                <div class="input-group">
-                    <input type="range" id="wallWidth" min="150" max="270" value="#" step="1">
-                    <input type="number" id="wallInputWidth" min="150" max="270" value="150" step="1">
-                </div>
-            </div>
 
-            <div class="wall-selector">
-                <label for="wallHeight">hoogte (cm):</label>
-                <div class="input-group">
-                    <input type="range" id="wallHeight" min="200" max="280" value="#" step="1">
-                    <input type="number" id="wallInputHeight" min="200" max="280" value="#" step="1">
-                </div>
-            </div>
-
+            <div class="mt-3">breedte (cm):</div>
+            <input class="input-group-text float-end rounded-0" type="number" id="wallInputWidth" min="150" max="270" value="150" step="1">
+            <input style="width: 80%" type="range" class="form-range" id="wallWidth" min="150" max="270" value="150" step="1">
             
-            <div class="wall-selector">
-                <label for="wallDepth">diepte (cm):</label>
-                <div class="input-group">
-                    <input type="range" id="wallDepth" min="20" max="60" value="#" step="1">
-                    <input type="number" id="wallInputDepth" min="20" max="60" value="#" step="1">
-                </div>
-            </div>
-    
+            <div class="mt-3">hoogte (cm):</div>
+            <input class="input-group-text float-end rounded-0"" type="number" id="wallInputHeight" min="200" max="280" value="#" step="1">
+            <input style="width: 53%" type="range" class="form-range" id="wallHeight" min="200" max="280" value="#" step="1">
+            
+            <div class="mt-3">diepte (cm):</div>
+            <input class="input-group-text float-end rounded-0"" type="number" id="wallInputDepth" min="20" max="50" value="#" step="1">
+            <input style="width: 20%" type="range" class="form-range" id="wallDepth" min="20" max="50" value="#" step="1">
         </div>
-    </div>
-    
-    <style>
-        .wall-selector {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            width: 100%;
-            border-radius: 0;
-        }
-    
-        .input-group {
-            display: flex;
-            align-items: center;
-            width: 100%;
-            gap: 10px;
-        }
-    
-        input[type="range"] {
-            flex-grow: 1;
-        }
-    
-        input[type="number"] {
-            width: 80px;
-            text-align: center;
-        }
-    </style>
-
-            </div>
-        </div>`
-
+    </div>`
     };
 
 

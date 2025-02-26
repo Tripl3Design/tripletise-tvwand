@@ -11,7 +11,11 @@
     "depth": 40,
     "tvSize": 50,
     "soundbar": true,
-    "fireplace": true,
+    "fireplace": {
+      "width": 80,
+      "height": 30,
+      "type": "ignite"
+    },
     "alcove": {
       "right": {
         "width": 80,
@@ -22,6 +26,6 @@
         "shelves": 3
       }
     },
-    "color": "4f4934"
+    "color": "ffffff"
   }
 ]
