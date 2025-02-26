@@ -118,6 +118,7 @@ function updateFeaturedModel(model) {
             console.error('Error loading module:', error);
         });
 }
+
 function updateControlPanel(model, selectedLayer, expandedLayer) {
     const settings = initSettings(model);
     const elem = document.getElementById('controlpanelContainer');
@@ -135,7 +136,11 @@ function updateControlPanel(model, selectedLayer, expandedLayer) {
         let newWidth = parseInt(event.target.value, 10);
         if (newWidth >= 150 && newWidth <= 270) {
             document.getElementById("wallInputWidth").value = newWidth;
-            model.width = newWidth; // Update de width in het model
+            model.width = newWidth;
+            
+            updateControlPanel(model, 'size');
+            updateFeaturedModel(model);
+            showSelected(false);
         }
     });
 
@@ -143,10 +148,13 @@ function updateControlPanel(model, selectedLayer, expandedLayer) {
         let newWidth = parseInt(event.target.value, 10);
         if (newWidth >= 150 && newWidth <= 270) {
             document.getElementById("wallWidth").value = newWidth;
-            model.width = newWidth; // Update de width in het model
+            model.width = newWidth;
+
+            updateControlPanel(model, 'size');
+            updateFeaturedModel(model);
+            showSelected(false);
         }
     });
-    console.log(model.width);
 
     // height
     document.getElementById("wallHeight").value = model.height;
@@ -156,7 +164,11 @@ function updateControlPanel(model, selectedLayer, expandedLayer) {
         let newHeight = parseInt(event.target.value, 10);
         if (newHeight >= 150 && newHeight <= 270) {
             document.getElementById("wallInputHeight").value = newHeight;
-            model.width = newHeight; // Update de width in het model
+            model.height = newHeight;
+
+            updateControlPanel(model, 'size');
+            updateFeaturedModel(model);
+            showSelected(false);
         }
     });
 
@@ -164,10 +176,13 @@ function updateControlPanel(model, selectedLayer, expandedLayer) {
         let newHeight = parseInt(event.target.value, 10);
         if (newHeight >= 150 && newHeight <= 270) {
             document.getElementById("wallHeight").value = newHeight;
-            FEATUREDMODEL.width = newHeight; // Update de width in het model
+            model.height = newHeight;
+
+            updateControlPanel(model, 'size');
+            updateFeaturedModel(model);
+            showSelected(false);
         }
     });
-    console.log(model.height);
 
     // depth
     document.getElementById("wallDepth").value = model.depth;
@@ -177,18 +192,26 @@ function updateControlPanel(model, selectedLayer, expandedLayer) {
         let newDepth = parseInt(event.target.value, 10);
         if (newDepth >= 150 && newDepth <= 270) {
             document.getElementById("wallInputDepth").value = newDepth;
-            model.width = newDepth; // Update de width in het model
+            model.depth = newDepth;
+            
+            updateControlPanel(model, 'size');
+            updateFeaturedModel(model);
+            showSelected(false);
         }
     });
 
     document.getElementById("wallInputDepth").addEventListener("input", function (event) {
         let newDepth = parseInt(event.target.value, 10);
-        if (newDepth >= 150 && newHeight <= 270) {
+        if (newDepth >= 150 && newDepth <= 270) {
             document.getElementById("wallDepth").value = newDepth;
-            FEATUREDMODEL.width = newDepth; // Update de width in het model
+            model.depth = newDepth;
+                        
+            updateControlPanel(model, 'size');
+            updateFeaturedModel(model);
+            showSelected(false);
         }
     });
-    console.log(model.height);
+
 
     document.getElementById('widthText').textContent = 'b: ' + model.width + ' cm';
     document.getElementById('heightText').textContent = 'h: ' + model.height + ' cm';
@@ -308,7 +331,6 @@ function initSettings(model) {
     
     <style>
         .wall-selector {
-           
             display: flex;
             flex-direction: column;
             gap: 20px;
