@@ -10,9 +10,9 @@
     "height": 240,
     "depth": 40,
     "tvSize": 50,
-    "soundbar": true,
+    "soundbar": false,
     "fireplace": {
-      "width": 80,
+      "width": 180,
       "height": 30,
       "type": "ignite"
     },
@@ -26,6 +26,7 @@
         "shelves": 3
       }
     },
-    "color": "ffffff"
+    "color": "00ff00",
+    "video": "tvVideo2"
   }
 ]

@@ -138,12 +138,12 @@ function updateControlPanel(model, selectedLayer, expandedLayer) {
             document.getElementById("wallInputWidth").value = newWidth;
         }
     });
-    
+
     document.getElementById("wallWidth").addEventListener("change", function (event) {
         let newWidth = parseInt(event.target.value, 10);
         if (newWidth >= 150 && newWidth <= 270) {
             model.width = newWidth;
-    
+
             updateControlPanel(model, 'size');
             updateFeaturedModel(model);
             showSelected(false);
@@ -210,7 +210,7 @@ function updateControlPanel(model, selectedLayer, expandedLayer) {
         let newDepth = parseInt(event.target.value, 10);
         if (newDepth >= 20 && newDepth <= 50) {
             model.depth = newDepth;
-            
+
             updateControlPanel(model, 'size');
             updateFeaturedModel(model);
             showSelected(false);
@@ -222,21 +222,112 @@ function updateControlPanel(model, selectedLayer, expandedLayer) {
         if (newDepth >= 20 && newDepth <= 50) {
             document.getElementById("wallDepth").value = newDepth;
             model.depth = newDepth;
-                        
+
             updateControlPanel(model, 'size');
             updateFeaturedModel(model);
             showSelected(false);
         }
     });
 
-    document.getElementById('sizeText').textContent = 'b: ' + model.width + ' cm h: ' + model.height + ' cm d: ' + model.depth + ' cm';
+    document.getElementById('sizeText').textContent = model.width + ' x ' + model.height + ' x ' + model.depth + ' cm';
 
 
 
 
-    //tv diagonal
-    //var tvSize = document.getElementById('tvSize');
-    //var tvSizeValues = ['32 inch', '40 inch', '42 inch', '43 inch', '45 inch', '48 inch', '49 inch', '50 inch', '55 inch', '58 inch', '60 inch', '65 inch', '70 inch', '75 inch', '82 inch', '85 inch'];
+    //tv diagonal 
+    document.getElementById("tvSize").value = model.tvSize;
+    document.getElementById("tvSizeInput").value = model.tvSize;
+
+    document.getElementById("tvSize").addEventListener("input", function (event) {
+        // let newTvSize = parseInt(event.target.value, 10);
+        document.getElementById("tvSizeInput").event.target.value = newTvSize;
+    });
+
+    document.getElementById("tvSize").addEventListener("change", function (event) {
+        // let newTvSize = parseInt(event.target.value, 10);
+        model.tvSize = event.target.value;
+
+        updateControlPanel(model, 'telly');
+        updateFeaturedModel(model);
+        showSelected(false);
+    });
+
+    document.getElementById("tvSizeInput").addEventListener("input", function (event) {
+        // let newTvSize = parseInt(event.target.value, 10);
+
+        document.getElementById("tvSize").event.target.value = newTvSize;
+        model.tvSize = newTvSize;
+
+        updateControlPanel(model, 'telly');
+        updateFeaturedModel(model);
+        showSelected(false);
+
+    });
+    document.getElementById('inchText').textContent = model.tvSize + ' inch';
+
+    // soundbar
+    let soundbarCheckbox = document.getElementById('soundbar');
+
+    if (model.soundbar) {
+        soundbarCheckbox.checked = true;
+    } else {
+        soundbarCheckbox.checked = false;
+    }
+
+    soundbarCheckbox.addEventListener('click', () => {
+        if (soundbarCheckbox.checked) {
+            model.soundbar = true;
+        } else {
+            model.soundbar = false;
+        }
+
+        updateControlPanel(model, 'telly');
+        updateFeaturedModel(model);
+        showSelected(false);
+    });
+
+    if (soundbarCheckbox.checked) {
+        document.getElementById('barText').textContent = 'met soundbar';
+    } else {
+        document.getElementById('barText').textContent = 'geen soundbar';
+    }
+
+    // video
+    document.getElementById("tvVideo1").addEventListener("click", function (event) {
+        model.video = document.getElementById("tvVideo1").id;
+
+        updateControlPanel(model, 'telly');
+        updateFeaturedModel(model);
+        showSelected(false);
+    });
+
+    document.getElementById("tvVideo2").addEventListener("click", function (event) {
+        model.video = document.getElementById("tvVideo2").id;
+
+        updateControlPanel(model, 'telly');
+        updateFeaturedModel(model);
+        showSelected(false);
+    });
+
+
+//fireplace
+    const allowedValues = [50, 60, 74, 100];
+    const rangeInput = document.getElementById("fireplaceWidth");
+
+    function getClosestValue(value) {
+        return allowedValues.reduce((prev, curr) => 
+            Math.abs(curr - value) < Math.abs(prev - value) ? curr : prev
+        );
+    }
+
+    // Update bij het bewegen van de slider
+    rangeInput.addEventListener("input", function () {
+        let closest = getClosestValue(rangeInput.value);
+        rangeInput.value = closest;
+        numberInput.value = closest;
+    });
+
+
 
     pricing(model);
 
@@ -305,87 +396,167 @@ async function handleModelSelection() {
     }
 }
 
-
 function initSettings(model) {
     const accordions = {};
 
     accordions.size = {
         title: "afmeting",
-        options: ['width', 'height', 'depth'],
+        options: [],
         display: "d-block",
         code: /*html*/`
 
         <div class="row m-0 p-0 pb-xxl-4 pb-xl-4 pb-3">
-        <div class="justify-content-start m-0 p-0">
+            <div class="justify-content-start m-0 p-0">
 
-            <div class="mt-3">breedte (cm):</div>
-            <input class="input-group-text float-end rounded-0" type="number" id="wallInputWidth" min="150" max="270" value="150" step="1">
-            <input style="width: 80%" type="range" class="form-range" id="wallWidth" min="150" max="270" value="150" step="1">
-            
-            <div class="mt-3">hoogte (cm):</div>
-            <input class="input-group-text float-end rounded-0"" type="number" id="wallInputHeight" min="200" max="280" value="#" step="1">
-            <input style="width: 53%" type="range" class="form-range" id="wallHeight" min="200" max="280" value="#" step="1">
-            
-            <div class="mt-3">diepte (cm):</div>
-            <input class="input-group-text float-end rounded-0"" type="number" id="wallInputDepth" min="20" max="50" value="#" step="1">
-            <input style="width: 20%" type="range" class="form-range" id="wallDepth" min="20" max="50" value="#" step="1">
+                <div>breedte:</div>
+                <input class="input-group-text float-end rounded-0 bg-white" type="number" id="wallInputWidth" min="150" max="270" value="#" step="1">
+                <input style="width: 80%" type="range" class="form-range" id="wallWidth" min="150" max="270" value="#" step="1">
+                <div style="width: 80%; display: flex; justify-content: space-between; margin-top: -8px; font-size: 11px;">
+                    <span>150</span>
+                    <span>160</span>
+                    <span>170</span>
+                    <span>180</span>
+                    <span>190</span>
+                    <span>200</span>
+                    <span>210</span>
+                    <span>220</span>
+                    <span>230</span>
+                    <span>240</span>
+                    <span>250</span>
+                    <span>260</span>
+                    <span>270</span>
+                </div>
+                
+                <div class="mt-3">hoogte:</div>
+                <input class="input-group-text float-end rounded-0 bg-white" type="number" id="wallInputHeight" min="200" max="280" value="#" step="1">
+                <input style="width: 53%" type="range" class="form-range" id="wallHeight" min="200" max="280" value="#" step="1">
+                <div style="width: 53%; display: flex; justify-content: space-between; margin-top: -8px; font-size: 11px;">
+                    <span>200</span>
+                    <span>210</span>
+                    <span>220</span>
+                    <span>230</span>
+                    <span>240</span>
+                    <span>250</span>
+                    <span>260</span>
+                    <span>270</span>
+                    <span>280</span>
+                </div>
+                
+                <div class="mt-3">diepte:</div>
+                <input class="input-group-text float-end rounded-0 bg-white" type="number" id="wallInputDepth" min="20" max="50" value="#" step="1">
+                <input style="width: 20%" type="range" class="form-range" id="wallDepth" min="20" max="50" value="#" step="1">
+                <div style="width: 20%; display: flex; justify-content: space-between; margin-top: -8px; font-size: 11px;">
+                    <span>20</span>
+                    <span>30</span>
+                    <span>40</span>
+                    <span>50</span>
+                </div>
+
+            </div>
         </div>
-    </div>`
+    
+        <style>
+        /* Stijl voor de slider */
+        input[type="range"] {
+         
+            border-radius: 0;
+        }
+
+        /* Zorg voor zichtbare tick marks */
+        input[type="range"]::-webkit-slider-runnable-track {
+            background: linear-gradient(to right, #ccc 0%, #ccc 33%, #ccc 66%, #ccc 100%);
+            background-size: 100% 100%;
+            height: 3px;
+            border-radius: 0;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            appearance: none;
+            width: 16px;
+            height: 16px;
+            background: #000;
+            border-radius: 50%;
+            margin-top: -6px;
+        }
+        </style>`
     };
 
-
-    accordions.tv = {
+    accordions.telly = {
         title: "tv",
-        options: ['numberOfSeats', 'dimensions'],
+        options: ['inch', 'bar'],
         display: "d-block",
         code: /*html*/`
         <div class="row m-0 p-0 pb-xxl-4 pb-xl-4 pb-3">
             <div class="justify-content-start m-0 p-0">
 
-                <div style="width: 100%;" class="m-0 p-3">
-                <label for="tempB">Choose a comfortable temperature:</label><br />
-                <input type="range" id="tempB" name="temp" list="values" />
-                
-                <datalist id="values">
-                  <option value="0" label="very cold!"></option>
-                  <option value="25" label="cool"></option>
-                  <option value="50" label="medium"></option>
-                  <option value="75" label="getting warm!"></option>
-                  <option value="100" label="hot!"></option>
-                </datalist>
-    <style>
-                datalist {
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: space-between;
-                    writing-mode: vertical-lr;
-                    width: 200px;
-                  }
-                  
-                  option {
-                    padding: 0;
-                  }
-                  
-                  input[type="range"] {
-                    width: 200px;
-                    margin: 0;
-                  }
-        
-    </style>
+                <div>inchmaat:</div>
+                <input class="input-group-text float-end rounded-0 bg-white" type="number" id="tvSizeInput" min="30" max="90" value="#" step="1">
+                <input style="width: 80%" type="range" class="form-range" id="tvSize" min="30" max="90" value="#" step="1">
+                <div style="width: 80%; display: flex; justify-content: space-between; margin-top: -10px; font-size: 11px;">
+                    <span>30</span>
+                    <span>35</span>
+                    <span>40</span>
+                    <span>45</span>
+                    <span>50</span>
+                    <span>55</span>
+                    <span>60</span>
+                    <span>65</span>
+                    <span>70</span>
+                    <span>75</span>
+                    <span>80</span>
+                    <span>85</span>
+                    <span>90</span>
+                </div>
+
+                <div class="form-check my-3">
+                    <input id="soundbar" name="soundbar" class="form-check-input" type="checkbox">
+                    <label class="form-check-label" for="flexCheckChecked">
+                    uitsparing voor sounbar
+                    </label>
                 </div>
 
                 <div class="mb-1">kies video (ter indicatie):</div>
-                <div>
-                    <video id="tvVideo" height="100px" autoplay loop muted>
-                        <source src="video/test.mp4" type="video/mp4" >
+                <div class="d-flex me-3">
+                    <video id="tvVideo1" height="100px" autoplay loop muted>
+                        <source src="video/video-1.mp4" type="video/mp4" >
                         Your browser does not support the video tag.
                     </video>
+                
+                    <video id="tvVideo2" height="100px" autoplay loop muted>
+                        <source src="video/video-2.mp4" type="video/mp4" >
+                        Your browser does not support the video tag.
+                    </video>
+
+                    <video id="optiflame" style="display: none;" height="100px" autoplay loop muted>
+                    <source src="video/optiflame.mp4" type="video/mp4" >
+                    Your browser does not support the video tag.
+                </video>
                 </div>
+                
+            </div>
+        </div>`
+    };
 
-     
-            
+    accordions.fireplace = {
+        title: "sfeerhaard",
+        options: [],
+        display: "d-block",
+        code: /*html*/`
+        <div class="row m-0 p-0 pb-xxl-4 pb-xl-4 pb-3">
+            <div class="justify-content-start m-0 p-0">
 
 
+                <div>maat:</div>
+
+                <select id="fireplaceWidth" class="form-select">
+                <option value="0">geen sfeerhaard</option>
+                <option value="127">Dimplex Ignite XL 50″</option>
+                <option value="152.4">Dimplex Ignite XL 60″</option>
+                <option value="187.96">Dimplex Ignite XL 74″</option>
+                <option value="254">Dimplex Ignite XL 100″</option>
+            </select>
+
+            </div>
         </div>`
     };
 

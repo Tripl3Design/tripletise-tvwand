@@ -84,7 +84,7 @@ function addGround() {
     groundGeometry = new THREE.PlaneGeometry(20, 20);
     groundMaterial = new THREE.ShadowMaterial({ opacity: 0.3 });
 
-    groundMaterial = new THREE.MeshBasicMaterial({ color: 0x000000 });
+    groundMaterial = new THREE.MeshStandardMaterial({ color: 0x000000 });
 
     ground = new THREE.Mesh(groundGeometry, groundMaterial);
     ground.rotation.x = -Math.PI / 2;
@@ -101,24 +101,15 @@ if (windowHeight < windowWidth) {
 }
 
 
-function createCinewall(width, height, depth, tvSize, wallColor, soundbar, fireplaceWidth, fireplaceHeight, fireplaceType) {
+function createCinewall(width, height, depth, tvSize, wallColor, soundbar, fireplaceWidth, fireplaceHeight, fireplaceType, video, alcoveRight, alcoveLeft) {
 
     let widthInMeters = width / 100;
     let heightInMeters = height / 100;
     let depthInMeters = depth / 100;
     let fireplaceWidthInMeters = fireplaceWidth / 100;
     let fireplaceHeightInMeters = fireplaceHeight / 100;
-
-    // Maak een rode kubus (1x1x1 meter)
-    const cubeGeometry = new THREE.BoxGeometry(1, 0.2, 1);
-    const cubeMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 }); // Rood
-    const cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
-
-    // Verplaats de kubus 1 meter naar rechts (x = 1)
-    cube.position.set(1, 0.1, 0); // y = 0.5 zodat hij op de grond staat
-
-    // Voeg de kubus toe aan de scene
-    scene.add(cube);
+    let alcoveRightWidthInMeters = alcoveRight / 100;
+    let alcoveLeftWidthInMeters = alcoveLeft / 100;
 
     const evaluator = new Evaluator();
 
@@ -147,7 +138,7 @@ function createCinewall(width, height, depth, tvSize, wallColor, soundbar, firep
 
         // geometry
         const soundbarGeometry = new THREE.CylinderGeometry(0.04, 0.04, recessWidth - 0.03, 32);;
-        const soundbarMaterial = new THREE.MeshBasicMaterial({ color: 0x000000 });
+        const soundbarMaterial = new THREE.MeshStandardMaterial({ color: 0x555555 });
 
         const soundbar = new THREE.Mesh(soundbarGeometry, soundbarMaterial);
         soundbar.rotation.z = Math.PI / 2;
@@ -163,26 +154,33 @@ function createCinewall(width, height, depth, tvSize, wallColor, soundbar, firep
 
         wallResult = evaluator.evaluate(wallResult, fireplaceRecess, SUBTRACTION);
 
-        // geometry
-        const fireplaceGeometry = new THREE.BoxGeometry(fireplaceWidthInMeters, fireplaceHeightInMeters, 0.30);
-        const fireplaceMaterial = new THREE.MeshBasicMaterial({ color: 0x000000 });
+        const fireElement = document.getElementById('optiflame');
 
-        const fireplace = new THREE.Mesh(fireplaceGeometry, fireplaceMaterial);
-        fireplace.position.set(0, 0.2, (depthInMeters / 2) - 0.15);
-        scene.add(fireplace);
+        const fireTexture = new THREE.VideoTexture(fireElement);
+        fireTexture.minFilter = THREE.LinearFilter;
+        fireTexture.magFilter = THREE.LinearFilter;
+        fireTexture.format = THREE.RGBFormat;
 
+        const fireMaterial = new THREE.MeshStandardMaterial({
+            map: fireTexture,
+            emissive: 0x555555
+        });
+
+        const fireGeometry = new THREE.BoxGeometry(fireplaceWidthInMeters, fireplaceHeightInMeters, 0.005);
+        const fireMesh = new THREE.Mesh(fireGeometry, fireMaterial);
+        fireMesh.position.set(0, 0.2 + (fireplaceHeightInMeters / 2), depthInMeters / 2 - 0.02);
+        scene.add(fireMesh);
     }
 
     const sanitizedColor = wallColor.startsWith("#") ? wallColor : `#${wallColor}`;
-    const color = new THREE.Color(sanitizedColor);
-    const material = new THREE.MeshStandardMaterial({
-        color: color,
+    const newWallColor = new THREE.Color(sanitizedColor);
+    const wallMaterial = new THREE.MeshStandardMaterial({
+        color: newWallColor,
         roughness: 0.9
     });
 
     if (wallResult) {
-        console.log("Boolean operatie geslaagd!");
-        const wallMesh = new THREE.Mesh(wallResult.geometry, material);
+        const wallMesh = new THREE.Mesh(wallResult.geometry, wallMaterial);
         wallMesh.position.set(0, heightInMeters / 2, 0);
         scene.add(wallMesh);
     }
@@ -192,60 +190,127 @@ function createCinewall(width, height, depth, tvSize, wallColor, soundbar, firep
 
     const tvFrameMesh = new Brush(new THREE.BoxGeometry(tvWidth + bezelThickness, tvHeight + bezelThickness, tvDepth));
     const tvMesh = new Brush(new THREE.BoxGeometry(tvWidth, tvHeight, tvDepth));
-    const tvResult = evaluator.evaluate(tvFrameMesh, tvMesh, SUBTRACTION);
+    const tvBezelResult = evaluator.evaluate(tvFrameMesh, tvMesh, SUBTRACTION);
 
-    if (tvResult) {
-        const tvFrameMesh = new THREE.Mesh(tvResult.geometry, new THREE.MeshStandardMaterial({ color: 0x000000, roughness: 0.9, metalness: 0.6 }));
+    if (tvBezelResult) {
+        const tvFrameMesh = new THREE.Mesh(tvBezelResult.geometry, new THREE.MeshStandardMaterial({ color: 0x000000, roughness: 0.9, metalness: 0.6 }));
         tvFrameMesh.position.set(0, 1 + (tvHeight / 2) + 0.015, (depthInMeters / 2) - 0.02);
         scene.add(tvFrameMesh);
     }
 
-    const videoElement = document.getElementById('tvVideo');
+    const videoElement = document.getElementById(video);
 
     const videoTexture = new THREE.VideoTexture(videoElement);
     videoTexture.minFilter = THREE.LinearFilter;
     videoTexture.magFilter = THREE.LinearFilter;
     videoTexture.format = THREE.RGBFormat;
 
-    const tvScreenMaterial = new THREE.MeshBasicMaterial({
+    const tvScreenMaterial = new THREE.MeshStandardMaterial({
         map: videoTexture,
-        //emissive: 0x555555
+        emissive: 0x555555
     });
 
     const tvScreenGeometry = new THREE.BoxGeometry(tvWidth, tvHeight, tvDepth - 0.005);
     const tvScreenMesh = new THREE.Mesh(tvScreenGeometry, tvScreenMaterial);
     tvScreenMesh.position.set(0, 1 + (tvHeight / 2) + 0.015, depthInMeters / 2 - 0.02);
     scene.add(tvScreenMesh);
+
+    if (alcoveRight) {
+        // Geometry
+        const alcoveRightGeometry = new Brush(new THREE.BoxGeometry(alcoveRightWidthInMeters, heightInMeters, depthInMeters - 0.05));
+
+        // Recess
+        const alcoveRightRecess = new Brush(new THREE.BoxGeometry(alcoveRightWidthInMeters - 0.2, heightInMeters - 0.4, depthInMeters - 0.07));
+        alcoveRightRecess.position.set(0, 0, 0.035);
+        alcoveRightRecess.updateMatrixWorld();
+
+        const alcoveRightResult = evaluator.evaluate(alcoveRightGeometry, alcoveRightRecess, SUBTRACTION);
+
+        if (alcoveRightResult) {
+            const alcoveRight = new THREE.Mesh(alcoveRightResult.geometry, wallMaterial);
+
+            alcoveRight.position.set(-(widthInMeters / 2) - (alcoveRightWidthInMeters / 2), heightInMeters / 2, -0.025);
+
+            scene.add(alcoveRight);
+        }
+    }
+
+    if (alcoveLeft) {
+        // Geometry
+        const alcoveLeftGeometry = new Brush(new THREE.BoxGeometry(alcoveLeftWidthInMeters, heightInMeters, depthInMeters - 0.05));
+
+        // Recess
+        const alcoveLeftRecess = new Brush(new THREE.BoxGeometry(alcoveLeftWidthInMeters - 0.2, heightInMeters - 0.4, depthInMeters - 0.07));
+        alcoveLeftRecess.position.set(0, 0, 0.035);
+        alcoveLeftRecess.updateMatrixWorld();
+
+        const alcoveLeftResult = evaluator.evaluate(alcoveLeftGeometry, alcoveLeftRecess, SUBTRACTION);
+
+        if (alcoveLeftResult) {
+            const alcoveLeft = new THREE.Mesh(alcoveLeftResult.geometry, wallMaterial);
+
+            alcoveLeft.position.set((widthInMeters / 2) + (alcoveLeftWidthInMeters / 2), heightInMeters / 2, -0.025);
+
+            scene.add(alcoveLeft);
+        }
+    }
 }
 
 
-export async function clearScene() {
+export async function clearScene(video) {
     scene.traverse((child) => {
         if (child.isMesh) {
             scene.remove(child);
 
+            // Dispose geometry
             if (child.geometry) {
                 child.geometry.dispose();
             }
+
+            // Dispose material (inclusief VideoTexture)
             if (child.material) {
                 if (Array.isArray(child.material)) {
-                    child.material.forEach(material => material.dispose());
+                    child.material.forEach(material => disposeMaterial(material));
                 } else {
-                    child.material.dispose();
+                    disposeMaterial(child.material);
                 }
             }
         }
     });
+
+    // Refresh de video-element
+    resetVideo(video);
+    resetVideo('optiflame');
 }
 
+// Helper functie om materiaal (en eventueel VideoTexture) te disposen
+function disposeMaterial(material) {
+    if (material.map) {
+        if (material.map instanceof THREE.VideoTexture) {
+            material.map.dispose(); // Belangrijk voor het vrijmaken van GPU geheugen
+            material.map.image.pause(); // Pauzeer de video
+            material.map.image.src = ""; // Leegmaken van de bron om memory leaks te voorkomen
+            material.map.image.load(); // Reset de video bron
+        }
+        material.map.dispose();
+    }
+    material.dispose();
+}
+
+function resetVideo(video) {
+    const videoElement = document.getElementById(video);
+    if (videoElement) {
+        videoElement.pause();
+        videoElement.currentTime = 0;
+        videoElement.load();
+        videoElement.play();
+    }
+}
 
 export async function loadModelData(model) {
-    clearScene();
+    clearScene(model.video ?? "tvVideo1");
     const group = new THREE.Group();
-    createCinewall(model.width, model.height, model.depth, 64, model.color, model.soundbar, model.fireplace.width ?? 0, model.fireplace.height ?? 0, model.fireplace.type ?? "none");
-
-
-    //addGround();
+    createCinewall(model.width, model.height, model.depth, model.tvSize, model.color, model.soundbar, model.fireplace.width ?? 0, model.fireplace.height ?? 0, model.fireplace.type ?? "none", model.video ?? "tvVideo1", model.alcove.right.width ?? undefined, model.alcove.left.width ?? undefined);
 
     scene.add(group);
 }
