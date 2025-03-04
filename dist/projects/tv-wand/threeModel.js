@@ -189,11 +189,11 @@ function createCinewall(width, height, depth, tvSize, wallColor, soundbar, firep
             wall.geometry.dispose();
             wall.material.dispose();
         }
-    
+
         wallMesh = new THREE.Mesh(wallResult.geometry, wallMaterial);
         wallMesh.position.set(0, heightInMeters / 2, 0);
         scene.add(wallMesh);
-    
+
         wallMesh.castShadow = true;
         wallMesh.receiveShadow = true;
     }
@@ -309,20 +309,10 @@ function createCinewall(width, height, depth, tvSize, wallColor, soundbar, firep
 }
 
 function clearScene(video) {
-    scene.traverse((child) => {
-        if (child.isMesh) {
-            scene.remove(child);
-            if (child.geometry) child.geometry.dispose();
-            if (child.material) {
-                if (Array.isArray(child.material)) {
-                    child.material.forEach(disposeMaterial);
-                } else {
-                    disposeMaterial(child.material);
-                }
-            }
-        }
-    });
-
+    while (scene.children.length > 0) {
+        let child = scene.children[0];
+        scene.remove(child);
+    }
     resetVideo(video);
     resetVideo('optiflame');
 }

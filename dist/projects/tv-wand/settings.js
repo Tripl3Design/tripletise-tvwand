@@ -204,7 +204,6 @@ function updateControlPanel(model, selectedLayer, expandedLayer) {
 
     document.getElementById('sizeText').textContent = model.width + ' x ' + model.height + ' x ' + model.depth + ' cm';
 
-
     //tv diagonal 
     document.getElementById("tvSize").value = model.tvSize;
     document.getElementById("tvSizeInput").value = model.tvSize;
