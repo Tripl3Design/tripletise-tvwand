@@ -210,8 +210,8 @@ function updateControlPanel(model, selectedLayer, expandedLayer) {
     document.getElementById("tvSizeInput").value = model.tvSize;
 
     document.getElementById("tvSize").addEventListener("input", function (event) {
-        document.getElementById("tvSizeInput").event.target.value = newTvSize;
-    });
+        document.getElementById("tvSizeInput").value = event.target.value;
+    });    
 
     document.getElementById("tvSize").addEventListener("change", function (event) {
         model.tvSize = event.target.value;
@@ -294,8 +294,6 @@ function updateControlPanel(model, selectedLayer, expandedLayer) {
         rangeInput.value = closest;
         numberInput.value = closest;
     });
-
-
 
     pricing(model);
 

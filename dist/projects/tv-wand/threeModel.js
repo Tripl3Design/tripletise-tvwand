@@ -184,14 +184,12 @@ function createCinewall(width, height, depth, tvSize, wallColor, soundbar, firep
     let wallMesh = null;
 
     if (wallResult) {
-        // Als er al een wallMesh bestaat, verwijder deze eerst uit de scene en dispose de resources
         if (wallMesh) {
-            scene.remove(wallMesh);
-            wallMesh.geometry.dispose();
-            wallMesh.material.dispose();
+            scene.remove(wall);
+            wall.geometry.dispose();
+            wall.material.dispose();
         }
     
-        // Maak een nieuwe wallMesh met het bijgewerkte resultaat
         wallMesh = new THREE.Mesh(wallResult.geometry, wallMaterial);
         wallMesh.position.set(0, heightInMeters / 2, 0);
         scene.add(wallMesh);
@@ -355,7 +353,7 @@ function resetVideo(video) {
 
 export async function loadModelData(model) {
     const group = new THREE.Group();
-    //clearScene(model.video ?? "tvVideo1");
+    clearScene(model.video ?? "tvVideo1");
     createCinewall(model.width, model.height, model.depth, model.tvSize, model.color, model.soundbar, model.fireplace.width ?? 0, model.fireplace.height ?? 0, model.fireplace.type ?? "none", model.video ?? "tvVideo1", model.alcove.right.width ?? undefined, model.alcove.right.shelves ?? 0, model.alcove.left.width ?? undefined, model.alcove.left.shelves ?? 0);
     scene.add(group);
 }
