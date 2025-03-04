@@ -4,7 +4,7 @@
     "name": "tv-wand",
     "image": "projects/tv-wand/img/thumbnails/voorbeeld-opstelling-4.jpg",
     "background": {
-      "original": "d4d4d4"
+      "original": "ffffff"
     },
     "width": 200,
     "height": 240,
@@ -18,15 +18,15 @@
     },
     "alcove": {
       "right": {
-        "width": 80,
-        "shelves": 3
+        "width": 0,
+        "shelves": 6
       },
       "left": {
-        "width": 120,
-        "shelves": 3
+        "width": 0,
+        "shelves": 2
       }
     },
-    "color": "00ff00",
+    "color": "cccccc",
     "video": "tvVideo2"
   }
 ]

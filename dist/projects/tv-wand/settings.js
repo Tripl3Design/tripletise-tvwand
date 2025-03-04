@@ -133,33 +133,24 @@ function updateControlPanel(model, selectedLayer, expandedLayer) {
     document.getElementById("wallInputWidth").value = model.width;
 
     document.getElementById("wallWidth").addEventListener("input", function (event) {
-        let newWidth = parseInt(event.target.value, 10);
-        if (newWidth >= 150 && newWidth <= 270) {
-            document.getElementById("wallInputWidth").value = newWidth;
-        }
+        document.getElementById("wallInputWidth").value = event.target.value;
     });
 
     document.getElementById("wallWidth").addEventListener("change", function (event) {
-        let newWidth = parseInt(event.target.value, 10);
-        if (newWidth >= 150 && newWidth <= 270) {
-            model.width = newWidth;
+        model.width = event.target.value;
 
-            updateControlPanel(model, 'size');
-            updateFeaturedModel(model);
-            showSelected(false);
-        }
+        updateControlPanel(model, 'size');
+        updateFeaturedModel(model);
+        showSelected(false);
     });
 
     document.getElementById("wallInputWidth").addEventListener("input", function (event) {
-        let newWidth = parseInt(event.target.value, 10);
-        if (newWidth >= 150 && newWidth <= 270) {
-            document.getElementById("wallWidth").value = newWidth;
-            model.width = newWidth;
+        document.getElementById("wallWidth").value = event.target.value;
+        model.width = event.target.value;
 
-            updateControlPanel(model, 'size');
-            updateFeaturedModel(model);
-            showSelected(false);
-        }
+        updateControlPanel(model, 'size');
+        updateFeaturedModel(model);
+        showSelected(false);
     });
 
     // height
@@ -167,32 +158,23 @@ function updateControlPanel(model, selectedLayer, expandedLayer) {
     document.getElementById("wallInputHeight").value = model.height;
 
     document.getElementById("wallHeight").addEventListener("input", function (event) {
-        let newHeight = parseInt(event.target.value, 10);
-        if (newHeight >= 200 && newHeight <= 280) {
-            document.getElementById("wallInputHeight").value = newHeight;
-        }
+        document.getElementById("wallInputHeight").value = event.target.value;
     });
 
     document.getElementById("wallHeight").addEventListener("change", function (event) {
-        let newHeight = parseInt(event.target.value, 10);
-        if (newHeight >= 200 && newHeight <= 280) {
-            model.height = newHeight;
+        model.height = event.target.value;
 
-            updateControlPanel(model, 'size');
-            updateFeaturedModel(model);
-            showSelected(false);
-        }
+        updateControlPanel(model, 'size');
+        updateFeaturedModel(model);
+        showSelected(false);
     });
 
     document.getElementById("wallInputHeight").addEventListener("input", function (event) {
-        let newHeight = parseInt(event.target.value, 10);
-        if (newHeight >= 200 && newHeight <= 280) {
-            model.height = newHeight;
+        model.height = event.target.value;
 
-            updateControlPanel(model, 'size');
-            updateFeaturedModel(model);
-            showSelected(false);
-        }
+        updateControlPanel(model, 'size');
+        updateFeaturedModel(model);
+        showSelected(false);
     });
 
     // depth
@@ -200,38 +182,27 @@ function updateControlPanel(model, selectedLayer, expandedLayer) {
     document.getElementById("wallInputDepth").value = model.depth;
 
     document.getElementById("wallDepth").addEventListener("input", function (event) {
-        let newDepth = parseInt(event.target.value, 10);
-        if (newDepth >= 20 && newDepth <= 50) {
-            document.getElementById("wallInputDepth").value = newDepth;
-        }
+        document.getElementById("wallInputDepth").value = event.target.value;
     });
 
     document.getElementById("wallDepth").addEventListener("change", function (event) {
-        let newDepth = parseInt(event.target.value, 10);
-        if (newDepth >= 20 && newDepth <= 50) {
-            model.depth = newDepth;
+        model.depth = event.target.value;
 
-            updateControlPanel(model, 'size');
-            updateFeaturedModel(model);
-            showSelected(false);
-        }
+        updateControlPanel(model, 'size');
+        updateFeaturedModel(model);
+        showSelected(false);
     });
 
     document.getElementById("wallInputDepth").addEventListener("input", function (event) {
-        let newDepth = parseInt(event.target.value, 10);
-        if (newDepth >= 20 && newDepth <= 50) {
-            document.getElementById("wallDepth").value = newDepth;
-            model.depth = newDepth;
+        document.getElementById("wallDepth").value = event.target.value;
+        model.depth = event.target.value;
 
-            updateControlPanel(model, 'size');
-            updateFeaturedModel(model);
-            showSelected(false);
-        }
+        updateControlPanel(model, 'size');
+        updateFeaturedModel(model);
+        showSelected(false);
     });
 
     document.getElementById('sizeText').textContent = model.width + ' x ' + model.height + ' x ' + model.depth + ' cm';
-
-
 
 
     //tv diagonal 
@@ -239,12 +210,10 @@ function updateControlPanel(model, selectedLayer, expandedLayer) {
     document.getElementById("tvSizeInput").value = model.tvSize;
 
     document.getElementById("tvSize").addEventListener("input", function (event) {
-        // let newTvSize = parseInt(event.target.value, 10);
         document.getElementById("tvSizeInput").event.target.value = newTvSize;
     });
 
     document.getElementById("tvSize").addEventListener("change", function (event) {
-        // let newTvSize = parseInt(event.target.value, 10);
         model.tvSize = event.target.value;
 
         updateControlPanel(model, 'telly');
@@ -253,10 +222,9 @@ function updateControlPanel(model, selectedLayer, expandedLayer) {
     });
 
     document.getElementById("tvSizeInput").addEventListener("input", function (event) {
-        // let newTvSize = parseInt(event.target.value, 10);
-
-        document.getElementById("tvSize").event.target.value = newTvSize;
-        model.tvSize = newTvSize;
+      
+        document.getElementById("tvSize").value = event.target.value;
+        model.tvSize = event.target.value;
 
         updateControlPanel(model, 'telly');
         updateFeaturedModel(model);
@@ -310,12 +278,12 @@ function updateControlPanel(model, selectedLayer, expandedLayer) {
     });
 
 
-//fireplace
+    //fireplace
     const allowedValues = [50, 60, 74, 100];
     const rangeInput = document.getElementById("fireplaceWidth");
 
     function getClosestValue(value) {
-        return allowedValues.reduce((prev, curr) => 
+        return allowedValues.reduce((prev, curr) =>
             Math.abs(curr - value) < Math.abs(prev - value) ? curr : prev
         );
     }
