@@ -10,7 +10,6 @@ let mainModule = null;
 
 async function downloadPdf() {
     try {
-        // Verkrijg zowel de dataURL als de Blob van de screenshot
         const { dataURL, blob } = mainModule.captureScreenshot();
 
         const docRef = await addDoc(collection(db, "clientModels"), {
@@ -22,7 +21,6 @@ async function downloadPdf() {
         });
         console.log("Document saved with ID: ", docRef.id);
 
-        // Gebruik de dataURL voor het maken van de PDF
         createPdf(FEATUREDMODEL, dataURL, title, docRef.id);
     } catch (e) {
         console.error("Error: ", e);

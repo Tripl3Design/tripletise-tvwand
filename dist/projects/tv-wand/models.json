@@ -18,15 +18,15 @@
     },
     "alcove": {
       "right": {
-        "width": 0,
+        "width": 80,
         "shelves": 6
       },
       "left": {
-        "width": 0,
+        "width": 80,
         "shelves": 2
       }
     },
     "color": "cccccc",
-    "video": "tvVideo2"
+    "video": "tvVideo1"
   }
 ]
