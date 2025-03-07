@@ -12,7 +12,7 @@
     "tvSize": 50,
     "soundbar": false,
     "fireplace": {
-      "width": 180,
+      "width": 0,
       "height": 30,
       "type": "ignite"
     },
@@ -27,6 +27,6 @@
       }
     },
     "color": "cccccc",
-    "video": "tvVideo1"
+    "video": "video-1"
   }
 ]

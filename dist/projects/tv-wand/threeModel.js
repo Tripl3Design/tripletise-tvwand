@@ -51,7 +51,8 @@ export function initThree(containerElem) {
     scene.add(ambientLight);
 
     const directionalLight = new THREE.DirectionalLight(0xffcc00, 1);
-    directionalLight.position.set(5, 20, 5);
+    directionalLight.position.set(10, 15, 10);
+    //directionalLight.position.set(5, 20, 5);
     directionalLight.target.position.set(0, 0, 0);
     directionalLight.castShadow = true;
     scene.add(directionalLight);
@@ -273,7 +274,12 @@ function createCinewall(width, height, depth, tvSize, wallColor, soundbar, firep
         tvFrameMesh.receiveShadow = true;
     }
 
-    const videoElement = document.getElementById(video);
+    const videoElement = document.createElement('video');
+    videoElement.src = 'projects/tv-wand/video/' + video + '.mp4';
+
+    videoElement.loop = true;
+    videoElement.muted = true;
+    videoElement.play();
 
     const videoTexture = new THREE.VideoTexture(videoElement);
     videoTexture.minFilter = THREE.LinearFilter;
@@ -391,8 +397,8 @@ function resetVideo(video) {
 
 export async function loadModelData(model) {
     const group = new THREE.Group();
-    clearScene(model.video ?? "tvVideo1");
-    createCinewall(model.width, model.height, model.depth, model.tvSize, model.color, model.soundbar, model.fireplace.width ?? 0, model.fireplace.height ?? 0, model.fireplace.type ?? "none", model.video ?? "tvVideo1", model.alcove.right.width ?? undefined, model.alcove.right.shelves ?? 0, model.alcove.left.width ?? undefined, model.alcove.left.shelves ?? 0);
+    clearScene(model.video ?? "video-1");
+    createCinewall(model.width, model.height, model.depth, model.tvSize, model.color, model.soundbar, model.fireplace.width ?? 0, model.fireplace.height ?? 0, model.fireplace.type ?? "none", model.video ?? "video-1", model.alcove.right.width ?? undefined, model.alcove.right.shelves ?? 0, model.alcove.left.width ?? undefined, model.alcove.left.shelves ?? 0);
     scene.add(group);
 }
 
@@ -508,7 +514,7 @@ if (arButton) {
                 a.href = usdzURL;
                 a.setAttribute('rel', 'ar');
                 const img = document.createElement('img');
-                img.src = 'img/logo_tv-wand.webp';
+                img.src = 'img/logo_tv.svg';
                 img.alt = 'Bekijk in AR';
                 a.appendChild(img);
                 document.body.appendChild(a);

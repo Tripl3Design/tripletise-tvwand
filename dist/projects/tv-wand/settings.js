@@ -208,7 +208,7 @@ function updateControlPanel(model, selectedLayer, expandedLayer) {
 
     document.getElementById("tvSize").addEventListener("input", function (event) {
         document.getElementById("tvSizeInput").value = event.target.value;
-    });    
+    });
 
     document.getElementById("tvSize").addEventListener("change", function (event) {
         model.tvSize = event.target.value;
@@ -219,7 +219,7 @@ function updateControlPanel(model, selectedLayer, expandedLayer) {
     });
 
     document.getElementById("tvSizeInput").addEventListener("input", function (event) {
-      
+
         document.getElementById("tvSize").value = event.target.value;
         model.tvSize = event.target.value;
 
@@ -258,16 +258,16 @@ function updateControlPanel(model, selectedLayer, expandedLayer) {
     }
 
     // video
-    document.getElementById("tvVideo1").addEventListener("click", function (event) {
-        model.video = document.getElementById("tvVideo1").id;
+    document.getElementById("video-1").addEventListener("click", function (event) {
+        model.video = document.getElementById("video-1").id;
 
         updateControlPanel(model, 'telly');
         updateFeaturedModel(model);
         showSelected(false);
     });
 
-    document.getElementById("tvVideo2").addEventListener("click", function (event) {
-        model.video = document.getElementById("tvVideo2").id;
+    document.getElementById("video-2").addEventListener("click", function (event) {
+        model.video = document.getElementById("video-2").id;
 
         updateControlPanel(model, 'telly');
         updateFeaturedModel(model);
@@ -480,20 +480,20 @@ function initSettings(model) {
 
                 <div class="mb-1">kies video (ter indicatie):</div>
                 <div class="d-flex me-3">
-                    <video id="tvVideo1" height="100px" autoplay loop muted>
-                        <source src="video/video-1.mp4" type="video/mp4" >
+                    <video id="video-1" height="100px" autoplay loop muted>
+                        <source src="projects/tv-wand/video/video-1.mp4" type="video/mp4" >
                         Your browser does not support the video tag.
                     </video>
                 
-                    <video id="tvVideo2" height="100px" autoplay loop muted>
-                        <source src="video/video-2.mp4" type="video/mp4" >
+                    <video id="video-2" height="100px" autoplay loop muted>
+                        <source src="projects/tv-wand/video/video-2.mp4" type="video/mp4" >
                         Your browser does not support the video tag.
                     </video>
 
                     <video id="optiflame" style="display: none;" height="100px" autoplay loop muted>
-                    <source src="video/optiflame.mp4" type="video/mp4" >
-                    Your browser does not support the video tag.
-                </video>
+                        <source src="projects/tv-wand/video/optiflame.mp4" type="video/mp4" >
+                        Your browser does not support the video tag.
+                    </video>
                 </div>
                 
             </div>
