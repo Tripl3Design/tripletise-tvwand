@@ -2,6 +2,12 @@
 function pricing(model) {
     let totalPrice = 0;
 
+    totalPrice = ((model.width * model.height * model.depth) /1000) // tv wand volume / 1000
+
+    + (model.soundbar ? 120 : 0)  // soundbar kost €120, tv gat is gratis
+    + (model.alcove.left ? 800 : 0) + (model.alcove.right.width * 5) //nissen kost €800 plus €5 per cm aan elke kant
+    + (model.alcove.left.shelves * 60); //plank kost €30 per stuk
+
     // Globale variabelen om prijs en model op te slaan
     currentModel = model;
 

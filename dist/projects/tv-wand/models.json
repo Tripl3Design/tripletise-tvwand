@@ -17,13 +17,13 @@
       "type": "ignite"
     },
     "alcove": {
-      "right": {
-        "width": 80,
-        "shelves": 6
-      },
       "left": {
         "width": 80,
-        "shelves": 2
+        "shelves": 1
+      },
+      "right": {
+        "width": 80,
+        "shelves": 1
       }
     },
     "color": "cccccc",

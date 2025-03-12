@@ -274,23 +274,70 @@ function updateControlPanel(model, selectedLayer, expandedLayer) {
         showSelected(false);
     });
 
+    //alcove
+    let alcoveCheckbox = document.getElementById('alcoveToggle');
 
-    //fireplace
-    const allowedValues = [50, 60, 74, 100];
-    const rangeInput = document.getElementById("fireplaceWidth");
-
-    function getClosestValue(value) {
-        return allowedValues.reduce((prev, curr) =>
-            Math.abs(curr - value) < Math.abs(prev - value) ? curr : prev
-        );
+    if (model.alcove.left.width != 0) {
+        alcoveCheckbox.checked = true;
+    } else {
+        alcoveCheckbox.checked = false;
     }
 
-    // Update bij het bewegen van de slider
-    rangeInput.addEventListener("input", function () {
-        let closest = getClosestValue(rangeInput.value);
-        rangeInput.value = closest;
-        numberInput.value = closest;
+    alcoveCheckbox.addEventListener('click', () => {
+        if (alcoveCheckbox.checked) {
+            model.alcove.left.width = 50;
+            model.alcove.right.width = 50;
+        } else {
+            model.alcove.left.width = 0;
+            model.alcove.right.width = 0;
+        }
+
+        updateControlPanel(model, 'alcove');
+        updateFeaturedModel(model);
+        showSelected(false);
     });
+
+    if (soundbarCheckbox.checked) {
+        document.getElementById('barText').textContent = 'met soundbar';
+    } else {
+        document.getElementById('barText').textContent = 'geen soundbar';
+    }
+
+    document.getElementById("alcove").value = model.alcove.left.width;
+    document.getElementById("alcoveInput").value = model.tvSize;
+
+    document.getElementById("alcove").addEventListener("input", function (event) {
+        document.getElementById("alcoveInput").value = event.target.value;
+    });
+
+    document.getElementById("alcove").addEventListener("change", function (event) {
+        model.alcove.left.width = parseInt(event.target.value);
+        model.alcove.right.width = parseInt(event.target.value);
+
+        updateControlPanel(model, 'alcove');
+        updateFeaturedModel(model);
+        showSelected(false);
+    });
+
+    document.getElementById("shelvesInput").value = model.alcove.left.shelves;
+
+    document.getElementById("shelvesInput").addEventListener("change", function (event) {
+        model.alcove.left.shelves = parseInt(event.target.value);
+        model.alcove.right.shelves = parseInt(event.target.value);
+
+        updateControlPanel(model, 'alcove');
+        updateFeaturedModel(model);
+        showSelected(false);
+    });
+
+    document.getElementById('alcoveWidthText').textContent = model.alcove.left.width + ' cm';
+    if (model.alcove.left.shelves != 1) {
+        document.getElementById('alcoveShelvesText').textContent = model.alcove.left.shelves + ' planken';
+    } else {
+        document.getElementById('alcoveShelvesText').textContent = model.alcove.left.shelves + ' plank';
+    }
+
+    //fireplace
 
     pricing(model);
 
@@ -473,7 +520,7 @@ function initSettings(model) {
 
                 <div class="form-check my-3">
                     <input id="soundbar" name="soundbar" class="form-check-input" type="checkbox">
-                    <label class="form-check-label" for="flexCheckChecked">
+                    <label class="form-check-label" for="soundbar">
                     uitsparing voor sounbar
                     </label>
                 </div>
@@ -496,6 +543,39 @@ function initSettings(model) {
                     </video>
                 </div>
                 
+            </div>
+        </div>`
+    };
+
+    accordions.alcove = {
+        title: "nissen",
+        options: ['alcoveWidth', 'alcoveShelves'],
+        display: "d-block",
+        code: /*html*/`
+        <div class="row m-0 p-0 pb-xxl-4 pb-xl-4 pb-3">
+            <div class="justify-content-start m-0 p-0">
+
+            <div class="form-check my-3">
+                <input id="alcoveToggle" name="soundbar" class="form-check-input" type="checkbox">
+                <label class="form-check-label" for="alcoveToggle">
+                voeg nissen toe
+                </label>
+            </div>
+
+                <div>breedte:</div>
+                <input class="input-group-text float-end rounded-0 bg-white" type="number" id="alcoveInput" min="30" max="90" value="#" step="1">
+                <input style="width: 80%" type="range" class="form-range" id="alcove" min="50" max="100" value="#" step="1">
+                <div style="width: 80%; display: flex; justify-content: space-between; margin-top: -10px; font-size: 11px;">
+                    <span>50</span>
+                    <span>60</span>
+                    <span>70</span>
+                    <span>80</span>
+                    <span>90</span>
+                    <span>100</span>
+                </div>
+
+                <div class="mt-3 mb-2">aantal planken:</div>
+                <input class="input-group-text rounded-0 bg-white" type="number" id="shelvesInput" name="shelvesInput" min="0" max="6" value="0" step="1">
             </div>
         </div>`
     };
