@@ -21,16 +21,12 @@ function pricing(model) {
                     <!--<span class="material-symbols-outlined align-middle">shopping_cart</span>-->
                     <span>bestel &nbsp;&nbsp;</span>
                     <span class="original-price-mobile" style="">€ ${totalPrice.toFixed(0)},-&nbsp;&nbsp;</span>
-                  
                 </div>
             `;
         } else {
             priceHTML = `
                 <div class="h5 fw-bold">
-                  <span>van </span>
-                  <span>van </span>
-                    <span class="original-price" style="color: black;">€ ${totalPrice.toFixed(0)} ,- voor </span>
-                  
+                    <span class="original-price" style="color: black;">€ ${totalPrice.toFixed(0)} ,-</span>
                 </div>
             `;
         }

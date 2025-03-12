@@ -7,8 +7,9 @@ import { RGBELoader } from 'three/addons/loaders/RGBELoader.js';
 import { GLTFExporter } from 'three/addons/exporters/GLTFExporter.js';
 import { USDZExporter } from 'three/addons/exporters/USDZExporter.js';
 
-let scene, camera, renderer, controls, rgbeLoader;
+let scene, camera, renderer, rgbeLoader, ambientLight, directionalLight, controls;
 let groundGeometry, groundMaterial, ground;
+let floorGeometry, floorMaterial, floor;
 
 let projectmap = 'projects/tv-wand/';
 
@@ -19,7 +20,7 @@ export function initThree(containerElem) {
 
     // Camera setup
     camera = new THREE.PerspectiveCamera(60, containerElem.offsetWidth / containerElem.offsetHeight, 0.1, 100);
-    camera.position.set(-4, - 0.7, 4);
+    camera.position.set(-4, 1.7, 4);
     camera.updateProjectionMatrix();
 
     // Renderer setup
@@ -37,7 +38,7 @@ export function initThree(containerElem) {
     });
 
     resizeObserver.observe(modelviewer);
-
+    
     rgbeLoader = new RGBELoader();
     rgbeLoader.load(projectmap + 'img/hdri/yoga_room_2k.hdr', function (texture) {
         texture.mapping = THREE.EquirectangularReflectionMapping;
@@ -46,16 +47,6 @@ export function initThree(containerElem) {
         scene.environment = envMap;
         renderer.toneMappingExposure = exposure;
     });
-
-    const ambientLight = new THREE.AmbientLight(0x404040, 0.5);
-    scene.add(ambientLight);
-
-    const directionalLight = new THREE.DirectionalLight(0xffcc00, 1);
-    directionalLight.position.set(10, 15, 10);
-    //directionalLight.position.set(5, 20, 5);
-    directionalLight.target.position.set(0, 0, 0);
-    directionalLight.castShadow = true;
-    scene.add(directionalLight);
 
     // OrbitControls setup
     controls = new OrbitControls(camera, renderer.domElement);
@@ -71,8 +62,9 @@ export function initThree(containerElem) {
     controls.target.set(0, 1.2, 0);
     controls.update();
 
-    // Ground plane setup
-    addGround();
+
+
+   
 
     // desktop version
     if (windowHeight < windowWidth) {
@@ -109,7 +101,22 @@ function createCinewall(width, height, depth, tvSize, wallColor, soundbar, firep
     let alcoveRightWidthInMeters = alcoveRight / 100;
     let alcoveLeftWidthInMeters = alcoveLeft / 100;
 
-    const evaluator = new Evaluator();
+    const evaluator = new Evaluator(); floorGeometry = new THREE.PlaneGeometry(20, 20);
+
+    const boxGeometry = new THREE.BoxGeometry(1, 1, 1);
+    const boxMaterial = new THREE.MeshStandardMaterial({
+        color: 0x000000,
+        side: THREE.FrontSide,
+        transparent: true,
+        opacity: 1
+    });
+    const boxMesh = new THREE.Mesh(boxGeometry, boxMaterial);
+    boxMesh.position.set(0, 0.5, 1);
+    scene.add(boxMesh);
+
+    boxMesh.castShadow = true;
+    boxMesh.receiveShadow = true;
+
 
     /*
         const floorGeometry = new THREE.PlaneGeometry(20, 20);
@@ -398,6 +405,19 @@ function resetVideo(video) {
 export async function loadModelData(model) {
     const group = new THREE.Group();
     clearScene(model.video ?? "video-1");
+    const ambientLight = new THREE.AmbientLight(0x404040);
+    scene.add(ambientLight);
+
+    const directionalLight = new THREE.DirectionalLight(0xffcc00, 1);
+    directionalLight.intensity = 2;
+    directionalLight.position.set(5, 20, 5);
+    directionalLight.target.position.set(0, 0, 0);
+    directionalLight.castShadow = true;
+    scene.add(directionalLight);
+
+     // Ground plane setup
+     addGround();
+    
     createCinewall(model.width, model.height, model.depth, model.tvSize, model.color, model.soundbar, model.fireplace.width ?? 0, model.fireplace.height ?? 0, model.fireplace.type ?? "none", model.video ?? "video-1", model.alcove.right.width ?? undefined, model.alcove.right.shelves ?? 0, model.alcove.left.width ?? undefined, model.alcove.left.shelves ?? 0);
     scene.add(group);
 }
