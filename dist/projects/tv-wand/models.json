@@ -26,7 +26,10 @@
         "shelves": 1
       }
     },
-    "color": "cccccc",
+    "color": {
+      "hex": "4A3526",
+      "name": "sepia brown"
+    },
     "video": "video-1"
   }
 ]

@@ -9,6 +9,8 @@ import { USDZExporter } from 'three/addons/exporters/USDZExporter.js';
 
 let scene, camera, renderer, rgbeLoader, controls;
 let groundGeometry, groundMaterial, ground;
+let videoElement = null;
+let videoTexture = null;
 
 let projectmap = 'projects/tv-wand/';
 
@@ -103,7 +105,6 @@ function createCinewall(width, height, depth, tvSize, wallColor, soundbar, firep
 
     const evaluator = new Evaluator();
 
-    
     const backwallGeometry = new THREE.PlaneGeometry(20, heightInMeters);
     const backwallMaterial = new THREE.MeshStandardMaterial({
         color: 0xaaaaaa,
@@ -120,7 +121,7 @@ function createCinewall(width, height, depth, tvSize, wallColor, soundbar, firep
     
 
     const wallGeometry = new THREE.BoxGeometry(widthInMeters, heightInMeters, depthInMeters);
-    const wallMaterial = new THREE.MeshStandardMaterial({ color: wallColor });
+    const wallMaterial = new THREE.MeshStandardMaterial({ color: '#' + wallColor });
 
     let wall = new Brush(wallGeometry);
     wall.updateMatrixWorld();
@@ -213,6 +214,25 @@ function createCinewall(width, height, depth, tvSize, wallColor, soundbar, firep
         tvFrameMesh.receiveShadow = true;
     }
 
+// Gebruik de functie in je TV-materiaal
+const tvScreenMaterial = new THREE.MeshStandardMaterial({
+    map: updateVideoTexture(video),
+    emissiveMap: videoTexture,
+    emissive: 0xffffff,
+    emissiveIntensity: 0.5,
+    roughness: 0.1,
+    metalness: 0.5,
+});
+
+// Maak en plaats het TV-scherm
+const tvScreenGeometry = new THREE.BoxGeometry(tvWidth, tvHeight, tvDepth - 0.005);
+const tvScreenMesh = new THREE.Mesh(tvScreenGeometry, tvScreenMaterial);
+tvScreenMesh.position.set(0, 1 + (tvHeight / 2) + 0.015, depthInMeters - 0.02);
+scene.add(tvScreenMesh);
+
+tvScreenMesh.castShadow = true;
+tvScreenMesh.receiveShadow = true;
+/*
     const videoElement = document.createElement('video');
     videoElement.src = 'projects/tv-wand/video/' + video + '.mp4';
 
@@ -241,7 +261,7 @@ function createCinewall(width, height, depth, tvSize, wallColor, soundbar, firep
 
     tvScreenMesh.castShadow = true;
     tvScreenMesh.receiveShadow = true;
-
+*/
     if (alcoveLeft) {
         // Geometry
         const alcoveLeftGeometry = new Brush(new THREE.BoxGeometry(alcoveLeftWidthInMeters, heightInMeters, depthInMeters - 0.05));
@@ -267,15 +287,10 @@ function createCinewall(width, height, depth, tvSize, wallColor, soundbar, firep
             const alcoveLeftShelveGeometry = new THREE.BoxGeometry(alcoveLeftWidthInMeters - 0.2, 0.06, depthInMeters - 0.07);
             const alcoveLeftShelve = new THREE.Mesh(alcoveLeftShelveGeometry, wallMaterial);
 
-            // ✅ Bereken de juiste Y-positie zodat planken gelijk verdeeld worden
-            const shelfStartY = (heightInMeters - 0.4) / (alcoveLeftShelves + 1); // Gelijke afstand tussen planken
-            const shelfY = (shelfStartY * (i + 1) + 0.2); // Positioneer de plank op de juiste hoogte
+            const shelfStartY = (heightInMeters - 0.4) / (alcoveLeftShelves + 1);
+            const shelfY = (shelfStartY * (i + 1) + 0.2);
 
-            alcoveLeftShelve.position.set(
-                -(widthInMeters / 2) - (alcoveLeftWidthInMeters / 2),
-                shelfY,
-                depthInMeters / 2 - 0.025
-            );
+            alcoveLeftShelve.position.set(-(widthInMeters / 2) - (alcoveLeftWidthInMeters / 2), shelfY, depthInMeters / 2 - 0.025);
 
             scene.add(alcoveLeftShelve);
 
@@ -336,15 +351,10 @@ function createCinewall(width, height, depth, tvSize, wallColor, soundbar, firep
                 const alcoveRightShelveGeometry = new THREE.BoxGeometry(alcoveRightWidthInMeters - 0.2, 0.06, depthInMeters - 0.07);
                 const alcoveRightShelve = new THREE.Mesh(alcoveRightShelveGeometry, wallMaterial);
 
-                // ✅ Bereken de juiste Y-positie zodat planken gelijk verdeeld worden
-                const shelfStartY = (heightInMeters - 0.4) / (alcoveRightShelves + 1); // Gelijke afstand tussen planken
-                const shelfY = (shelfStartY * (i + 1) + 0.2); // Positioneer de plank op de juiste hoogte
+                const shelfStartY = (heightInMeters - 0.4) / (alcoveRightShelves + 1);
+                const shelfY = (shelfStartY * (i + 1) + 0.2);
 
-                alcoveRightShelve.position.set(
-                    (widthInMeters / 2) + (alcoveRightWidthInMeters / 2), // Links positioneren
-                    shelfY, // Correcte Y-positie
-                    depthInMeters / 2 - 0.025 // Dieptepositie blijft hetzelfde
-                );
+                alcoveRightShelve.position.set((widthInMeters / 2) + (alcoveRightWidthInMeters / 2), shelfY, depthInMeters / 2 - 0.025);
 
                 scene.add(alcoveRightShelve);
 
@@ -353,8 +363,8 @@ function createCinewall(width, height, depth, tvSize, wallColor, soundbar, firep
 
                 const lampGeometry = new THREE.CylinderGeometry(0.05, 0.05, 0.005, 32);
                 const lampMaterial = new THREE.MeshStandardMaterial({
-                    color: 0xfff5e1,  // Warm lichtkleur
-                    emissive: 0xfff5e1, // Laat de lamp zelf licht uitstralen
+                    color: 0xfff5e1,
+                    emissive: 0xfff5e1,
                     emissiveIntensity: 1.5,
                     roughness: 0.3
                 });
@@ -376,14 +386,12 @@ function createCinewall(width, height, depth, tvSize, wallColor, soundbar, firep
                 shelfLight.shadow.mapSize.height = 1024;
 
                 shelfLight.target.position.set(lamp.position.x, lamp.position.y, lamp.position.z);
+                shelfLight.target.position.set(lamp.position.x, heightInMeters-.4, lamp.position.z);
 
                 scene.add(shelfLight);
                 scene.add(shelfLight.target);
             }
         }
-
-
-
     }
 }
 
@@ -392,19 +400,44 @@ function clearScene(video) {
         let child = scene.children[0];
         scene.remove(child);
     }
-    resetVideo(video);
-    resetVideo('optiflame');
 }
 
-function resetVideo(video) {
-    const videoElement = document.getElementById(video);
-    if (videoElement) {
-        videoElement.pause();
-        videoElement.currentTime = 0;
-        videoElement.load();
-        videoElement.play();
+function updateVideoTexture(video) {
+    if (!videoElement) {
+        // Maak een nieuw video-element aan als het nog niet bestaat
+        videoElement = document.createElement('video');
+        videoElement.loop = true;
+        videoElement.muted = true;
+        videoElement.setAttribute('playsinline', ''); // Voorkomt problemen op iOS
     }
+
+    // Controleer of de video al wordt afgespeeld en of de bron dezelfde is
+    if (videoElement.src.includes(video)) {
+        // Video is al geladen en speelt de juiste video af, doe verder niets
+        if (videoElement.paused || videoElement.ended) {
+            videoElement.play().catch(error => console.error("Video kan niet automatisch starten:", error));
+        }
+        return videoTexture; // Return de bestaande video-texture
+    }
+
+    // Update de videobron en laad de nieuwe video als het niet dezelfde is
+    videoElement.src = `projects/tv-wand/video/${video}.mp4`;
+    videoElement.load(); // Laadt de nieuwe video
+
+    // Maak of update de video-texture
+    if (!videoTexture) {
+        videoTexture = new THREE.VideoTexture(videoElement);
+        videoTexture.minFilter = THREE.LinearFilter;
+        videoTexture.magFilter = THREE.LinearFilter;
+        videoTexture.format = THREE.RGBFormat;
+    }
+
+    // Speel de nieuwe video af
+    videoElement.play().catch(error => console.error("Video kan niet automatisch starten:", error));
+
+    return videoTexture;
 }
+
 
 export async function loadModelData(model) {
     const group = new THREE.Group();
@@ -413,7 +446,7 @@ export async function loadModelData(model) {
     const ambientLight = new THREE.AmbientLight(0xeeeeee, 1);
     scene.add(ambientLight);
 
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 2);
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
     directionalLight.position.set(3, model.height / 100, 4);
     directionalLight.target.position.set(0, 0, 0);
     directionalLight.shadow.mapSize.width = 2048; // Standaard is 512
@@ -425,7 +458,7 @@ export async function loadModelData(model) {
     // Ground plane setup
     addGround();
 
-    createCinewall(model.width, model.height, model.depth, model.tvSize, model.color, model.soundbar, model.fireplace.width ?? 0, model.fireplace.height ?? 0, model.fireplace.type ?? "none", model.video ?? "video-1", model.alcove.right.width ?? undefined, model.alcove.right.shelves ?? 0, model.alcove.left.width ?? undefined, model.alcove.left.shelves ?? 0);
+    createCinewall(model.width, model.height, model.depth, model.tvSize, model.color.hex, model.soundbar, model.fireplace.width ?? 0, model.fireplace.height ?? 0, model.fireplace.type ?? "none", model.video ?? "video-1", model.alcove.right.width ?? undefined, model.alcove.right.shelves ?? 0, model.alcove.left.width ?? undefined, model.alcove.left.shelves ?? 0);
     scene.add(group);
 }
 

@@ -1,37 +1,43 @@
 "use strict"
-function addColors(name, colorScheme, containerElem) {
-    const html = [];
+function addColors(name, colorType, colorScheme, containerElem) {
+    // Voeg een uniek nummer toe aan elk item in de colorScheme
+    let textureItemsWithIndex = colorScheme.map((item, index) => ({
+        ...item,
+        uniqueId: `${name}Index_${index}` // Voeg een uniek ID toe aan elk item
+    }));
 
+    // Filter de items op colorType als dat nodig is
+    const filteredItems = textureItemsWithIndex.filter(item => item.colorType === colorType);
+
+    // Als er geen items gevonden worden, geef een bericht weer
+    if (filteredItems.length === 0) {
+        containerElem.innerHTML = `<p>No items found for colorType: ${colorType}</p>`;
+        return;
+    }
+
+    // HTML array voor het opbouwen van de inhoud
+    const html = [];
     html.push( /*html*/ `
         <div class="row row-cols-auto m-0 p-0">
-            `);
+    `);
 
-    const colorItems = [];
+    // Loop door de gefilterde items en voeg de HTML toe
+    filteredItems.forEach((item) => {
+        // Gebruik het unieke ID dat we aan elk item hebben toegevoegd
+        const uniqueId = item.uniqueId;
 
-    for (let i = 0; i < colorScheme.length; i++) {
-        var colorPath = colorScheme[i].colorPath;
-        if (colorPath == undefined) {
-            //colorPath = "img/transparant.png";
-
-            colorItems.push(colorScheme[i]);
-        }
-    }
-
-    for (let c = 0; c < colorItems.length; c++) {
-        //if (c !== 0 && c % 5 == 0) {
-        //    html.push( /*html*/ `
-        //        <!--<div class="col m-0 p-0"></div>-->
-        //    `);
-        //}
         html.push( /*html*/ `
-                <div class="col d-flex align-items-center m-0 p-1 colorTitle" style="aspect-ratio: 1">
-                    <img id="${name}Index_${c}" style="background-color: #${colorItems[c].colorHex}; width: 50px;" src="img/transparant.png" class="rounded-pill img-fluid mx-auto p-0 border    border-5    colorButton ${name}_colorButton" alt="${colorItems[c].colorNameNL}">
-                    </div>
-            `);
-    }
+            <div class="col d-flex align-items-center m-0 p-1 colorTitle" style="aspect-ratio: 1">
+                <img id="${uniqueId}" style="background-color: #${item.colorHex}; width: 50px;" src="img/transparant.png" class="rounded-pill img-fluid mx-auto p-0 border    border-5    colorButton ${name}_colorButton" alt="${item.colorName}">
+            </div>
+        `);
+    });
+
     html.push( /*html*/ `
         </div>
-`);
+    `);
+
+    // Zet de HTML content in het container element
     containerElem.innerHTML = html.join('\n');
 }
 
@@ -64,7 +70,7 @@ function addTextures(name, colorType, colorScheme, containerElem) {
 
         html.push( /*html*/ `
             <div class="col d-flex align-items-center m-0 p-1" style="aspect-ratio: 1">
-                <img id="${uniqueId}" style="background-color: #${item.colorHex}; width: 50px;" src="${item.colorPathThumb}" class="rounded-pill img-fluid mx-auto p-0 border border-5 colorButton ${name}_colorButton" alt="${item.colorNameNL}">
+                <img id="${uniqueId}" style="background-color: #${item.colorHex}; width: 50px;" src="${item.colorPathThumb}" class="rounded-pill img-fluid mx-auto p-0 border border-5 colorButton ${name}_colorButton" alt="${item.colorName}">
             </div>
         `);
     });
@@ -197,11 +203,11 @@ function controlPanel_addLayer(name, settings, collapsed) {
 function controlPanel(settings, allModels, containerElem, expandedLayer) {
     const html = [];
     if (uap.getDevice().type != 'mobile' || uap.getDevice().type != 'tablet' || uap.getDevice().withFeatureCheck().type != 'tablet') {
-    html.push( /*html*/ `
+        html.push( /*html*/ `
     <div class="row m-0 p-0">
         <div id="featuredModels" class="text-nowrap carousel slide border-top border-1 border-dark m-0 p-0    py-3" data-bs-theme="dark">
             `);
-    }else{
+    } else {
         html.push( /*html*/ `
             <div class="row m-0 p-0">
                 <div id="featuredModels" class="text-nowrap carousel slide border-dark m-0 p-0   pb-3" data-bs-theme="dark">

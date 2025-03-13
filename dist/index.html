@@ -47,10 +47,6 @@
     const windowWidth = window.innerWidth;
 
     const uap = new UAParser();
-    console.log(uap.getResult());
-    console.log(uap.getDevice().type);
-    //hack for IpadAir and IpadPro (not visible on Chrome DevTools)
-    console.log(uap.getDevice().withFeatureCheck());
 
     function bodyOnload() {
       handleModelSelection();

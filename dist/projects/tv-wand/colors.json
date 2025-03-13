@@ -1,691 +1,1495 @@
 {
-    "upholsteries": [
+    "colors": [
         {
-            "colorBrand": "vww",
-            "colorType": "adore",
-            "colorName": "anthracite",
-            "colorCode": "67",
-            "colorPricegroup": 4,
-            "colorHex": "323232",
-            "colorStructure": "velvet",
-            "colorPath": "projects/tv-wand/Textures/vww/adore/anthracite-67.jpg",
-            "colorPathThumb": "projects/tv-wand/Textures/vww/adore/anthracite-67.jpg",
-            "colorBg": "d4d4d4",
-            "iconColor": "light",
-            "colorGroup": "grey"
+            "colorCode": "1000",
+            "colorName": "Green beige",
+            "colorRgb": "205-186-136",
+            "colorHex": "CDBA88",
+            "colorType": "yellow"
         },
         {
-            "colorBrand": "vww",
-            "colorType": "adore",
-            "colorName": "army",
-            "colorCode": "14",
-            "colorPricegroup": 4,
-            "colorHex": "78531a",
-            "colorStructure": "velvet",
-            "colorPath": "projects/tv-wand/Textures/vww/adore/army-14.jpg",
-            "colorPathThumb": "projects/tv-wand/Textures/vww/adore/army-14.jpg",
-            "colorBg": "d4d4d4",
-            "iconColor": "light",
-            "colorGroup": "grey"
+            "colorCode": "1001",
+            "colorName": "Beige",
+            "colorRgb": "208-176-132",
+            "colorHex": "D0B084",
+            "colorType": "yellow"
         },
         {
-            "colorBrand": "vww",
-            "colorType": "adore",
-            "colorName": "aubergine",
-            "colorCode": "74",
-            "colorPricegroup": 4,
-            "colorHex": "2c2933",
-            "colorStructure": "velvet",
-            "colorPath": "projects/tv-wand/Textures/vww/adore/aubergine-74.jpg",
-            "colorPathThumb": "projects/tv-wand/Textures/vww/adore/aubergine-74.jpg",
-            "colorBg": "d4d4d4",
-            "iconColor": "light",
-            "colorGroup": "grey"
+            "colorCode": "1002",
+            "colorName": "Sand yellow",
+            "colorRgb": "210-170-109",
+            "colorHex": "D2AA6D",
+            "colorType": "yellow"
         },
         {
-            "colorBrand": "vww",
-            "colorType": "adore",
-            "colorName": "beige",
-            "colorCode": "05",
-            "colorPricegroup": 4,
-            "colorHex": "ab9880",
-            "colorStructure": "velvet",
-            "colorPath": "projects/tv-wand/Textures/vww/adore/beige-05.jpg",
-            "colorPathThumb": "projects/tv-wand/Textures/vww/adore/beige-05.jpg",
-            "colorBg": "d4d4d4",
-            "iconColor": "light",
-            "colorGroup": "grey"
+            "colorCode": "1003",
+            "colorName": "Signal yellow",
+            "colorRgb": "249-168-0",
+            "colorHex": "F9A800",
+            "colorType": "yellow"
         },
         {
-            "colorBrand": "vww",
-            "colorType": "adore",
-            "colorName": "blossom",
-            "colorCode": "166",
-            "colorPricegroup": 4,
-            "colorHex": "a2706a",
-            "colorStructure": "velvet",
-            "colorPath": "projects/tv-wand/Textures/vww/adore/blossom-166.jpg",
-            "colorPathThumb": "projects/tv-wand/Textures/vww/adore/blossom-166.jpg",
-            "colorBg": "d4d4d4",
-            "iconColor": "light",
-            "colorGroup": "grey"
+            "colorCode": "1004",
+            "colorName": "Golden yellow",
+            "colorRgb": "228-158-0",
+            "colorHex": "E49E00",
+            "colorType": "yellow"
         },
         {
-            "colorBrand": "vww",
-            "colorType": "adore",
-            "colorName": "coffee",
-            "colorCode": "81",
-            "colorPricegroup": 4,
-            "colorHex": "322d2c",
-            "colorStructure": "velvet",
-            "colorPath": "projects/tv-wand/Textures/vww/adore/coffee-81.jpg",
-            "colorPathThumb": "projects/tv-wand/Textures/vww/adore/coffee-81.jpg",
-            "colorBg": "d4d4d4",
-            "iconColor": "light",
-            "colorGroup": "grey"
+            "colorCode": "1005",
+            "colorName": "Honey yellow",
+            "colorRgb": "203-142-0",
+            "colorHex": "CB8E00",
+            "colorType": "yellow"
         },
         {
-            "colorBrand": "vww",
-            "colorType": "adore",
-            "colorName": "cognac",
-            "colorCode": "28",
-            "colorPricegroup": 4,
-            "colorHex": "64422b",
-            "colorStructure": "velvet",
-            "colorPath": "projects/tv-wand/Textures/vww/adore/cognac-28.jpg",
-            "colorPathThumb": "projects/tv-wand/Textures/vww/adore/coffee-81.jpg",
-            "colorBg": "d4d4d4",
-            "iconColor": "light",
-            "colorGroup": "grey"
+            "colorCode": "1006",
+            "colorName": "Maize yellow",
+            "colorRgb": "226-144-0",
+            "colorHex": "E29000",
+            "colorType": "yellow"
         },
         {
-            "colorBrand": "vww",
-            "colorType": "adore",
-            "colorName": "copper",
-            "colorCode": "126",
-            "colorPricegroup": 4,
-            "colorHex": "4f2e29",
-            "colorStructure": "velvet",
-            "colorPath": "projects/tv-wand/Textures/vww/adore/copper-126.jpg",
-            "colorPathThumb": "projects/tv-wand/Textures/vww/adore/copper-126.jpg",
-            "colorBg": "d4d4d4",
-            "iconColor": "light",
-            "colorGroup": "grey"
+            "colorCode": "1007",
+            "colorName": "Daffodil yellow",
+            "colorRgb": "232-140-0",
+            "colorHex": "E88C00",
+            "colorType": "yellow"
         },
         {
-            "colorBrand": "vww",
-            "colorType": "adore",
-            "colorName": "darkgrey",
-            "colorCode": "68",
-            "colorPricegroup": 4,
-            "colorHex": "3e3e3e",
-            "colorStructure": "velvet",
-            "colorPath": "projects/tv-wand/Textures/vww/adore/darkgrey-68.jpg",
-            "colorPathThumb": "projects/tv-wand/Textures/vww/adore/darkgrey-68.jpg",
-            "colorBg": "d4d4d4",
-            "iconColor": "light",
-            "colorGroup": "grey"
-        },        {
-            "colorBrand": "vww",
-            "colorType": "adore",
-            "colorName": "dolphin",
-            "colorCode": "180",
-            "colorPricegroup": 4,
-            "colorHex": "676667",
-            "colorStructure": "velvet",
-            "colorPath": "projects/tv-wand/Textures/vww/adore/dolphin-180.jpg",
-            "colorPathThumb": "projects/tv-wand/Textures/vww/adore/dolphin-180.jpg",
-            "colorBg": "d4d4d4",
-            "iconColor": "light",
-            "colorGroup": "grey"
+            "colorCode": "1011",
+            "colorName": "Brown beige",
+            "colorRgb": "175-128-79",
+            "colorHex": "AF804F",
+            "colorType": "yellow"
         },
         {
-            "colorBrand": "vww",
-            "colorType": "adore",
-            "colorName": "ecru",
-            "colorCode": "102",
-            "colorPricegroup": 4,
-            "colorHex": "c7c8bd",
-            "colorStructure": "velvet",
-            "colorPath": "projects/tv-wand/Textures/vww/adore/ecru-102.jpg",
-            "colorPathThumb": "projects/tv-wand/Textures/vww/adore/ecru-102.jpg",
-            "colorBg": "d4d4d4",
-            "iconColor": "light",
-            "colorGroup": "grey"
+            "colorCode": "1012",
+            "colorName": "Lemon yellow",
+            "colorRgb": "221-175-39",
+            "colorHex": "DDAF27",
+            "colorType": "yellow"
         },
         {
-            "colorBrand": "vww",
-            "colorType": "adore",
-            "colorName": "forest",
-            "colorCode": "162",
-            "colorPricegroup": 4,
-            "colorHex": "302e2e",
-            "colorStructure": "velvet",
-            "colorPath": "projects/tv-wand/Textures/vww/adore/forest-162.jpg",
-            "colorPathThumb": "projects/tv-wand/Textures/vww/adore/forest-162.jpg",
-            "colorBg": "d4d4d4",
-            "iconColor": "light",
-            "colorGroup": "grey"
+            "colorCode": "1013",
+            "colorName": "Oyster white",
+            "colorRgb": "227-217-198",
+            "colorHex": "E3D9C6",
+            "colorType": "yellow"
         },
         {
-            "colorBrand": "vww",
-            "colorType": "adore",
-            "colorName": "hazel",
-            "colorCode": "96",
-            "colorPricegroup": 4,
-            "colorHex": "462c26",
-            "colorStructure": "velvet",
-            "colorPath": "projects/tv-wand/Textures/vww/adore/hazel-96.jpg",
-            "colorPathThumb": "projects/tv-wand/Textures/vww/adore/hazel-96.jpg",
-            "colorBg": "d4d4d4",
-            "iconColor": "light",
-            "colorGroup": "grey"
+            "colorCode": "1014",
+            "colorName": "Ivory",
+            "colorRgb": "221-196-154",
+            "colorHex": "DDC49A",
+            "colorType": "yellow"
         },
         {
-            "colorBrand": "vww",
-            "colorType": "adore",
-            "colorName": "indigo",
-            "colorCode": "90",
-            "colorPricegroup": 4,
-            "colorHex": "26282f",
-            "colorStructure": "velvet",
-            "colorPath": "projects/tv-wand/Textures/vww/adore/indigo-90.jpg",
-            "colorPathThumb": "projects/tv-wand/Textures/vww/adore/indigo-90.jpg",
-            "colorBg": "d4d4d4",
-            "iconColor": "light",
-            "colorGroup": "grey"
+            "colorCode": "1015",
+            "colorName": "Light ivory",
+            "colorRgb": "230-210-181",
+            "colorHex": "E6D2B5",
+            "colorType": "yellow"
         },
         {
-            "colorBrand": "vww",
-            "colorType": "adore",
-            "colorName": "latte",
-            "colorCode": "211",
-            "colorPricegroup": 4,
-            "colorHex": "796457",
-            "colorStructure": "velvet",
-            "colorPath": "projects/tv-wand/Textures/vww/adore/latte-211.jpg",
-            "colorPathThumb": "projects/tv-wand/Textures/vww/adore/latte-211.jpg",
-            "colorBg": "d4d4d4",
-            "iconColor": "light",
-            "colorGroup": "grey"
+            "colorCode": "1016",
+            "colorName": "Sulfur yellow",
+            "colorRgb": "241-221-56",
+            "colorHex": "F1DD38",
+            "colorType": "yellow"
         },
         {
-            "colorBrand": "vww",
-            "colorType": "adore",
-            "colorName": "linen",
-            "colorCode": "110",
-            "colorPricegroup": 4,
-            "colorHex": "c0c1b9",
-            "colorStructure": "velvet",
-            "colorPath": "projects/tv-wand/Textures/vww/adore/linen-110.jpg",
-            "colorPathThumb": "projects/tv-wand/Textures/vww/adore/linen-110.jpg",
-            "colorBg": "d4d4d4",
-            "iconColor": "light",
-            "colorGroup": "grey"
+            "colorCode": "1017",
+            "colorName": "Saffron yellow",
+            "colorRgb": "246-169-80",
+            "colorHex": "F6A950",
+            "colorType": "yellow"
         },
         {
-            "colorBrand": "vww",
-            "colorType": "adore",
-            "colorName": "liver",
-            "colorCode": "10",
-            "colorPricegroup": 4,
-            "colorHex": "89776d",
-            "colorStructure": "velvet",
-            "colorPath": "projects/tv-wand/Textures/vww/adore/liver-10.jpg",
-            "colorPathThumb": "projects/tv-wand/Textures/vww/adore/liver-10.jpg",
-            "colorBg": "d4d4d4",
-            "iconColor": "light",
-            "colorGroup": "grey"
+            "colorCode": "1018",
+            "colorName": "Zinc yellow",
+            "colorRgb": "250-202-48",
+            "colorHex": "FACA30",
+            "colorType": "yellow"
         },
         {
-            "colorBrand": "vww",
-            "colorType": "adore",
-            "colorName": "moss",
-            "colorCode": "59",
-            "colorPricegroup": 4,
-            "colorHex": "4f4934",
-            "colorStructure": "velvet",
-            "colorPath": "projects/tv-wand/Textures/vww/adore/moss-59.jpg",
-            "colorPathThumb": "projects/tv-wand/Textures/vww/adore/moss-59.jpg",
-            "colorBg": "d4d4d4",
-            "iconColor": "light",
-            "colorGroup": "grey"
+            "colorCode": "1019",
+            "colorName": "Grey beige",
+            "colorRgb": "164-143-122",
+            "colorHex": "A48F7A",
+            "colorType": "yellow"
         },
         {
-            "colorBrand": "vww",
-            "colorType": "adore",
-            "colorName": "natural",
-            "colorCode": "01",
-            "colorPricegroup": 4,
-            "colorHex": "c1bca8",
-            "colorStructure": "velvet",
-            "colorPath": "projects/tv-wand/Textures/vww/adore/natural-01.jpg",
-            "colorPathThumb": "projects/tv-wand/Textures/vww/adore/natural-01.jpg",
-            "colorBg": "d4d4d4",
-            "iconColor": "light",
-            "colorGroup": "grey"
+            "colorCode": "1020",
+            "colorName": "Olive yellow",
+            "colorRgb": "160-143-101",
+            "colorHex": "A08F65",
+            "colorType": "yellow"
         },
         {
-            "colorBrand": "vww",
-            "colorType": "adore",
-            "colorName": "niagara",
-            "colorCode": "158",
-            "colorPricegroup": 4,
-            "colorHex": "455151",
-            "colorStructure": "velvet",
-            "colorPath": "projects/tv-wand/Textures/vww/adore/niagara-158.jpg",
-            "colorPathThumb": "projects/tv-wand/Textures/vww/adore/niagara-158.jpg",
-            "colorBg": "d4d4d4",
-            "iconColor": "light",
-            "colorGroup": "grey"
+            "colorCode": "1021",
+            "colorName": "Colza yellow",
+            "colorRgb": "246-182-0",
+            "colorHex": "F6B600",
+            "colorType": "yellow"
         },
         {
-            "colorBrand": "vww",
-            "colorType": "adore",
-            "colorName": "oyster",
-            "colorCode": "175",
-            "colorPricegroup": 4,
-            "colorHex": "aeaea6",
-            "colorStructure": "velvet",
-            "colorPath": "projects/tv-wand/Textures/vww/adore/oyster-175.jpg",
-            "colorPathThumb": "projects/tv-wand/Textures/vww/adore/oyster-175.jpg",
-            "colorBg": "d4d4d4",
-            "iconColor": "light",
-            "colorGroup": "grey"
+            "colorCode": "1023",
+            "colorName": "Traffic yellow",
+            "colorRgb": "247-181-0",
+            "colorHex": "F7B500",
+            "colorType": "yellow"
         },
         {
-            "colorBrand": "vww",
-            "colorType": "adore",
-            "colorName": "pale",
-            "colorCode": "200",
-            "colorPricegroup": 4,
-            "colorHex": "725659",
-            "colorStructure": "velvet",
-            "colorPath": "projects/tv-wand/Textures/vww/adore/pale-200.jpg",
-            "colorPathThumb": "projects/tv-wand/Textures/vww/adore/pale-200.jpg",
-            "colorBg": "d4d4d4",
-            "iconColor": "light",
-            "colorGroup": "grey"
+            "colorCode": "1024",
+            "colorName": "Ochre yellow",
+            "colorRgb": "186-143-76",
+            "colorHex": "BA8F4C",
+            "colorType": "yellow"
         },
         {
-            "colorBrand": "vww",
-            "colorType": "adore",
-            "colorName": "petrol",
-            "colorCode": "56",
-            "colorPricegroup": 4,
-            "colorHex": "323d40",
-            "colorStructure": "velvet",
-            "colorPath": "projects/tv-wand/Textures/vww/adore/petrol-56.jpg",
-            "colorPathThumb": "projects/tv-wand/Textures/vww/adore/petrol-56.jpg",
-            "colorBg": "d4d4d4",
-            "iconColor": "light",
-            "colorGroup": "grey"
+            "colorCode": "1026",
+            "colorName": "Luminous yellow",
+            "colorRgb": "255-255-0",
+            "colorHex": "FFFF00",
+            "colorType": "yellow"
         },
         {
-            "colorBrand": "vww",
-            "colorType": "adore",
-            "colorName": "sand",
-            "colorCode": "03",
-            "colorPricegroup": 4,
-            "colorHex": "968472",
-            "colorStructure": "velvet",
-            "colorPath": "projects/tv-wand/Textures/vww/adore/sand-03.jpg",
-            "colorPathThumb": "projects/tv-wand/Textures/vww/adore/sand-03.jpg",
-            "colorBg": "d4d4d4",
-            "iconColor": "light",
-            "colorGroup": "grey"
+            "colorCode": "1027",
+            "colorName": "Curry",
+            "colorRgb": "167-127-14",
+            "colorHex": "A77F0E",
+            "colorType": "yellow"
         },
         {
-            "colorBrand": "vww",
-            "colorType": "adore",
-            "colorName": "steel",
-            "colorCode": "149",
-            "colorPricegroup": 4,
-            "colorHex": "696c68",
-            "colorStructure": "velvet",
-            "colorPath": "projects/tv-wand/Textures/vww/adore/steel-149.jpg",
-            "colorPathThumb": "projects/tv-wand/Textures/vww/adore/steel-149.jpg",
-            "colorBg": "d4d4d4",
-            "iconColor": "light",
-            "colorGroup": "grey"
+            "colorCode": "1028",
+            "colorName": "Melon yellow",
+            "colorRgb": "255-155-0",
+            "colorHex": "FF9B00",
+            "colorType": "yellow"
         },
         {
-            "colorBrand": "vww",
-            "colorType": "adore",
-            "colorName": "tobacco",
-            "colorCode": "111",
-            "colorPricegroup": 4,
-            "colorHex": "3d2b2b",
-            "colorStructure": "velvet",
-            "colorPath": "projects/tv-wand/Textures/vww/adore/tobacco-111.jpg",
-            "colorPathThumb": "projects/tv-wand/Textures/vww/adore/tobacco-111.jpg",
-            "colorBg": "d4d4d4",
-            "iconColor": "light",
-            "colorGroup": "grey"
+            "colorCode": "1032",
+            "colorName": "Broom yellow",
+            "colorRgb": "226-163-0",
+            "colorHex": "E2A300",
+            "colorType": "yellow"
         },
         {
-            "colorBrand": "vww",
-            "colorType": "adore",
-            "colorName": "winered",
-            "colorCode": "39",
-            "colorPricegroup": 4,
-            "colorHex": "482e32",
-            "colorStructure": "velvet",
-            "colorPath": "projects/tv-wand/Textures/vww/adore/winered-39.jpg",
-            "colorPathThumb": "projects/tv-wand/Textures/vww/adore/winered-39.jpg",
-            "colorBg": "d4d4d4",
-            "iconColor": "light",
-            "colorGroup": "grey"
-        },
-
-        {
-            "colorBrand": "vww",
-            "colorType": "dream",
-            "colorName": "antraciet",
-            "colorCode": "46",
-            "colorPricegroup": 4,
-            "colorHex": "",
-            "colorStructure": "boucle",
-            "colorPath": "projects/tv-wand/Textures/vww/dream/antraciet-46.jpg",
-            "colorPathThumb": "projects/tv-wand/Textures/vww/dream/antraciet-46_thumb.jpg",
-            "colorBg": "d4d4d4",
-            "iconColor": "light",
-            "colorGroup": "grey"
+            "colorCode": "1033",
+            "colorName": "Dahlia yellow",
+            "colorRgb": "249-154-28",
+            "colorHex": "F99A1C",
+            "colorType": "yellow"
         },
         {
-            "colorBrand": "vww",
-            "colorType": "dream",
-            "colorName": "chianti",
-            "colorCode": "36",
-            "colorPricegroup": 4,
-            "colorHex": "",
-            "colorStructure": "boucle",
-            "colorPath": "projects/tv-wand/Textures/vww/dream/chianti-36.jpg",
-            "colorPathThumb": "projects/tv-wand/Textures/vww/dream/chianti-36_thumb.jpg",
-            "colorBg": "d4d4d4",
-            "iconColor": "light",
-            "colorGroup": "grey"
+            "colorCode": "1034",
+            "colorName": "Pastel yellow",
+            "colorRgb": "235-156-82",
+            "colorHex": "EB9C52",
+            "colorType": "yellow"
         },
         {
-            "colorBrand": "vww",
-            "colorType": "dream",
-            "colorName": "cloud",
-            "colorCode": "122",
-            "colorPricegroup": 4,
-            "colorHex": "",
-            "colorStructure": "boucle",
-            "colorPath": "projects/tv-wand/Textures/vww/dream/cloud-122.jpg",
-            "colorPathThumb": "projects/tv-wand/Textures/vww/dream/cloud-122_thumb.jpg",
-            "colorBg": "d4d4d4",
-            "iconColor": "light",
-            "colorGroup": "grey"
+            "colorCode": "1035",
+            "colorName": "Pearl beige",
+            "colorRgb": "144-131-112",
+            "colorHex": "908370",
+            "colorType": "yellow"
         },
         {
-            "colorBrand": "vww",
-            "colorType": "dream",
-            "colorName": "grey",
-            "colorCode": "45",
-            "colorPricegroup": 4,
-            "colorHex": "",
-            "colorStructure": "boucle",
-            "colorPath": "projects/tv-wand/Textures/vww/dream/grey-45.jpg",
-            "colorPathThumb": "projects/tv-wand/Textures/vww/dream/grey-45_thumb.jpg",
-            "colorBg": "d4d4d4",
-            "iconColor": "light",
-            "colorGroup": "grey"
+            "colorCode": "1036",
+            "colorName": "Pearl gold",
+            "colorRgb": "128-100-63",
+            "colorHex": "80643F",
+            "colorType": "yellow"
         },
         {
-            "colorBrand": "vww",
-            "colorType": "dream",
-            "colorName": "lightgrey",
-            "colorCode": "120",
-            "colorPricegroup": 4,
-            "colorHex": "",
-            "colorStructure": "boucle",
-            "colorPath": "projects/tv-wand/Textures/vww/dream/lightgrey-120.jpg",
-            "colorPathThumb": "projects/tv-wand/Textures/vww/dream/lightgrey-120_thumb.jpg",
-            "colorBg": "d4d4d4",
-            "iconColor": "light",
-            "colorGroup": "grey"
+            "colorCode": "1037",
+            "colorName": "Sun yellow",
+            "colorRgb": "240-146-0",
+            "colorHex": "F09200",
+            "colorType": "yellow"
         },
         {
-            "colorBrand": "vww",
-            "colorType": "dream",
-            "colorName": "nature",
-            "colorCode": "01",
-            "colorPricegroup": 4,
-            "colorHex": "",
-            "colorStructure": "boucle",
-            "colorPath": "projects/tv-wand/Textures/vww/dream/nature-01.jpg",
-            "colorPathThumb": "projects/tv-wand/Textures/vww/dream/nature-01_thumb.jpg",
-            "colorBg": "d4d4d4",
-            "iconColor": "light",
-            "colorGroup": "grey"
+            "colorCode": "2000",
+            "colorName": "Yellow orange",
+            "colorRgb": "218-110-0",
+            "colorHex": "DA6E00",
+            "colorType": "yellow"
         },
         {
-            "colorBrand": "vww",
-            "colorType": "dream",
-            "colorName": "olive",
-            "colorCode": "751",
-            "colorPricegroup": 4,
-            "colorHex": "",
-            "colorStructure": "boucle",
-            "colorPath": "projects/tv-wand/Textures/vww/dream/olive-751.jpg",
-            "colorPathThumb": "projects/tv-wand/Textures/vww/dream/olive-751_thumb.jpg",
-            "colorBg": "d4d4d4",
-            "iconColor": "light",
-            "colorGroup": "grey"
+            "colorCode": "2001",
+            "colorName": "Red orange",
+            "colorRgb": "186-72-27",
+            "colorHex": "BA481B",
+            "colorType": "orange"
         },
         {
-            "colorBrand": "vww",
-            "colorType": "dream",
-            "colorName": "peacock",
-            "colorCode": "436",
-            "colorPricegroup": 4,
-            "colorHex": "",
-            "colorStructure": "boucle",
-            "colorPath": "projects/tv-wand/Textures/vww/dream/peacock-436.jpg",
-            "colorPathThumb": "projects/tv-wand/Textures/vww/dream/peacock-436_thumb.jpg",
-            "colorBg": "d4d4d4",
-            "iconColor": "light",
-            "colorGroup": "grey"
+            "colorCode": "2002",
+            "colorName": "Vermilion",
+            "colorRgb": "191-57-34",
+            "colorHex": "BF3922",
+            "colorType": "orange"
         },
         {
-            "colorBrand": "vww",
-            "colorType": "dream",
-            "colorName": "silver cream",
-            "colorCode": "115",
-            "colorPricegroup": 4,
-            "colorHex": "",
-            "colorStructure": "boucle",
-            "colorPath": "projects/tv-wand/Textures/vww/dream/silver_cream-115.jpg",
-            "colorPathThumb": "projects/tv-wand/Textures/vww/dream/silver_cream-115_thumb.jpg",
-            "colorBg": "d4d4d4",
-            "iconColor": "light",
-            "colorGroup": "grey"
+            "colorCode": "2003",
+            "colorName": "Pastel orange",
+            "colorRgb": "246-120-40",
+            "colorHex": "F67828",
+            "colorType": "orange"
         },
         {
-            "colorBrand": "vww",
-            "colorType": "dream",
-            "colorName": "silver cream",
-            "colorCode": "121",
-            "colorPricegroup": 4,
-            "colorHex": "",
-            "colorStructure": "boucle",
-            "colorPath": "projects/tv-wand/Textures/vww/dream/silver-121.jpg",
-            "colorPathThumb": "projects/tv-wand/Textures/vww/dream/silver-121_thumb.jpg",
-            "colorBg": "d4d4d4",
-            "iconColor": "light",
-            "colorGroup": "grey"
-        },
-
-        {
-            "colorBrand": "vww",
-            "colorType": "essa",
-            "colorName": "ashgrey",
-            "colorCode": "16",
-            "colorPricegroup": 3,
-            "colorHex": "48e32",
-            "colorStructure": "boucle",
-            "colorPath": "projects/tv-wand/Textures/vww/essa/ashgrey-16.jpg",
-            "colorPathThumb": "projects/tv-wand/Textures/vww/essa/ashgrey-16_thumb.jpg",
-            "colorBg": "d4d4d4",
-            "iconColor": "light",
-            "colorGroup": "grey"
+            "colorCode": "2004",
+            "colorName": "Pure orange",
+            "colorRgb": "226-83-3",
+            "colorHex": "E25303",
+            "colorType": "orange"
         },
         {
-            "colorBrand": "vww",
-            "colorType": "essa",
-            "colorName": "cabernet",
-            "colorCode": "205",
-            "colorPricegroup": 3,
-            "colorHex": "",
-            "colorStructure": "boucle",
-            "colorPath": "projects/tv-wand/Textures/vww/essa/cabernet-205.jpg",
-            "colorPathThumb": "projects/tv-wand/Textures/vww/essa/cabernet-205_thumb.jpg",
-            "colorBg": "d4d4d4",
-            "iconColor": "light",
-            "colorGroup": "grey"
+            "colorCode": "2005",
+            "colorName": "Luminous orange",
+            "colorRgb": "255-77-6",
+            "colorHex": "FF4D06",
+            "colorType": "orange"
         },
         {
-            "colorBrand": "vww",
-            "colorType": "essa",
-            "colorName": "caramel",
-            "colorCode": "16",
-            "colorPricegroup": 3,
-            "colorHex": "",
-            "colorStructure": "boucle",
-            "colorPath": "projects/tv-wand/Textures/vww/essa/caramel-16.jpg",
-            "colorPathThumb": "projects/tv-wand/Textures/vww/essa/caramel-16_thumb.jpg",
-            "colorBg": "d4d4d4",
-            "iconColor": "light",
-            "colorGroup": "grey"
+            "colorCode": "2007",
+            "colorName": "Luminous bright orange",
+            "colorRgb": "255-178-0",
+            "colorHex": "FFB200",
+            "colorType": "orange"
         },
         {
-            "colorBrand": "vww",
-            "colorType": "essa",
-            "colorName": "darkblue",
-            "colorCode": "48",
-            "colorPricegroup": 3,
-            "colorHex": "",
-            "colorStructure": "boucle",
-            "colorPath": "projects/tv-wand/Textures/vww/essa/darkblue-48.jpg",
-            "colorPathThumb": "projects/tv-wand/Textures/vww/essa/darkblue-48_thumb.jpg",
-            "colorBg": "d4d4d4",
-            "iconColor": "light",
-            "colorGroup": "grey"
+            "colorCode": "2008",
+            "colorName": "Bright red orange",
+            "colorRgb": "237-107-33",
+            "colorHex": "ED6B21",
+            "colorType": "orange"
         },
         {
-            "colorBrand": "vww",
-            "colorType": "essa",
-            "colorName": "grey",
-            "colorCode": "65",
-            "colorPricegroup": 3,
-            "colorHex": "",
-            "colorStructure": "boucle",
-            "colorPath": "projects/tv-wand/Textures/vww/essa/grey-65.jpg",
-            "colorPathThumb": "projects/tv-wand/Textures/vww/essa/grey-65_thumb.jpg",
-            "colorBg": "d4d4d4",
-            "iconColor": "light",
-            "colorGroup": "grey"
+            "colorCode": "2009",
+            "colorName": "Traffic orange",
+            "colorRgb": "222-83-7",
+            "colorHex": "DE5307",
+            "colorType": "orange"
         },
         {
-            "colorBrand": "vww",
-            "colorType": "essa",
-            "colorName": "lava",
-            "colorCode": "165",
-            "colorPricegroup": 3,
-            "colorHex": "",
-            "colorStructure": "boucle",
-            "colorPath": "projects/tv-wand/Textures/vww/essa/lava-165.jpg",
-            "colorPathThumb": "projects/tv-wand/Textures/vww/essa/lava-165_thumb.jpg",
-            "colorBg": "d4d4d4",
-            "iconColor": "light",
-            "colorGroup": "grey"
+            "colorCode": "2010",
+            "colorName": "Signal orange",
+            "colorRgb": "208-93-40",
+            "colorHex": "D05D28",
+            "colorType": "orange"
         },
         {
-            "colorBrand": "vww",
-            "colorType": "essa",
-            "colorName": "naturel",
-            "colorCode": "01",
-            "colorPricegroup": 3,
-            "colorHex": "",
-            "colorStructure": "boucle",
-            "colorPath": "projects/tv-wand/Textures/vww/essa/naturel-01.jpg",
-            "colorPathThumb": "projects/tv-wand/Textures/vww/essa/naturel-01_thumb.jpg",
-            "colorBg": "d4d4d4",
-            "iconColor": "light",
-            "colorGroup": "grey"
+            "colorCode": "2011",
+            "colorName": "Deep orange",
+            "colorRgb": "226-110-14",
+            "colorHex": "E26E0E",
+            "colorType": "orange"
         },
         {
-            "colorBrand": "vww",
-            "colorType": "essa",
-            "colorName": "shell",
-            "colorCode": "196",
-            "colorPricegroup": 3,
-            "colorHex": "",
-            "colorStructure": "boucle",
-            "colorPath": "projects/tv-wand/Textures/vww/essa/shell-196.jpg",
-            "colorPathThumb": "projects/tv-wand/Textures/vww/essa/shell-196_thumb.jpg",
-            "colorBg": "d4d4d4",
-            "iconColor": "light",
-            "colorGroup": "grey"
+            "colorCode": "2012",
+            "colorName": "Salmon orange",
+            "colorRgb": "213-101-77",
+            "colorHex": "D5654D",
+            "colorType": "orange"
         },
         {
-            "colorBrand": "vww",
-            "colorType": "essa",
-            "colorName": "slate",
-            "colorCode": "87",
-            "colorPricegroup": 3,
-            "colorHex": "",
-            "colorStructure": "boucle",
-            "colorPath": "projects/tv-wand/Textures/vww/essa/slate-87.jpg",
-            "colorPathThumb": "projects/tv-wand/Textures/vww/essa/slate-87_thumb.jpg",
-            "colorBg": "d4d4d4",
-            "iconColor": "light",
-            "colorGroup": "grey"
+            "colorCode": "2013",
+            "colorName": "Pearl orange",
+            "colorRgb": "146-62-37",
+            "colorHex": "923E25",
+            "colorType": "orange"
         },
         {
-            "colorBrand": "vww",
-            "colorType": "essa",
-            "colorName": "turtle",
-            "colorCode": "88",
-            "colorPricegroup": 3,
-            "colorHex": "",
-            "colorStructure": "boucle",
-            "colorPath": "projects/tv-wand/Textures/vww/essa/turtle-88.jpg",
-            "colorPathThumb": "projects/tv-wand/Textures/vww/essa/turtle-88_thumb.jpg",
-            "colorBg": "d4d4d4",
-            "iconColor": "light",
-            "colorGroup": "grey"
+            "colorCode": "3000",
+            "colorName": "Flame red",
+            "colorRgb": "167-41-32",
+            "colorHex": "A72920",
+            "colorType": "red"
         },
         {
-            "colorBrand": "vww",
-            "colorType": "essa",
-            "colorName": "turtle",
-            "colorCode": "88",
-            "colorPricegroup": 3,
-            "colorHex": "",
-            "colorStructure": "boucle",
-            "colorPath": "projects/tv-wand/Textures/vww/essa/wood-108.jpg",
-            "colorPathThumb": "projects/tv-wand/Textures/vww/essa/wood-108_thumb.jpg",
-            "colorBg": "d4d4d4",
-            "iconColor": "light",
-            "colorGroup": "grey"
+            "colorCode": "3001",
+            "colorName": "Signal red",
+            "colorRgb": "155-36-35",
+            "colorHex": "9B2423",
+            "colorType": "red"
         },
         {
-            "colorBrand": "vww",
-            "colorType": "essa",
-            "colorName": "bisque",
-            "colorCode": "91",
-            "colorPricegroup": 3,
-            "colorHex": "",
-            "colorStructure": "boucle",
-            "colorPath": "projects/tv-wand/Textures/vww/essa/bisque-91.jpg",
-            "colorPathThumb": "projects/tv-wand/Textures/vww/essa/bisque-91_thumb.jpg",
-            "colorBg": "d4d4d4",
-            "iconColor": "light",
-            "colorGroup": "grey"
+            "colorCode": "3002",
+            "colorName": "Carmine red",
+            "colorRgb": "155-35-33",
+            "colorHex": "9B2321",
+            "colorType": "red"
+        },
+        {
+            "colorCode": "3003",
+            "colorName": "Ruby red",
+            "colorRgb": "134-26-34",
+            "colorHex": "861A22",
+            "colorType": "red"
+        },
+        {
+            "colorCode": "3004",
+            "colorName": "Purple red",
+            "colorRgb": "107-28-35",
+            "colorHex": "6B1C23",
+            "colorType": "red"
+        },
+        {
+            "colorCode": "3005",
+            "colorName": "Wine red",
+            "colorRgb": "89-25-31",
+            "colorHex": "59191F",
+            "colorType": "red"
+        },
+        {
+            "colorCode": "3007",
+            "colorName": "Black red",
+            "colorRgb": "62-32-34",
+            "colorHex": "3E2022",
+            "colorType": "red"
+        },
+        {
+            "colorCode": "3009",
+            "colorName": "Oxide red",
+            "colorRgb": "109-52-45",
+            "colorHex": "6D342D",
+            "colorType": "red"
+        },
+        {
+            "colorCode": "3011",
+            "colorName": "Brown red",
+            "colorRgb": "121-36-35",
+            "colorHex": "792423",
+            "colorType": "red"
+        },
+        {
+            "colorCode": "3012",
+            "colorName": "Beige red",
+            "colorRgb": "198-132-109",
+            "colorHex": "C6846D",
+            "colorType": "red"
+        },
+        {
+            "colorCode": "3013",
+            "colorName": "Tomato red",
+            "colorRgb": "151-46-37",
+            "colorHex": "972E25",
+            "colorType": "red"
+        },
+        {
+            "colorCode": "3014",
+            "colorName": "Antique pink",
+            "colorRgb": "203-115-117",
+            "colorHex": "CB7375",
+            "colorType": "red"
+        },
+        {
+            "colorCode": "3015",
+            "colorName": "Light pink",
+            "colorRgb": "216-160-166",
+            "colorHex": "D8A0A6",
+            "colorType": "red"
+        },
+        {
+            "colorCode": "3016",
+            "colorName": "Coral red",
+            "colorRgb": "166-61-47",
+            "colorHex": "A63D2F",
+            "colorType": "red"
+        },
+        {
+            "colorCode": "3017",
+            "colorName": "Rose",
+            "colorRgb": "203-85-93",
+            "colorHex": "CB555D",
+            "colorType": "red"
+        },
+        {
+            "colorCode": "3018",
+            "colorName": "Strawberry red",
+            "colorRgb": "199-63-74",
+            "colorHex": "C73F4A",
+            "colorType": "red"
+        },
+        {
+            "colorCode": "3020",
+            "colorName": "Traffic red",
+            "colorRgb": "187-30-16",
+            "colorHex": "BB1E10",
+            "colorType": "red"
+        },
+        {
+            "colorCode": "3022",
+            "colorName": "Salmon pink",
+            "colorRgb": "207-105-85",
+            "colorHex": "CF6955",
+            "colorType": "red"
+        },
+        {
+            "colorCode": "3024",
+            "colorName": "Luminous red",
+            "colorRgb": "255-45-33",
+            "colorHex": "FF2D21",
+            "colorType": "red"
+        },
+        {
+            "colorCode": "3026",
+            "colorName": "Luminous bright red",
+            "colorRgb": "255-42-27",
+            "colorHex": "FF2A1B",
+            "colorType": "red"
+        },
+        {
+            "colorCode": "3027",
+            "colorName": "Raspberry red",
+            "colorRgb": "171-39-60",
+            "colorHex": "AB273C",
+            "colorType": "red"
+        },
+        {
+            "colorCode": "3028",
+            "colorName": "Pure red",
+            "colorRgb": "204-44-36",
+            "colorHex": "CC2C24",
+            "colorType": "red"
+        },
+        {
+            "colorCode": "3031",
+            "colorName": "Orient red",
+            "colorRgb": "166-52-55",
+            "colorHex": "A63437",
+            "colorType": "red"
+        },
+        {
+            "colorCode": "3032",
+            "colorName": "Pearl ruby red",
+            "colorRgb": "112-29-35",
+            "colorHex": "701D23",
+            "colorType": "red"
+        },
+        {
+            "colorCode": "3033",
+            "colorName": "Pearl pink",
+            "colorRgb": "165-58-45",
+            "colorHex": "A53A2D",
+            "colorType": "red"
+        },
+        {
+            "colorCode": "4001",
+            "colorName": "Red lilac",
+            "colorRgb": "129-97-131",
+            "colorHex": "816183",
+            "colorType": "violet"
+        },
+        {
+            "colorCode": "4002",
+            "colorName": "Red violet",
+            "colorRgb": "141-60-75",
+            "colorHex": "8D3C4B",
+            "colorType": "violet"
+        },
+        {
+            "colorCode": "4003",
+            "colorName": "Heather violet",
+            "colorRgb": "196-97-140",
+            "colorHex": "C4618C",
+            "colorType": "violet"
+        },
+        {
+            "colorCode": "4004",
+            "colorName": "Claret violet",
+            "colorRgb": "101-30-56",
+            "colorHex": "651E38",
+            "colorType": "violet"
+        },
+        {
+            "colorCode": "4005",
+            "colorName": "Blue lilac",
+            "colorRgb": "118-104-154",
+            "colorHex": "76689A",
+            "colorType": "violet"
+        },
+        {
+            "colorCode": "4006",
+            "colorName": "Traffic purple",
+            "colorRgb": "144-51-115",
+            "colorHex": "903373",
+            "colorType": "violet"
+        },
+        {
+            "colorCode": "4007",
+            "colorName": "Purple violet",
+            "colorRgb": "71-36-60",
+            "colorHex": "47243C",
+            "colorType": "violet"
+        },
+        {
+            "colorCode": "4008",
+            "colorName": "Signal violet",
+            "colorRgb": "132-76-130",
+            "colorHex": "844C82",
+            "colorType": "violet"
+        },
+        {
+            "colorCode": "4009",
+            "colorName": "Pastel violet",
+            "colorRgb": "157-134-146",
+            "colorHex": "9D8692",
+            "colorType": "violet"
+        },
+        {
+            "colorCode": "4010",
+            "colorName": "Telemagenta",
+            "colorRgb": "188-64-119",
+            "colorHex": "BC4077",
+            "colorType": "violet"
+        },
+        {
+            "colorCode": "4011",
+            "colorName": "Pearl violet",
+            "colorRgb": "110-99-135",
+            "colorHex": "6E6387",
+            "colorType": "violet"
+        },
+        {
+            "colorCode": "4012",
+            "colorName": "Pearl blackberry",
+            "colorRgb": "107-107-127",
+            "colorHex": "6B6B7F",
+            "colorType": "violet"
+        },
+        {
+            "colorCode": "5000",
+            "colorName": "Violet blue",
+            "colorRgb": "49-79-111",
+            "colorHex": "314F6F",
+            "colorType": "blue"
+        },
+        {
+            "colorCode": "5001",
+            "colorName": "Green blue",
+            "colorRgb": "15-76-100",
+            "colorHex": "0F4C64",
+            "colorType": "blue"
+        },
+        {
+            "colorCode": "5002",
+            "colorName": "Ultramarine blue",
+            "colorRgb": "0-56-123",
+            "colorHex": "00387B",
+            "colorType": "blue"
+        },
+        {
+            "colorCode": "5003",
+            "colorName": "Sapphire blue",
+            "colorRgb": "31-56-85",
+            "colorHex": "1F3855",
+            "colorType": "blue"
+        },
+        {
+            "colorCode": "5004",
+            "colorName": "Black blue",
+            "colorRgb": "25-30-40",
+            "colorHex": "191E28",
+            "colorType": "blue"
+        },
+        {
+            "colorCode": "5005",
+            "colorName": "Signal blue",
+            "colorRgb": "0-83-135",
+            "colorHex": "005387",
+            "colorType": "blue"
+        },
+        {
+            "colorCode": "5007",
+            "colorName": "Brilliant blue",
+            "colorRgb": "55-107-140",
+            "colorHex": "376B8C",
+            "colorType": "blue"
+        },
+        {
+            "colorCode": "5008",
+            "colorName": "Grey blue",
+            "colorRgb": "43-58-68",
+            "colorHex": "2B3A44",
+            "colorType": "blue"
+        },
+        {
+            "colorCode": "5009",
+            "colorName": "Azure blue",
+            "colorRgb": "34-95-120",
+            "colorHex": "225F78",
+            "colorType": "blue"
+        },
+        {
+            "colorCode": "5010",
+            "colorName": "Gentian blue",
+            "colorRgb": "0-79-124",
+            "colorHex": "004F7C",
+            "colorType": "blue"
+        },
+        {
+            "colorCode": "5011",
+            "colorName": "Steel blue",
+            "colorRgb": "26-43-60",
+            "colorHex": "1A2B3C",
+            "colorType": "blue"
+        },
+        {
+            "colorCode": "5012",
+            "colorName": "Light blue",
+            "colorRgb": "0-137-182",
+            "colorHex": "0089B6",
+            "colorType": "blue"
+        },
+        {
+            "colorCode": "5013",
+            "colorName": "Cobalt blue",
+            "colorRgb": "25-49-83",
+            "colorHex": "193153",
+            "colorType": "blue"
+        },
+        {
+            "colorCode": "5014",
+            "colorName": "Pigeon blue",
+            "colorRgb": "99-125-150",
+            "colorHex": "637D96",
+            "colorType": "blue"
+        },
+        {
+            "colorCode": "5015",
+            "colorName": "Sky blue",
+            "colorRgb": "0-124-176",
+            "colorHex": "007CB0",
+            "colorType": "blue"
+        },
+        {
+            "colorCode": "5017",
+            "colorName": "Traffic blue",
+            "colorRgb": "0-91-140",
+            "colorHex": "005B8C",
+            "colorType": "blue"
+        },
+        {
+            "colorCode": "5018",
+            "colorName": "Turquoise blue",
+            "colorRgb": "5-139-140",
+            "colorHex": "058B8C",
+            "colorType": "blue"
+        },
+        {
+            "colorCode": "5019",
+            "colorName": "Capri blue",
+            "colorRgb": "0-94-131",
+            "colorHex": "005E83",
+            "colorType": "blue"
+        },
+        {
+            "colorCode": "5020",
+            "colorName": "Ocean blue",
+            "colorRgb": "0-65-75",
+            "colorHex": "00414B",
+            "colorType": "blue"
+        },
+        {
+            "colorCode": "5021",
+            "colorName": "Water blue",
+            "colorRgb": "0-117-119",
+            "colorHex": "007577",
+            "colorType": "blue"
+        },
+        {
+            "colorCode": "5022",
+            "colorName": "Night blue",
+            "colorRgb": "34-45-90",
+            "colorHex": "222D5A",
+            "colorType": "blue"
+        },
+        {
+            "colorCode": "5023",
+            "colorName": "Distant blue",
+            "colorRgb": "66-105-140",
+            "colorHex": "42698C",
+            "colorType": "blue"
+        },
+        {
+            "colorCode": "5024",
+            "colorName": "Pastel blue",
+            "colorRgb": "96-147-172",
+            "colorHex": "6093AC",
+            "colorType": "blue"
+        },
+        {
+            "colorCode": "5025",
+            "colorName": "Pearl gentian blue",
+            "colorRgb": "33-105-124",
+            "colorHex": "21697C",
+            "colorType": "blue"
+        },
+        {
+            "colorCode": "5026",
+            "colorName": "Pearl night blue",
+            "colorRgb": "15-48-82",
+            "colorHex": "0F3052",
+            "colorType": "blue"
+        },
+        {
+            "colorCode": "6000",
+            "colorName": "Patina green",
+            "colorRgb": "60-116-96",
+            "colorHex": "3C7460",
+            "colorType": "green"
+        },
+        {
+            "colorCode": "6001",
+            "colorName": "Emerald green",
+            "colorRgb": "54-103-53",
+            "colorHex": "366735",
+            "colorType": "green"
+        },
+        {
+            "colorCode": "6002",
+            "colorName": "Leaf green",
+            "colorRgb": "50-89-40",
+            "colorHex": "325928",
+            "colorType": "green"
+        },
+        {
+            "colorCode": "6003",
+            "colorName": "Olive green",
+            "colorRgb": "80-83-60",
+            "colorHex": "50533C",
+            "colorType": "green"
+        },
+        {
+            "colorCode": "6004",
+            "colorName": "Blue green",
+            "colorRgb": "2-68-66",
+            "colorHex": "024442",
+            "colorType": "green"
+        },
+        {
+            "colorCode": "6005",
+            "colorName": "Moss green",
+            "colorRgb": "17-66-50",
+            "colorHex": "114232",
+            "colorType": "green"
+        },
+        {
+            "colorCode": "6006",
+            "colorName": "Grey olive",
+            "colorRgb": "60-57-46",
+            "colorHex": "3C392E",
+            "colorType": "green"
+        },
+        {
+            "colorCode": "6007",
+            "colorName": "Bottle green",
+            "colorRgb": "44-50-34",
+            "colorHex": "2C3222",
+            "colorType": "green"
+        },
+        {
+            "colorCode": "6008",
+            "colorName": "Brown green",
+            "colorRgb": "55-52-42",
+            "colorHex": "37342A",
+            "colorType": "green"
+        },
+        {
+            "colorCode": "6009",
+            "colorName": "Fir green",
+            "colorRgb": "39-53-42",
+            "colorHex": "27352A",
+            "colorType": "green"
+        },
+        {
+            "colorCode": "6010",
+            "colorName": "Grass green",
+            "colorRgb": "77-111-57",
+            "colorHex": "4D6F39",
+            "colorType": "green"
+        },
+        {
+            "colorCode": "6011",
+            "colorName": "Reseda green",
+            "colorRgb": "108-124-89",
+            "colorHex": "6C7C59",
+            "colorType": "green"
+        },
+        {
+            "colorCode": "6012",
+            "colorName": "Black green",
+            "colorRgb": "48-61-58",
+            "colorHex": "303D3A",
+            "colorType": "green"
+        },
+        {
+            "colorCode": "6013",
+            "colorName": "Reed green",
+            "colorRgb": "125-118-90",
+            "colorHex": "7D765A",
+            "colorType": "green"
+        },
+        {
+            "colorCode": "6014",
+            "colorName": "Yellow olive",
+            "colorRgb": "71-65-53",
+            "colorHex": "474135",
+            "colorType": "green"
+        },
+        {
+            "colorCode": "6015",
+            "colorName": "Black olive",
+            "colorRgb": "61-61-54",
+            "colorHex": "3D3D36",
+            "colorType": "green"
+        },
+        {
+            "colorCode": "6016",
+            "colorName": "Turquoise green",
+            "colorRgb": "0-105-76",
+            "colorHex": "00694C",
+            "colorType": "green"
+        },
+        {
+            "colorCode": "6017",
+            "colorName": "May green",
+            "colorRgb": "88-127-64",
+            "colorHex": "587F40",
+            "colorType": "green"
+        },
+        {
+            "colorCode": "6018",
+            "colorName": "Yellow green",
+            "colorRgb": "97-153-59",
+            "colorHex": "61993B",
+            "colorType": "green"
+        },
+        {
+            "colorCode": "6019",
+            "colorName": "Pastel green",
+            "colorRgb": "185-206-172",
+            "colorHex": "B9CEAC",
+            "colorType": "green"
+        },
+        {
+            "colorCode": "6020",
+            "colorName": "Chrome green",
+            "colorRgb": "55-66-47",
+            "colorHex": "37422F",
+            "colorType": "green"
+        },
+        {
+            "colorCode": "6021",
+            "colorName": "Pale green",
+            "colorRgb": "138-153-119",
+            "colorHex": "8A9977",
+            "colorType": "green"
+        },
+        {
+            "colorCode": "6022",
+            "colorName": "Olive drab",
+            "colorRgb": "58-51-39",
+            "colorHex": "3A3327",
+            "colorType": "green"
+        },
+        {
+            "colorCode": "6024",
+            "colorName": "Traffic green",
+            "colorRgb": "0-131-81",
+            "colorHex": "008351",
+            "colorType": "green"
+        },
+        {
+            "colorCode": "6025",
+            "colorName": "Fern green",
+            "colorRgb": "94-110-59",
+            "colorHex": "5E6E3B",
+            "colorType": "green"
+        },
+        {
+            "colorCode": "6026",
+            "colorName": "Opal green",
+            "colorRgb": "0-95-78",
+            "colorHex": "005F4E",
+            "colorType": "green"
+        },
+        {
+            "colorCode": "6027",
+            "colorName": "Light green",
+            "colorRgb": "126-186-181",
+            "colorHex": "7EBAB5",
+            "colorType": "green"
+        },
+        {
+            "colorCode": "6028",
+            "colorName": "Pine green",
+            "colorRgb": "49-84-66",
+            "colorHex": "315442",
+            "colorType": "green"
+        },
+        {
+            "colorCode": "6029",
+            "colorName": "Mint green",
+            "colorRgb": "0-111-61",
+            "colorHex": "006F3D",
+            "colorType": "green"
+        },
+        {
+            "colorCode": "6032",
+            "colorName": "Signal green",
+            "colorRgb": "35-127-82",
+            "colorHex": "237F52",
+            "colorType": "green"
+        },
+        {
+            "colorCode": "6033",
+            "colorName": "Mint turquoise",
+            "colorRgb": "70-135-127",
+            "colorHex": "46877F",
+            "colorType": "green"
+        },
+        {
+            "colorCode": "6034",
+            "colorName": "Pastel turquoise",
+            "colorRgb": "122-172-172",
+            "colorHex": "7AACAC",
+            "colorType": "green"
+        },
+        {
+            "colorCode": "6035",
+            "colorName": "Pearl green",
+            "colorRgb": "25-77-37",
+            "colorHex": "194D25",
+            "colorType": "green"
+        },
+        {
+            "colorCode": "6036",
+            "colorName": "Pearl opal green",
+            "colorRgb": "4-87-75",
+            "colorHex": "04574B",
+            "colorType": "green"
+        },
+        {
+            "colorCode": "6037",
+            "colorName": "Pure green",
+            "colorRgb": "0-139-41",
+            "colorHex": "008B29",
+            "colorType": "green"
+        },
+        {
+            "colorCode": "6038",
+            "colorName": "Luminous green",
+            "colorRgb": "0-181-26",
+            "colorHex": "00B51A",
+            "colorType": "green"
+        },
+        {
+            "colorCode": "7000",
+            "colorName": "Squirrel grey",
+            "colorRgb": "122-136-142",
+            "colorHex": "7A888E",
+            "colorType": "grey"
+        },
+        {
+            "colorCode": "7001",
+            "colorName": "Silver grey",
+            "colorRgb": "140-150-157",
+            "colorHex": "8C969D",
+            "colorType": "grey"
+        },
+        {
+            "colorCode": "7002",
+            "colorName": "Olive grey",
+            "colorRgb": "129-120-99",
+            "colorHex": "817863",
+            "colorType": "grey"
+        },
+        {
+            "colorCode": "7003",
+            "colorName": "Moss grey",
+            "colorRgb": "122-118-105",
+            "colorHex": "7A7669",
+            "colorType": "grey"
+        },
+        {
+            "colorCode": "7004",
+            "colorName": "Signal grey",
+            "colorRgb": "155-155-155",
+            "colorHex": "9B9B9B",
+            "colorType": "grey"
+        },
+        {
+            "colorCode": "7005",
+            "colorName": "Mouse grey",
+            "colorRgb": "108-110-107",
+            "colorHex": "6C6E6B",
+            "colorType": "grey"
+        },
+        {
+            "colorCode": "7006",
+            "colorName": "Beige grey",
+            "colorRgb": "118-106-94",
+            "colorHex": "766A5E",
+            "colorType": "grey"
+        },
+        {
+            "colorCode": "7008",
+            "colorName": "Khaki grey",
+            "colorRgb": "116-94-61",
+            "colorHex": "745E3D",
+            "colorType": "grey"
+        },
+        {
+            "colorCode": "7009",
+            "colorName": "Green grey",
+            "colorRgb": "93-96-88",
+            "colorHex": "5D6058",
+            "colorType": "grey"
+        },
+        {
+            "colorCode": "7010",
+            "colorName": "Tarpaulin grey",
+            "colorRgb": "88-92-86",
+            "colorHex": "585C56",
+            "colorType": "grey"
+        },
+        {
+            "colorCode": "7011",
+            "colorName": "Iron grey",
+            "colorRgb": "82-89-93",
+            "colorHex": "52595D",
+            "colorType": "grey"
+        },
+        {
+            "colorCode": "7012",
+            "colorName": "Basalt grey",
+            "colorRgb": "87-93-94",
+            "colorHex": "575D5E",
+            "colorType": "grey"
+        },
+        {
+            "colorCode": "7013",
+            "colorName": "Brown grey",
+            "colorRgb": "87-80-68",
+            "colorHex": "575044",
+            "colorType": "grey"
+        },
+        {
+            "colorCode": "7015",
+            "colorName": "Slate grey",
+            "colorRgb": "79-83-88",
+            "colorHex": "4F5358",
+            "colorType": "grey"
+        },
+        {
+            "colorCode": "7016",
+            "colorName": "Anthracite grey",
+            "colorRgb": "56-62-66",
+            "colorHex": "383E42",
+            "colorType": "grey"
+        },
+        {
+            "colorCode": "7021",
+            "colorName": "Black grey",
+            "colorRgb": "47-50-52",
+            "colorHex": "2F3234",
+            "colorType": "grey"
+        },
+        {
+            "colorCode": "7022",
+            "colorName": "Umbra grey",
+            "colorRgb": "76-74-68",
+            "colorHex": "4C4A44",
+            "colorType": "grey"
+        },
+        {
+            "colorCode": "7023",
+            "colorName": "Concrete grey",
+            "colorRgb": "128-128-118",
+            "colorHex": "808076",
+            "colorType": "grey"
+        },
+        {
+            "colorCode": "7024",
+            "colorName": "Graphite grey",
+            "colorRgb": "69-73-78",
+            "colorHex": "45494E",
+            "colorType": "grey"
+        },
+        {
+            "colorCode": "7026",
+            "colorName": "Granite grey",
+            "colorRgb": "55-67-69",
+            "colorHex": "374345",
+            "colorType": "grey"
+        },
+        {
+            "colorCode": "7030",
+            "colorName": "Stone grey",
+            "colorRgb": "146-142-133",
+            "colorHex": "928E85",
+            "colorType": "grey"
+        },
+        {
+            "colorCode": "7031",
+            "colorName": "Blue grey",
+            "colorRgb": "91-104-109",
+            "colorHex": "5B686D",
+            "colorType": "grey"
+        },
+        {
+            "colorCode": "7032",
+            "colorName": "Pebble grey",
+            "colorRgb": "181-176-161",
+            "colorHex": "B5B0A1",
+            "colorType": "grey"
+        },
+        {
+            "colorCode": "7033",
+            "colorName": "Cement grey",
+            "colorRgb": "127-130-116",
+            "colorHex": "7F8274",
+            "colorType": "grey"
+        },
+        {
+            "colorCode": "7034",
+            "colorName": "Yellow grey",
+            "colorRgb": "146-136-111",
+            "colorHex": "92886F",
+            "colorType": "grey"
+        },
+        {
+            "colorCode": "7035",
+            "colorName": "Light grey",
+            "colorRgb": "197-199-196",
+            "colorHex": "C5C7C4",
+            "colorType": "grey"
+        },
+        {
+            "colorCode": "7036",
+            "colorName": "Platinum grey",
+            "colorRgb": "151-147-146",
+            "colorHex": "979392",
+            "colorType": "grey"
+        },
+        {
+            "colorCode": "7037",
+            "colorName": "Dusty grey",
+            "colorRgb": "122-123-122",
+            "colorHex": "7A7B7A",
+            "colorType": "grey"
+        },
+        {
+            "colorCode": "7038",
+            "colorName": "Agate grey",
+            "colorRgb": "176-176-169",
+            "colorHex": "B0B0A9",
+            "colorType": "grey"
+        },
+        {
+            "colorCode": "7039",
+            "colorName": "Quartz grey",
+            "colorRgb": "107-102-94",
+            "colorHex": "6B665E",
+            "colorType": "grey"
+        },
+        {
+            "colorCode": "7040",
+            "colorName": "Window grey",
+            "colorRgb": "152-158-161",
+            "colorHex": "989EA1",
+            "colorType": "grey"
+        },
+        {
+            "colorCode": "7042",
+            "colorName": "Traffic grey A",
+            "colorRgb": "142-146-145",
+            "colorHex": "8E9291",
+            "colorType": "grey"
+        },
+        {
+            "colorCode": "7043",
+            "colorName": "Traffic grey B",
+            "colorRgb": "79-82-80",
+            "colorHex": "4F5250",
+            "colorType": "grey"
+        },
+        {
+            "colorCode": "7044",
+            "colorName": "Silk grey",
+            "colorRgb": "183-179-168",
+            "colorHex": "B7B3A8",
+            "colorType": "grey"
+        },
+        {
+            "colorCode": "7045",
+            "colorName": "Telegrey 1",
+            "colorRgb": "141-146-149",
+            "colorHex": "8D9295",
+            "colorType": "grey"
+        },
+        {
+            "colorCode": "7046",
+            "colorName": "Telegrey 2",
+            "colorRgb": "127-134-138",
+            "colorHex": "7F868A",
+            "colorType": "grey"
+        },
+        {
+            "colorCode": "7047",
+            "colorName": "Telegrey 4",
+            "colorRgb": "200-200-199",
+            "colorHex": "C8C8C7",
+            "colorType": "grey"
+        },
+        {
+            "colorCode": "7048",
+            "colorName": "Pearl mouse grey",
+            "colorRgb": "129-123-115",
+            "colorHex": "817B73",
+            "colorType": "grey"
+        },
+        {
+            "colorCode": "8000",
+            "colorName": "Green brown",
+            "colorRgb": "137-105-62",
+            "colorHex": "89693E",
+            "colorType": "brown"
+        },
+        {
+            "colorCode": "8001",
+            "colorName": "Ochre brown",
+            "colorRgb": "157-98-43",
+            "colorHex": "9D622B",
+            "colorType": "brown"
+        },
+        {
+            "colorCode": "8002",
+            "colorName": "Signal brown",
+            "colorRgb": "121-77-62",
+            "colorHex": "794D3E",
+            "colorType": "brown"
+        },
+        {
+            "colorCode": "8003",
+            "colorName": "Clay brown",
+            "colorRgb": "126-75-38",
+            "colorHex": "7E4B26",
+            "colorType": "brown"
+        },
+        {
+            "colorCode": "8004",
+            "colorName": "Copper brown",
+            "colorRgb": "141-73-49",
+            "colorHex": "8D4931",
+            "colorType": "brown"
+        },
+        {
+            "colorCode": "8007",
+            "colorName": "Fawn brown",
+            "colorRgb": "112-69-42",
+            "colorHex": "70452A",
+            "colorType": "brown"
+        },
+        {
+            "colorCode": "8008",
+            "colorName": "Olive brown",
+            "colorRgb": "114-74-37",
+            "colorHex": "724A25",
+            "colorType": "brown"
+        },
+        {
+            "colorCode": "8011",
+            "colorName": "Nut brown",
+            "colorRgb": "90-56-38",
+            "colorHex": "5A3826",
+            "colorType": "brown"
+        },
+        {
+            "colorCode": "8012",
+            "colorName": "red brown",
+            "colorRgb": "102-51-43",
+            "colorHex": "66332B",
+            "colorType": "brown"
+        },
+        {
+            "colorCode": "8014",
+            "colorName": "sepia brown",
+            "colorRgb": "74-53-38",
+            "colorHex": "4A3526",
+            "colorType": "brown"
+        },
+        {
+            "colorCode": "8015",
+            "colorName": "Chestnut brown",
+            "colorRgb": "94-47-38",
+            "colorHex": "5E2F26",
+            "colorType": "brown"
+        },
+        {
+            "colorCode": "8016",
+            "colorName": "Mahogany brown",
+            "colorRgb": "76-43-32",
+            "colorHex": "4C2B20",
+            "colorType": "brown"
+        },
+        {
+            "colorCode": "8017",
+            "colorName": "chocolate brown",
+            "colorRgb": "68-47-41",
+            "colorHex": "442F29",
+            "colorType": "brown"
+        },
+        {
+            "colorCode": "8019",
+            "colorName": "Grey brown",
+            "colorRgb": "61-54-53",
+            "colorHex": "3D3635",
+            "colorType": "brown"
+        },
+        {
+            "colorCode": "8022",
+            "colorName": "Black brown",
+            "colorRgb": "26-23-24",
+            "colorHex": "1A1718",
+            "colorType": "brown"
+        },
+        {
+            "colorCode": "8023",
+            "colorName": "Orange brown",
+            "colorRgb": "164-87-41",
+            "colorHex": "A45729",
+            "colorType": "brown"
+        },
+        {
+            "colorCode": "8024",
+            "colorName": "Beige brown",
+            "colorRgb": "121-80-56",
+            "colorHex": "795038",
+            "colorType": "brown"
+        },
+        {
+            "colorCode": "8025",
+            "colorName": "Pale brown",
+            "colorRgb": "117-88-71",
+            "colorHex": "755847",
+            "colorType": "brown"
+        },
+        {
+            "colorCode": "8028",
+            "colorName": "Terra brown",
+            "colorRgb": "81-58-42",
+            "colorHex": "513A2A",
+            "colorType": "brown"
+        },
+        {
+            "colorCode": "8029",
+            "colorName": "Pearl copper",
+            "colorRgb": "127-64-49",
+            "colorHex": "7F4031",
+            "colorType": "brown"
+        },
+        {
+            "colorCode": "9001",
+            "colorName": "Cream",
+            "colorRgb": "233-224-210",
+            "colorHex": "E9E0D2",
+            "colorType": "white"
+        },
+        {
+            "colorCode": "9002",
+            "colorName": "Grey white",
+            "colorRgb": "215-213-203",
+            "colorHex": "D7D5CB",
+            "colorType": "white"
+        },
+        {
+            "colorCode": "9003",
+            "colorName": "Signal white",
+            "colorRgb": "236-236-231",
+            "colorHex": "ECECE7",
+            "colorType": "white"
+        },
+        {
+            "colorCode": "9004",
+            "colorName": "Signal black",
+            "colorRgb": "43-43-44",
+            "colorHex": "2B2B2C",
+            "colorType": "black"
+        },
+        {
+            "colorCode": "9005",
+            "colorName": "Jet black",
+            "colorRgb": "14-14-16",
+            "colorHex": "0E0E10",
+            "colorType": "black"
+        },
+        {
+            "colorCode": "9006",
+            "colorName": "White aluminium",
+            "colorRgb": "161-161-160",
+            "colorHex": "A1A1A0",
+            "colorType": "grey"
+        },
+        {
+            "colorCode": "9007",
+            "colorName": "Grey aluminium",
+            "colorRgb": "135-133-129",
+            "colorHex": "878581",
+            "colorType": "grey"
+        },
+        {
+            "colorCode": "9010",
+            "colorName": "Pure white",
+            "colorRgb": "241-236-225",
+            "colorHex": "F1ECE1",
+            "colorType": "white"
+        },
+        {
+            "colorCode": "9011",
+            "colorName": "Graphite black",
+            "colorRgb": "39-41-43",
+            "colorHex": "27292B",
+            "colorType": "black"
+        },
+        {
+            "colorCode": "9016",
+            "colorName": "Traffic white",
+            "colorRgb": "241-240-234",
+            "colorHex": "F1F0EA",
+            "colorType": "white"
+        },
+        {
+            "colorCode": "9017",
+            "colorName": "Traffic black",
+            "colorRgb": "42-41-42",
+            "colorHex": "2A292A",
+            "colorType": "black"
+        },
+        {
+            "colorCode": "9018",
+            "colorName": "Papyrus white",
+            "colorRgb": "200-203-196",
+            "colorHex": "C8CBC4",
+            "colorType": "grey"
+        },
+        {
+            "colorCode": "9022",
+            "colorName": "Pearl light grey",
+            "colorRgb": "133-133-131",
+            "colorHex": "858583",
+            "colorType": "grey"
+        },
+        {
+            "colorCode": "9023",
+            "colorName": "Pearl dark grey",
+            "colorRgb": "121-123-122",
+            "colorHex": "797B7A",
+            "colorType": "grey"
         }
     ]
 }

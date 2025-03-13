@@ -252,9 +252,9 @@ function updateControlPanel(model, selectedLayer, expandedLayer) {
     });
 
     if (soundbarCheckbox.checked) {
-        document.getElementById('barText').textContent = 'met soundbar';
+        document.getElementById('soundbarText').textContent = 'met soundbar';
     } else {
-        document.getElementById('barText').textContent = 'geen soundbar';
+        document.getElementById('soundbarText').textContent = 'geen soundbar';
     }
 
     // video
@@ -297,10 +297,10 @@ function updateControlPanel(model, selectedLayer, expandedLayer) {
         showSelected(false);
     });
 
-    if (soundbarCheckbox.checked) {
-        document.getElementById('barText').textContent = 'met soundbar';
+    if (alcoveCheckbox.checked) {
+        document.getElementById('alcoveText').textContent = 'met vakkenkasten';
     } else {
-        document.getElementById('barText').textContent = 'geen soundbar';
+        document.getElementById('alcoveText').textContent = 'geen vakkenkasten';
     }
 
     document.getElementById("alcove").value = model.alcove.left.width;
@@ -338,6 +338,50 @@ function updateControlPanel(model, selectedLayer, expandedLayer) {
     }
 
     //fireplace
+
+
+    //colors  
+    const ralColor = model.color.hex;
+    let colorIndex = ALLCOLORS.colors.findIndex(item => item.colorHex === ralColor);
+    console.log(colorIndex);
+    var colorValue = document.querySelectorAll(`.finishingColors_colorButton`);
+    model.color.name = ALLCOLORS.colors[colorIndex].colorName;
+
+    if (uap.getDevice().type === 'mobile' || uap.getDevice().type === 'tablet' || uap.getDevice().withFeatureCheck().type === 'tablet') {
+        colorValue.forEach(item => item.addEventListener('mouseover', () => {
+            colorValue.forEach(item => { item.classList.remove('colorButtonActive') });
+            const colorId = item.id.split('_');
+            colorIndex = colorId[1];
+            document.getElementById(`finishingText`).style.visibility = 'visible';
+            document.getElementById(`colorText`).innerHTML = '<img src="' + ALLCOLORS.colors[colorIndex].colorPathThumb + '" class="rounded-pill shadow" style="width: calc(1rem + 1vw);">&nbsp;&nbsp;&nbsp;&nbsp;' + ALLCOLORS.colors[colorIndex].colorName;
+            document.getElementById(`colorText`).classList.add('fst-italic');
+            showSelected(true);
+        }));
+
+        colorValue.forEach(item => item.addEventListener('mouseout', () => {
+            document.getElementById(`finishingText`).style.visibility = 'hidden';
+            document.getElementById(`colorText`).innerHTML = '<img src="' + model.color.pathThumb + '" class="rounded-pill shadow" style="width: calc(1rem + 1vw);">&nbsp;&nbsp;&nbsp;&nbsp;' + model.color.type + ' ' + model.color.name;
+            document.getElementById(`colorText`).classList.remove('fst-italic');
+            showSelected(true);
+        }));
+    }
+
+    colorValue.forEach(item => item.addEventListener('click', () => {
+        colorValue.forEach(item => { item.classList.remove('colorButtonActive') });
+        const colorId = item.id.split('_');
+        colorIndex = colorId[1];
+
+        model.color.hex = ALLCOLORS.colors[colorIndex].colorHex;
+        document.getElementById(`finishingColorsIndex_${colorIndex}`).classList.add('colorButtonActive');
+
+        updateControlPanel(model, `finishing`);
+        updateFeaturedModel(model);
+        showSelected(true);
+    }));
+
+    document.getElementById('finishingText').innerHTML = '<img src="img/transparant.png" class="rounded-pill shadow" style="width: calc(1rem + 1vw); background-color: #' + model.color.hex + ';">&nbsp;&nbsp;&nbsp;&nbsp;' + model.color.name;
+    document.getElementById(`finishingColorsIndex_${colorIndex}`).classList.remove('colorButton');
+    document.getElementById(`finishingColorsIndex_${colorIndex}`).classList.add('colorButtonActive');
 
     pricing(model);
 
@@ -492,14 +536,14 @@ function initSettings(model) {
     };
 
     accordions.telly = {
-        title: "tv",
-        options: ['inch', 'bar'],
+        title: "tv uitsparing",
+        options: ['inch'],
         display: "d-block",
         code: /*html*/`
         <div class="row m-0 p-0 pb-xxl-4 pb-xl-4 pb-3">
             <div class="justify-content-start m-0 p-0">
 
-                <div>inchmaat:</div>
+                <div>inchmaat tv:</div>
                 <input class="input-group-text float-end rounded-0 bg-white" type="number" id="tvSizeInput" min="30" max="90" value="#" step="1">
                 <input style="width: 80%" type="range" class="form-range" id="tvSize" min="30" max="90" value="#" step="1">
                 <div style="width: 80%; display: flex; justify-content: space-between; margin-top: -10px; font-size: 11px;">
@@ -516,13 +560,6 @@ function initSettings(model) {
                     <span>80</span>
                     <span>85</span>
                     <span>90</span>
-                </div>
-
-                <div class="form-check my-3">
-                    <input id="soundbar" name="soundbar" class="form-check-input" type="checkbox">
-                    <label class="form-check-label" for="soundbar">
-                    uitsparing voor sounbar
-                    </label>
                 </div>
 
                 <div class="mb-1">kies video (ter indicatie):</div>
@@ -547,6 +584,42 @@ function initSettings(model) {
         </div>`
     };
 
+    accordions.options = {
+        title: "opties",
+        options: ['soundbar', 'alcove'],
+        display: "d-block",
+        code: /*html*/`
+        <div class="row m-0 p-0 pb-xxl-4 pb-xl-4 pb-3">
+
+        <!--<div>De uitsparing voor een soundbar maken we in dezelfde breedte als de tv uitsparing.</div>-->
+            <div class="justify-content-start m-0 p-0">
+                <div class="form-check my-3">
+                    <input id="soundbar" name="soundbar" class="form-check-input" type="checkbox">
+                    <label class="form-check-label" for="soundbar">
+                    uitsparing voor sounbar
+                    </label>
+                </div>
+
+        <!--<div>Aan beide zijden van de tv-wand is er de mogelijkheid om vakkenkasten met verlichting te plaatsen.</div>-->
+        <div class="form-check my-3">
+                    <input id="alcoveToggle" name="soundbar" class="form-check-input" type="checkbox">
+                    <label class="form-check-label" for="alcoveToggle">
+                    plaats vakkenkasten
+                    </label>
+                </div>
+
+                <!--<div>Aan beide zijden van de tv-wand is er de mogelijkheid om vakkenkasten met verlichting te plaatsen.</div>-->
+                <div class="form-check my-3">
+                            <input id="alcoveToggle" name="soundbar" class="form-check-input" type="checkbox">
+                            <label class="form-check-label" for="alcoveToggle">
+                            sfeerhaard
+                            </label>
+                        </div>
+                
+            </div>
+        </div>`
+    };
+
     accordions.alcove = {
         title: "nissen",
         options: ['alcoveWidth', 'alcoveShelves'],
@@ -555,12 +628,7 @@ function initSettings(model) {
         <div class="row m-0 p-0 pb-xxl-4 pb-xl-4 pb-3">
             <div class="justify-content-start m-0 p-0">
 
-            <div class="form-check my-3">
-                <input id="alcoveToggle" name="soundbar" class="form-check-input" type="checkbox">
-                <label class="form-check-label" for="alcoveToggle">
-                voeg nissen toe
-                </label>
-            </div>
+     
 
                 <div>breedte:</div>
                 <input class="input-group-text float-end rounded-0 bg-white" type="number" id="alcoveInput" min="30" max="90" value="#" step="1">
@@ -602,6 +670,87 @@ function initSettings(model) {
             </div>
         </div>`
     };
+
+    accordions.finishing = {
+        title: "afwerking",
+        options: ['color'],
+        display: "d-block",
+        code: /*html*/`
+            <div>De tv-wand wordt afgewerkt met lakdraagfolie, die u zelf in de gewenste kleur kunt schilderen.<br>Om een indruk te krijgen van het eindresultaat kunt u hier een RAL kleur toepassen.</div>
+                <div class="row m-0 p-0 pb-xxl-4 pb-xl-4 pb-3">
+                    <div class="h6 fw-normal mt-3">wit</div>
+                    <div class="col-12 m-0 p-0">
+                        <div id="colorsWhitePicker" class="m-0 p-0"></div>
+                    </div>
+                    <div class="h6 fw-normal mt-3">grijs</div>
+                    <div class="col-12 m-0 p-0">
+                        <div id="colorsGreyPicker" class="m-0 p-0"></div>
+                    </div>
+                    <div class="h6 fw-normal mt-3">zwart</div>
+                    <div class="col-12 m-0 p-0">
+                        <div id="colorsBlackPicker" class="m-0 p-0"></div>
+                    </div>
+                    <div class="h6 fw-normal mt-3">bruin</div>
+                    <div class="col-12 m-0 p-0">
+                        <div id="colorsBrownPicker" class="m-0 p-0"></div>
+                    </div>
+                    <div class="h6 fw-normal mt-3">geel</div>
+                    <div class="col-12 m-0 p-0">
+                        <div id="colorsYellowPicker" class="m-0 p-0"></div>
+                    </div>
+                    <div class="h6 fw-normal mt-3">oranje</div>
+                    <div class="col-12 m-0 p-0">
+                        <div id="colorsOrangePicker" class="m-0 p-0"></div>
+                    </div>
+                    <div class="h6 fw-normal mt-3">rood</div>
+                    <div class="col-12 m-0 p-0">
+                        <div id="colorsRedPicker" class="m-0 p-0"></div>
+                    </div>
+                    <div class="h6 fw-normal mt-3">violet</div>
+                    <div class="col-12 m-0 p-0">
+                        <div id="colorsVioletPicker" class="m-0 p-0"></div>
+                    </div>
+                    <div class="h6 fw-normal mt-3">blauw</div>
+                    <div class="col-12 m-0 p-0">
+                        <div id="colorsBluePicker" class="m-0 p-0"></div>
+                    </div>
+                    <div class="h6 fw-normal mt-3">groen</div>
+                    <div class="col-12 m-0 p-0">
+                        <div id="colorsGreenPicker" class="m-0 p-0"></div>
+                    </div>                  
+                </div>`,
+        "onload": function () {
+            let containerElemsWhiteColors = document.getElementById(`colorsWhitePicker`);
+            addColors(`finishingColors`, 'white', ALLCOLORS.colors, containerElemsWhiteColors);
+
+            let containerElemsGreyColors = document.getElementById(`colorsGreyPicker`);
+            addColors(`finishingColors`, 'grey', ALLCOLORS.colors, containerElemsGreyColors);
+
+            let containerElemsBlackColors = document.getElementById(`colorsBlackPicker`);
+            addColors(`finishingColors`, 'black', ALLCOLORS.colors, containerElemsBlackColors);
+
+            let containerElemsBrownColors = document.getElementById(`colorsBrownPicker`);
+            addColors(`finishingColors`, 'brown', ALLCOLORS.colors, containerElemsBrownColors);
+
+            let containerElemsYellowColors = document.getElementById(`colorsYellowPicker`);
+            addColors(`finishingColors`, 'yellow', ALLCOLORS.colors, containerElemsYellowColors);
+
+            let containerElemsOrangeColors = document.getElementById(`colorsOrangePicker`);
+            addColors(`finishingColors`, 'orange', ALLCOLORS.colors, containerElemsOrangeColors);
+           
+            let containerElemsRedColors = document.getElementById(`colorsRedPicker`);
+            addColors(`finishingColors`, 'red', ALLCOLORS.colors, containerElemsRedColors);
+                       
+            let containerElemsVioletColors = document.getElementById(`colorsVioletPicker`);
+            addColors(`finishingColors`, 'violet', ALLCOLORS.colors, containerElemsVioletColors);
+                                   
+            let containerElemsBlueColors = document.getElementById(`colorsBluePicker`);
+            addColors(`finishingColors`, 'blue', ALLCOLORS.colors, containerElemsBlueColors);
+                                               
+            let containerElemsGreenColors = document.getElementById(`colorsGreenPicker`);
+            addColors(`finishingColors`, 'green', ALLCOLORS.colors, containerElemsGreenColors);
+        }
+    }
 
     return { accordions };
 }
