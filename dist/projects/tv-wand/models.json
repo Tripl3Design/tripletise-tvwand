@@ -2,33 +2,70 @@
   {
     "id": 1,
     "name": "tv-wand",
-    "image": "projects/tv-wand/img/thumbnails/voorbeeld-opstelling-4.jpg",
+    "image": "projects/tv-wand/img/thumbnails/tv-wand200-240-40.png",
     "background": {
-      "original": "ffffff"
+      "original": "d4d4d4"
     },
     "width": 200,
     "height": 240,
     "depth": 40,
-    "tvSize": 50,
-    "soundbar": false,
+    "tvSize": 83,
+    "soundbar": true,
     "fireplace": {
       "width": 0,
       "height": 30,
+      "brand": "ignite",
       "type": "ignite"
     },
     "alcove": {
       "left": {
         "width": 80,
-        "shelves": 1
+        "shelves": 2
       },
       "right": {
         "width": 80,
-        "shelves": 1
+        "shelves": 2
       }
     },
     "color": {
-      "hex": "4A3526",
-      "name": "sepia brown"
+      "hex": "ECECE7",
+      "name": "signaalwit",
+      "group": "white"
+    },
+    "video": "video-1"
+  },
+  {
+    "id": 2,
+    "name": "tv-wand",
+    "image": "projects/tv-wand/img/thumbnails/tv-wand200-216-50.png",
+    "background": {
+      "original": "d4d4d4"
+    },
+    "width": 200,
+    "height": 216,
+    "depth": 50,
+    "tvSize": 76,
+    "soundbar": true,
+    "fireplace": {
+      "width": 0,
+      "height": 30,
+      "brand": "ignite",
+      "type": "ignite"
+    },
+    "alcove": {
+      "left": {
+        "width": 67,
+        "shelves": 2
+      },
+      "right": {
+        "width": 67,
+        "shelves": 2
+      }
+    },
+    "color": {
+      "hex": "7D765A",
+      "name": "rietgroen",
+      "group": "green"
     },
     "video": "video-1"
   }

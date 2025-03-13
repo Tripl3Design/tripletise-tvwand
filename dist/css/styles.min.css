@@ -11,28 +11,36 @@
 }
 
 @font-face {
-    font-family: 'PoppinsBold';
+    font-family: 'RobotoBold';
+    src: url('../fonts/Roboto-Bold.ttf') format('opentype');
+    font-weight: bold;
+    font-style: bold;
+}
+
+
+@font-face {
+    font-family: 'RobotoBold';
     src: url('../fonts/Poppins-Bold.ttf') format('opentype');
     font-weight: normal;
     font-style: normal;
 }
 
 #producttitle {
-    font-family: 'PoppinsBold', sans-serif; /* Use the font family defined */
+    font-family: 'RobotoBold', sans-serif; /* Use the font family defined */
     font-size: 32px;
     letter-spacing: 1.5px;
     color: #292929;
 }
 
 #productsubtitle {
-    font-family: 'PoppinsBold', sans-serif; /* Use the font family defined */
+    font-family: 'RobotoBold', sans-serif; /* Use the font family defined */
     font-size: 32px;
     letter-spacing: 1.5px;
     color: #dfdeda;
 }
 
 #producttitleMobile{
-    font-family: 'PoppinsBold', sans-serif; /* Use the font family defined */
+    font-family: 'RobotoRegular', sans-serif; /* Use the font family defined */
     font-size: 24px;
     letter-spacing: 1.5px;
     color: #292929;

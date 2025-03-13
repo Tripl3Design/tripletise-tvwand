@@ -2,1494 +2,1707 @@
     "colors": [
         {
             "colorCode": "1000",
-            "colorName": "Green beige",
+            "colorName": "green beige",
+            "colorNameNL": "groenbeige",
             "colorRgb": "205-186-136",
             "colorHex": "CDBA88",
-            "colorType": "yellow"
+            "colorGroup": "yellow"
         },
         {
             "colorCode": "1001",
-            "colorName": "Beige",
+            "colorName": "beige",
+            "colorNameNL": "beige",
             "colorRgb": "208-176-132",
             "colorHex": "D0B084",
-            "colorType": "yellow"
+            "colorGroup": "yellow"
         },
         {
             "colorCode": "1002",
-            "colorName": "Sand yellow",
+            "colorName": "sand yellow",
+            "colorNameNL": "zandgeel",
             "colorRgb": "210-170-109",
             "colorHex": "D2AA6D",
-            "colorType": "yellow"
+            "colorGroup": "yellow"
         },
         {
             "colorCode": "1003",
-            "colorName": "Signal yellow",
+            "colorName": "signal yellow",
+            "colorNameNL": "signaalgeel",
             "colorRgb": "249-168-0",
             "colorHex": "F9A800",
-            "colorType": "yellow"
+            "colorGroup": "yellow"
         },
         {
             "colorCode": "1004",
-            "colorName": "Golden yellow",
+            "colorName": "golden yellow",
+            "colorNameNL": "goudgeel",
             "colorRgb": "228-158-0",
             "colorHex": "E49E00",
-            "colorType": "yellow"
+            "colorGroup": "yellow"
         },
         {
             "colorCode": "1005",
-            "colorName": "Honey yellow",
+            "colorName": "honey yellow",
+            "colorNameNL": "honinggeel",
             "colorRgb": "203-142-0",
             "colorHex": "CB8E00",
-            "colorType": "yellow"
+            "colorGroup": "yellow"
         },
         {
             "colorCode": "1006",
-            "colorName": "Maize yellow",
+            "colorName": "maize yellow",
+            "colorNameNL": "maisgeel",
             "colorRgb": "226-144-0",
             "colorHex": "E29000",
-            "colorType": "yellow"
+            "colorGroup": "yellow"
         },
         {
             "colorCode": "1007",
-            "colorName": "Daffodil yellow",
+            "colorName": "daffodil yellow",
+            "colorNameNL": "narcissengeel",
             "colorRgb": "232-140-0",
             "colorHex": "E88C00",
-            "colorType": "yellow"
+            "colorGroup": "yellow"
         },
         {
             "colorCode": "1011",
-            "colorName": "Brown beige",
+            "colorName": "brown beige",
+            "colorNameNL": "btuingeel",
             "colorRgb": "175-128-79",
             "colorHex": "AF804F",
-            "colorType": "yellow"
+            "colorGroup": "yellow"
         },
         {
             "colorCode": "1012",
-            "colorName": "Lemon yellow",
+            "colorName": "lemon yellow",
+            "colorNameNL": "citroengeel",
             "colorRgb": "221-175-39",
             "colorHex": "DDAF27",
-            "colorType": "yellow"
+            "colorGroup": "yellow"
         },
         {
             "colorCode": "1013",
-            "colorName": "Oyster white",
+            "colorName": "oyster white",
+            "colorNameNL": "parelwit",
             "colorRgb": "227-217-198",
             "colorHex": "E3D9C6",
-            "colorType": "yellow"
+            "colorGroup": "yellow"
         },
         {
             "colorCode": "1014",
-            "colorName": "Ivory",
+            "colorName": "ivory",
+            "colorNameNL": "ivoorkleurig",
             "colorRgb": "221-196-154",
             "colorHex": "DDC49A",
-            "colorType": "yellow"
+            "colorGroup": "yellow"
         },
         {
             "colorCode": "1015",
-            "colorName": "Light ivory",
+            "colorName": "light ivory",
+            "colorNameNL": "licht ivoorkleurig",
             "colorRgb": "230-210-181",
             "colorHex": "E6D2B5",
-            "colorType": "yellow"
+            "colorGroup": "yellow"
         },
         {
             "colorCode": "1016",
-            "colorName": "Sulfur yellow",
+            "colorName": "sulfur yellow",
+            "colorNameNL": "zwavelgeel",
             "colorRgb": "241-221-56",
             "colorHex": "F1DD38",
-            "colorType": "yellow"
+            "colorGroup": "yellow"
         },
         {
             "colorCode": "1017",
-            "colorName": "Saffron yellow",
+            "colorName": "saffron yellow",
+            "colorNameNL": "saffraangeel",
             "colorRgb": "246-169-80",
             "colorHex": "F6A950",
-            "colorType": "yellow"
+            "colorGroup": "yellow"
         },
         {
             "colorCode": "1018",
-            "colorName": "Zinc yellow",
+            "colorName": "zinc yellow",
+            "colorNameNL": "zinkgeel",
             "colorRgb": "250-202-48",
             "colorHex": "FACA30",
-            "colorType": "yellow"
+            "colorGroup": "yellow"
         },
         {
             "colorCode": "1019",
-            "colorName": "Grey beige",
+            "colorName": "grey beige",
+            "colorNameNL": "grijsbeige",
             "colorRgb": "164-143-122",
             "colorHex": "A48F7A",
-            "colorType": "yellow"
+            "colorGroup": "yellow"
         },
         {
             "colorCode": "1020",
-            "colorName": "Olive yellow",
+            "colorName": "olive yellow",
+            "colorNameNL": "olijfgeel",
             "colorRgb": "160-143-101",
             "colorHex": "A08F65",
-            "colorType": "yellow"
+            "colorGroup": "yellow"
         },
         {
             "colorCode": "1021",
-            "colorName": "Colza yellow",
+            "colorName": "colza yellow",
+            "colorNameNL": "koolzaadgeel",
             "colorRgb": "246-182-0",
             "colorHex": "F6B600",
-            "colorType": "yellow"
+            "colorGroup": "yellow"
         },
         {
             "colorCode": "1023",
-            "colorName": "Traffic yellow",
+            "colorName": "traffic yellow",
+            "colorNameNL": "verkeersgeel",
             "colorRgb": "247-181-0",
             "colorHex": "F7B500",
-            "colorType": "yellow"
+            "colorGroup": "yellow"
         },
         {
             "colorCode": "1024",
             "colorName": "Ochre yellow",
+            "colorNameNL": "okergeel",
             "colorRgb": "186-143-76",
             "colorHex": "BA8F4C",
-            "colorType": "yellow"
+            "colorGroup": "yellow"
         },
         {
             "colorCode": "1026",
-            "colorName": "Luminous yellow",
+            "colorName": "luminous yellow",
+            "colorNameNL": "briljantgeel",
             "colorRgb": "255-255-0",
             "colorHex": "FFFF00",
-            "colorType": "yellow"
+            "colorGroup": "yellow"
         },
         {
             "colorCode": "1027",
-            "colorName": "Curry",
+            "colorName": "curry",
+            "colorNameNL": "kerriegeel",
             "colorRgb": "167-127-14",
             "colorHex": "A77F0E",
-            "colorType": "yellow"
+            "colorGroup": "yellow"
         },
         {
             "colorCode": "1028",
-            "colorName": "Melon yellow",
+            "colorName": "melon yellow",
+            "colorNameNL": "meloengeel",
             "colorRgb": "255-155-0",
             "colorHex": "FF9B00",
-            "colorType": "yellow"
+            "colorGroup": "yellow"
         },
         {
             "colorCode": "1032",
-            "colorName": "Broom yellow",
+            "colorName": "broom yellow",
+            "colorNameNL": "bremgeel",
             "colorRgb": "226-163-0",
             "colorHex": "E2A300",
-            "colorType": "yellow"
+            "colorGroup": "yellow"
         },
         {
             "colorCode": "1033",
-            "colorName": "Dahlia yellow",
+            "colorName": "dahlia yellow",
+            "colorNameNL": "dahliageel",
             "colorRgb": "249-154-28",
             "colorHex": "F99A1C",
-            "colorType": "yellow"
+            "colorGroup": "yellow"
         },
         {
             "colorCode": "1034",
-            "colorName": "Pastel yellow",
+            "colorName": "pastel yellow",
+            "colorNameNL": "pastelgeel",
             "colorRgb": "235-156-82",
             "colorHex": "EB9C52",
-            "colorType": "yellow"
+            "colorGroup": "yellow"
         },
         {
             "colorCode": "1035",
-            "colorName": "Pearl beige",
+            "colorName": "pearl beige",
+            "colorNameNL": "parelmoer grijs",
             "colorRgb": "144-131-112",
             "colorHex": "908370",
-            "colorType": "yellow"
+            "colorGroup": "yellow"
         },
         {
             "colorCode": "1036",
-            "colorName": "Pearl gold",
+            "colorName": "pearl gold",
+            "colorNameNL": "parelmoer goud",
             "colorRgb": "128-100-63",
             "colorHex": "80643F",
-            "colorType": "yellow"
+            "colorGroup": "yellow"
         },
         {
             "colorCode": "1037",
-            "colorName": "Sun yellow",
+            "colorName": "sun yellow",
+            "colorNameNL": "zonnegeel",
             "colorRgb": "240-146-0",
             "colorHex": "F09200",
-            "colorType": "yellow"
+            "colorGroup": "yellow"
         },
         {
             "colorCode": "2000",
-            "colorName": "Yellow orange",
+            "colorName": "yellow orange",
+            "colorNameNL": "geeloranje",
             "colorRgb": "218-110-0",
             "colorHex": "DA6E00",
-            "colorType": "yellow"
+            "colorGroup": "yellow"
         },
         {
             "colorCode": "2001",
-            "colorName": "Red orange",
+            "colorName": "red orange",
+            "colorNameNL": "roodoranje",
             "colorRgb": "186-72-27",
             "colorHex": "BA481B",
-            "colorType": "orange"
+            "colorGroup": "orange"
         },
         {
             "colorCode": "2002",
-            "colorName": "Vermilion",
+            "colorName": "vermilion",
+            "colorNameNL": "vermiljoen",
             "colorRgb": "191-57-34",
             "colorHex": "BF3922",
-            "colorType": "orange"
+            "colorGroup": "orange"
         },
         {
             "colorCode": "2003",
-            "colorName": "Pastel orange",
+            "colorName": "pastel orange",
+            "colorNameNL": "pasteloranje",
             "colorRgb": "246-120-40",
             "colorHex": "F67828",
-            "colorType": "orange"
+            "colorGroup": "orange"
         },
         {
             "colorCode": "2004",
-            "colorName": "Pure orange",
+            "colorName": "pure orange",
+            "colorNameNL": "zuiver oranje",
             "colorRgb": "226-83-3",
             "colorHex": "E25303",
-            "colorType": "orange"
+            "colorGroup": "orange"
         },
         {
             "colorCode": "2005",
-            "colorName": "Luminous orange",
+            "colorName": "luminous orange",
+            "colorNameNL": "briljantoranje",
             "colorRgb": "255-77-6",
             "colorHex": "FF4D06",
-            "colorType": "orange"
+            "colorGroup": "orange"
         },
         {
             "colorCode": "2007",
-            "colorName": "Luminous bright orange",
+            "colorName": "luminous bright orange",
+            "colorNameNL": "briljant lichtoranje",
             "colorRgb": "255-178-0",
             "colorHex": "FFB200",
-            "colorType": "orange"
+            "colorGroup": "orange"
         },
         {
             "colorCode": "2008",
-            "colorName": "Bright red orange",
+            "colorName": "lright red orange",
+            "colorNameNL": "licht roodoranje",
             "colorRgb": "237-107-33",
             "colorHex": "ED6B21",
-            "colorType": "orange"
+            "colorGroup": "orange"
         },
         {
             "colorCode": "2009",
-            "colorName": "Traffic orange",
+            "colorName": "traffic orange",
+            "colorNameNL": "verkeersoranje",
             "colorRgb": "222-83-7",
             "colorHex": "DE5307",
-            "colorType": "orange"
+            "colorGroup": "orange"
         },
         {
             "colorCode": "2010",
-            "colorName": "Signal orange",
+            "colorName": "signal orange",
+            "colorNameNL": "signaaloranje",
             "colorRgb": "208-93-40",
             "colorHex": "D05D28",
-            "colorType": "orange"
+            "colorGroup": "orange"
         },
         {
             "colorCode": "2011",
-            "colorName": "Deep orange",
+            "colorName": "deep orange",
+            "colorNameNL": "dieporanje",
             "colorRgb": "226-110-14",
             "colorHex": "E26E0E",
-            "colorType": "orange"
+            "colorGroup": "orange"
         },
         {
             "colorCode": "2012",
-            "colorName": "Salmon orange",
+            "colorName": "salmon orange",
+            "colorNameNL": "zalmoranje",
             "colorRgb": "213-101-77",
             "colorHex": "D5654D",
-            "colorType": "orange"
+            "colorGroup": "orange"
         },
         {
             "colorCode": "2013",
-            "colorName": "Pearl orange",
+            "colorName": "pearl orange",
+            "colorNameNL": "parelmoer oranje",
             "colorRgb": "146-62-37",
             "colorHex": "923E25",
-            "colorType": "orange"
+            "colorGroup": "orange"
         },
         {
             "colorCode": "3000",
-            "colorName": "Flame red",
+            "colorName": "flame red",
+            "colorNameNL": "vuurrood",
             "colorRgb": "167-41-32",
             "colorHex": "A72920",
-            "colorType": "red"
+            "colorGroup": "red"
         },
         {
             "colorCode": "3001",
-            "colorName": "Signal red",
+            "colorName": "signal red",
+            "colorNameNL": "signaalrood",
             "colorRgb": "155-36-35",
             "colorHex": "9B2423",
-            "colorType": "red"
+            "colorGroup": "red"
         },
         {
             "colorCode": "3002",
-            "colorName": "Carmine red",
+            "colorName": "carmine red",
+            "colorNameNL": "karmijnrood",
             "colorRgb": "155-35-33",
             "colorHex": "9B2321",
-            "colorType": "red"
+            "colorGroup": "red"
         },
         {
             "colorCode": "3003",
-            "colorName": "Ruby red",
+            "colorName": "ruby red",
+            "colorNameNL": "robijnrood",
             "colorRgb": "134-26-34",
             "colorHex": "861A22",
-            "colorType": "red"
+            "colorGroup": "red"
         },
         {
             "colorCode": "3004",
-            "colorName": "Purple red",
+            "colorName": "purple red",
+            "colorNameNL": "purperrood",
             "colorRgb": "107-28-35",
             "colorHex": "6B1C23",
-            "colorType": "red"
+            "colorGroup": "red"
         },
         {
             "colorCode": "3005",
-            "colorName": "Wine red",
+            "colorName": "wine red",
+            "colorNameNL": "Wijnrood",
             "colorRgb": "89-25-31",
             "colorHex": "59191F",
-            "colorType": "red"
+            "colorGroup": "red"
         },
         {
             "colorCode": "3007",
             "colorName": "Black red",
+            "colorNameNL": "zwartrood",
             "colorRgb": "62-32-34",
             "colorHex": "3E2022",
-            "colorType": "red"
+            "colorGroup": "red"
         },
         {
             "colorCode": "3009",
-            "colorName": "Oxide red",
+            "colorName": "oxide red",
+            "colorNameNL": "oxyderood",
             "colorRgb": "109-52-45",
             "colorHex": "6D342D",
-            "colorType": "red"
+            "colorGroup": "red"
         },
         {
             "colorCode": "3011",
-            "colorName": "Brown red",
+            "colorName": "brown red",
+            "colorNameNL": "bruinrood",
             "colorRgb": "121-36-35",
             "colorHex": "792423",
-            "colorType": "red"
+            "colorGroup": "red"
         },
         {
             "colorCode": "3012",
-            "colorName": "Beige red",
+            "colorName": "beige red",
+            "colorNameNL": "beigerood",
             "colorRgb": "198-132-109",
             "colorHex": "C6846D",
-            "colorType": "red"
+            "colorGroup": "red"
         },
         {
             "colorCode": "3013",
-            "colorName": "Tomato red",
+            "colorName": "tomato red",
+            "colorNameNL": "tomaatrood",
             "colorRgb": "151-46-37",
             "colorHex": "972E25",
-            "colorType": "red"
+            "colorGroup": "red"
         },
         {
             "colorCode": "3014",
-            "colorName": "Antique pink",
+            "colorName": "antique pink",
+            "colorNameNL": "oudroze",
             "colorRgb": "203-115-117",
             "colorHex": "CB7375",
-            "colorType": "red"
+            "colorGroup": "red"
         },
         {
             "colorCode": "3015",
-            "colorName": "Light pink",
+            "colorName": "light pink",
+            "colorNameNL": "lichtroze",
             "colorRgb": "216-160-166",
             "colorHex": "D8A0A6",
-            "colorType": "red"
+            "colorGroup": "red"
         },
         {
             "colorCode": "3016",
-            "colorName": "Coral red",
+            "colorName": "coral red",
+            "colorNameNL": "koraalrood",
             "colorRgb": "166-61-47",
             "colorHex": "A63D2F",
-            "colorType": "red"
+            "colorGroup": "red"
         },
         {
             "colorCode": "3017",
-            "colorName": "Rose",
+            "colorName": "rose",
+            "colorNameNL": "bleekrood",
             "colorRgb": "203-85-93",
             "colorHex": "CB555D",
-            "colorType": "red"
+            "colorGroup": "red"
         },
         {
             "colorCode": "3018",
-            "colorName": "Strawberry red",
+            "colorName": "strawberry red",
+            "colorNameNL": "aardbeirood",
             "colorRgb": "199-63-74",
             "colorHex": "C73F4A",
-            "colorType": "red"
+            "colorGroup": "red"
         },
         {
             "colorCode": "3020",
-            "colorName": "Traffic red",
+            "colorName": "traffic red",
+            "colorNameNL": "verkeersrood",
             "colorRgb": "187-30-16",
             "colorHex": "BB1E10",
-            "colorType": "red"
+            "colorGroup": "red"
         },
         {
             "colorCode": "3022",
-            "colorName": "Salmon pink",
+            "colorName": "salmon pink",
+            "colorNameNL": "zalmrood",
             "colorRgb": "207-105-85",
             "colorHex": "CF6955",
-            "colorType": "red"
+            "colorGroup": "red"
         },
         {
             "colorCode": "3024",
-            "colorName": "Luminous red",
+            "colorName": "luminous red",
+            "colorNameNL": "briljantrood",
             "colorRgb": "255-45-33",
             "colorHex": "FF2D21",
-            "colorType": "red"
+            "colorGroup": "red"
         },
         {
             "colorCode": "3026",
-            "colorName": "Luminous bright red",
+            "colorName": "luminous bright red",
+            "colorNameNL": "briljant lichtrood",
             "colorRgb": "255-42-27",
             "colorHex": "FF2A1B",
-            "colorType": "red"
+            "colorGroup": "red"
         },
         {
             "colorCode": "3027",
             "colorName": "Raspberry red",
+            "colorNameNL": "framboosrood",
             "colorRgb": "171-39-60",
             "colorHex": "AB273C",
-            "colorType": "red"
+            "colorGroup": "red"
         },
         {
             "colorCode": "3028",
             "colorName": "Pure red",
+            "colorNameNL": "zuiver rood",
             "colorRgb": "204-44-36",
             "colorHex": "CC2C24",
-            "colorType": "red"
+            "colorGroup": "red"
         },
         {
             "colorCode": "3031",
-            "colorName": "Orient red",
+            "colorName": "orient red",
+            "colorNameNL": "oriëntrood",
             "colorRgb": "166-52-55",
             "colorHex": "A63437",
-            "colorType": "red"
+            "colorGroup": "red"
         },
         {
             "colorCode": "3032",
-            "colorName": "Pearl ruby red",
+            "colorName": "pearl ruby red",
+            "colorNameNL": "parelmoer donkerrood",
             "colorRgb": "112-29-35",
             "colorHex": "701D23",
-            "colorType": "red"
+            "colorGroup": "red"
         },
         {
             "colorCode": "3033",
             "colorName": "Pearl pink",
+            "colorNameNL": "parelmoer lichtrood",
             "colorRgb": "165-58-45",
             "colorHex": "A53A2D",
-            "colorType": "red"
+            "colorGroup": "red"
         },
         {
             "colorCode": "4001",
-            "colorName": "Red lilac",
+            "colorName": "red lilac",
+            "colorNameNL": "roodlila",
             "colorRgb": "129-97-131",
             "colorHex": "816183",
-            "colorType": "violet"
+            "colorGroup": "violet"
         },
         {
             "colorCode": "4002",
-            "colorName": "Red violet",
+            "colorName": "red violet",
+            "colorNameNL": "roodpaars",
             "colorRgb": "141-60-75",
             "colorHex": "8D3C4B",
-            "colorType": "violet"
+            "colorGroup": "violet"
         },
         {
             "colorCode": "4003",
-            "colorName": "Heather violet",
+            "colorName": "heather violet",
+            "colorNameNL": "heidepaars",
             "colorRgb": "196-97-140",
             "colorHex": "C4618C",
-            "colorType": "violet"
+            "colorGroup": "violet"
         },
         {
             "colorCode": "4004",
-            "colorName": "Claret violet",
+            "colorName": "claret violet",
+            "colorNameNL": "bordeauxpaars",
             "colorRgb": "101-30-56",
             "colorHex": "651E38",
-            "colorType": "violet"
+            "colorGroup": "violet"
         },
         {
             "colorCode": "4005",
-            "colorName": "Blue lilac",
+            "colorName": "blue lilac",
+            "colorNameNL": "blauwlila",
             "colorRgb": "118-104-154",
             "colorHex": "76689A",
-            "colorType": "violet"
+            "colorGroup": "violet"
         },
         {
             "colorCode": "4006",
             "colorName": "Traffic purple",
+            "colorNameNL": "verkeerspurper",
             "colorRgb": "144-51-115",
             "colorHex": "903373",
-            "colorType": "violet"
+            "colorGroup": "violet"
         },
         {
             "colorCode": "4007",
-            "colorName": "Purple violet",
+            "colorName": "purple violet",
+            "colorNameNL": "purperviolet",
             "colorRgb": "71-36-60",
             "colorHex": "47243C",
-            "colorType": "violet"
+            "colorGroup": "violet"
         },
         {
             "colorCode": "4008",
-            "colorName": "Signal violet",
+            "colorName": "signal violet",
+            "colorNameNL": "signaalviolet",
             "colorRgb": "132-76-130",
             "colorHex": "844C82",
-            "colorType": "violet"
+            "colorGroup": "violet"
         },
         {
             "colorCode": "4009",
-            "colorName": "Pastel violet",
+            "colorName": "pastel violet",
+            "colorNameNL": "pastelviolet",
             "colorRgb": "157-134-146",
             "colorHex": "9D8692",
-            "colorType": "violet"
+            "colorGroup": "violet"
         },
         {
             "colorCode": "4010",
-            "colorName": "Telemagenta",
+            "colorName": "telemagenta",
+            "colorNameNL": "telemagenta",
             "colorRgb": "188-64-119",
             "colorHex": "BC4077",
-            "colorType": "violet"
+            "colorGroup": "violet"
         },
         {
             "colorCode": "4011",
-            "colorName": "Pearl violet",
+            "colorName": "pearl violet",
+            "colorNameNL": "parelmoer donkerviolet",
             "colorRgb": "110-99-135",
             "colorHex": "6E6387",
-            "colorType": "violet"
+            "colorGroup": "violet"
         },
         {
             "colorCode": "4012",
-            "colorName": "Pearl blackberry",
+            "colorName": "pearl blackberry",
+            "colorNameNL": "parelmoer lichtviolet",
             "colorRgb": "107-107-127",
             "colorHex": "6B6B7F",
-            "colorType": "violet"
+            "colorGroup": "violet"
         },
         {
             "colorCode": "5000",
-            "colorName": "Violet blue",
+            "colorName": "violet blue",
+            "colorNameNL": "paarsblauw",
             "colorRgb": "49-79-111",
             "colorHex": "314F6F",
-            "colorType": "blue"
+            "colorGroup": "blue"
         },
         {
             "colorCode": "5001",
-            "colorName": "Green blue",
+            "colorName": "green blue",
+            "colorNameNL": "groenblauw",
             "colorRgb": "15-76-100",
             "colorHex": "0F4C64",
-            "colorType": "blue"
+            "colorGroup": "blue"
         },
         {
             "colorCode": "5002",
-            "colorName": "Ultramarine blue",
+            "colorName": "ultramarine blue",
+            "colorNameNL": "ultramarijn blauw",
             "colorRgb": "0-56-123",
             "colorHex": "00387B",
-            "colorType": "blue"
+            "colorGroup": "blue"
         },
         {
             "colorCode": "5003",
-            "colorName": "Sapphire blue",
+            "colorName": "sapphire blue",
+            "colorNameNL": "saffierblauw",
             "colorRgb": "31-56-85",
             "colorHex": "1F3855",
-            "colorType": "blue"
+            "colorGroup": "blue"
         },
         {
             "colorCode": "5004",
-            "colorName": "Black blue",
+            "colorName": "black blue",
+            "colorNameNL": "zwartblauw",
             "colorRgb": "25-30-40",
             "colorHex": "191E28",
-            "colorType": "blue"
+            "colorGroup": "blue"
         },
         {
             "colorCode": "5005",
-            "colorName": "Signal blue",
+            "colorName": "signal blue",
+            "colorNameNL": "signaalblauw",
             "colorRgb": "0-83-135",
             "colorHex": "005387",
-            "colorType": "blue"
+            "colorGroup": "blue"
         },
         {
             "colorCode": "5007",
-            "colorName": "Brilliant blue",
+            "colorName": "brilliant blue",
+            "colorNameNL": "briljantblauw",
             "colorRgb": "55-107-140",
             "colorHex": "376B8C",
-            "colorType": "blue"
+            "colorGroup": "blue"
         },
         {
             "colorCode": "5008",
-            "colorName": "Grey blue",
+            "colorName": "grey blue",
+            "colorNameNL": "grijsblauw",
             "colorRgb": "43-58-68",
             "colorHex": "2B3A44",
-            "colorType": "blue"
+            "colorGroup": "blue"
         },
         {
             "colorCode": "5009",
-            "colorName": "Azure blue",
+            "colorName": "azure blue",
+            "colorNameNL": "azuurblauw",
             "colorRgb": "34-95-120",
             "colorHex": "225F78",
-            "colorType": "blue"
+            "colorGroup": "blue"
         },
         {
             "colorCode": "5010",
-            "colorName": "Gentian blue",
+            "colorName": "gentian blue",
+            "colorNameNL": "gentiaanblauw",
             "colorRgb": "0-79-124",
             "colorHex": "004F7C",
-            "colorType": "blue"
+            "colorGroup": "blue"
         },
         {
             "colorCode": "5011",
-            "colorName": "Steel blue",
+            "colorName": "steel blue",
+            "colorNameNL": "staalblauw",
             "colorRgb": "26-43-60",
             "colorHex": "1A2B3C",
-            "colorType": "blue"
+            "colorGroup": "blue"
         },
         {
             "colorCode": "5012",
-            "colorName": "Light blue",
+            "colorName": "light blue",
+            "colorNameNL": "lichtblauw",
             "colorRgb": "0-137-182",
             "colorHex": "0089B6",
-            "colorType": "blue"
+            "colorGroup": "blue"
         },
         {
             "colorCode": "5013",
-            "colorName": "Cobalt blue",
+            "colorName": "cobalt blue",
+            "colorNameNL": "kobaltblauw",
             "colorRgb": "25-49-83",
             "colorHex": "193153",
-            "colorType": "blue"
+            "colorGroup": "blue"
         },
         {
             "colorCode": "5014",
-            "colorName": "Pigeon blue",
+            "colorName": "pigeon blue",
+            "colorNameNL": "duifblauw",
             "colorRgb": "99-125-150",
             "colorHex": "637D96",
-            "colorType": "blue"
+            "colorGroup": "blue"
         },
         {
             "colorCode": "5015",
-            "colorName": "Sky blue",
+            "colorName": "sky blue",
+            "colorNameNL": "hemelsblauw",
             "colorRgb": "0-124-176",
             "colorHex": "007CB0",
-            "colorType": "blue"
+            "colorGroup": "blue"
         },
         {
             "colorCode": "5017",
-            "colorName": "Traffic blue",
+            "colorName": "traffic blue",
+            "colorNameNL": "verkeersblauw",
             "colorRgb": "0-91-140",
             "colorHex": "005B8C",
-            "colorType": "blue"
+            "colorGroup": "blue"
         },
         {
             "colorCode": "5018",
-            "colorName": "Turquoise blue",
+            "colorName": "turquoise blue",
+            "colorNameNL": "turkooisblauw",
             "colorRgb": "5-139-140",
             "colorHex": "058B8C",
-            "colorType": "blue"
+            "colorGroup": "blue"
         },
         {
             "colorCode": "5019",
-            "colorName": "Capri blue",
+            "colorName": "capri blue",
+            "colorNameNL": "capriblauw",
             "colorRgb": "0-94-131",
             "colorHex": "005E83",
-            "colorType": "blue"
+            "colorGroup": "blue"
         },
         {
             "colorCode": "5020",
-            "colorName": "Ocean blue",
+            "colorName": "ocean blue",
+            "colorNameNL": "oceaanblauw",
             "colorRgb": "0-65-75",
             "colorHex": "00414B",
-            "colorType": "blue"
+            "colorGroup": "blue"
         },
         {
             "colorCode": "5021",
-            "colorName": "Water blue",
+            "colorName": "water blue",
+            "colorNameNL": "waterblauw",
             "colorRgb": "0-117-119",
             "colorHex": "007577",
-            "colorType": "blue"
+            "colorGroup": "blue"
         },
         {
             "colorCode": "5022",
-            "colorName": "Night blue",
+            "colorName": "night blue",
+            "colorNameNL": "Nachtblauw",
             "colorRgb": "34-45-90",
             "colorHex": "222D5A",
-            "colorType": "blue"
+            "colorGroup": "blue"
         },
         {
             "colorCode": "5023",
-            "colorName": "Distant blue",
+            "colorName": "distant blue",
+            "colorNameNL": "verblauw",
             "colorRgb": "66-105-140",
             "colorHex": "42698C",
-            "colorType": "blue"
+            "colorGroup": "blue"
         },
         {
             "colorCode": "5024",
-            "colorName": "Pastel blue",
+            "colorName": "pastel blue",
+            "colorNameNL": "Pastelblauw",
             "colorRgb": "96-147-172",
             "colorHex": "6093AC",
-            "colorType": "blue"
+            "colorGroup": "blue"
         },
         {
             "colorCode": "5025",
-            "colorName": "Pearl gentian blue",
+            "colorName": "pearl gentian blue",
+            "colorNameNL": "parelmoer blauw",
             "colorRgb": "33-105-124",
             "colorHex": "21697C",
-            "colorType": "blue"
+            "colorGroup": "blue"
         },
         {
             "colorCode": "5026",
-            "colorName": "Pearl night blue",
+            "colorName": "pearl night blue",
+            "colorNameNL": "parelmoer nachtblauw",
             "colorRgb": "15-48-82",
             "colorHex": "0F3052",
-            "colorType": "blue"
+            "colorGroup": "blue"
         },
         {
             "colorCode": "6000",
-            "colorName": "Patina green",
+            "colorName": "patina green",
+            "colorNameNL": "patinagroen",
             "colorRgb": "60-116-96",
             "colorHex": "3C7460",
-            "colorType": "green"
+            "colorGroup": "green"
         },
         {
             "colorCode": "6001",
-            "colorName": "Emerald green",
+            "colorName": "emerald green",
+            "colorNameNL": "smaragdgroen",
             "colorRgb": "54-103-53",
             "colorHex": "366735",
-            "colorType": "green"
+            "colorGroup": "green"
         },
         {
             "colorCode": "6002",
-            "colorName": "Leaf green",
+            "colorName": "leaf green",
+            "colorNameNL": "loofgroen",
             "colorRgb": "50-89-40",
             "colorHex": "325928",
-            "colorType": "green"
+            "colorGroup": "green"
         },
         {
             "colorCode": "6003",
-            "colorName": "Olive green",
+            "colorName": "olive green",
+            "colorNameNL": "olijfgroen",
             "colorRgb": "80-83-60",
             "colorHex": "50533C",
-            "colorType": "green"
+            "colorGroup": "green"
         },
         {
             "colorCode": "6004",
-            "colorName": "Blue green",
+            "colorName": "blue green",
+            "colorNameNL": "blauwgroen",
             "colorRgb": "2-68-66",
             "colorHex": "024442",
-            "colorType": "green"
+            "colorGroup": "green"
         },
         {
             "colorCode": "6005",
-            "colorName": "Moss green",
+            "colorName": "moss green",
+            "colorNameNL": "mosgroen",
             "colorRgb": "17-66-50",
             "colorHex": "114232",
-            "colorType": "green"
+            "colorGroup": "green"
         },
         {
             "colorCode": "6006",
-            "colorName": "Grey olive",
+            "colorName": "grey olive",
+            "colorNameNL": "grijs olijfgroen",
             "colorRgb": "60-57-46",
             "colorHex": "3C392E",
-            "colorType": "green"
+            "colorGroup": "green"
         },
         {
             "colorCode": "6007",
-            "colorName": "Bottle green",
+            "colorName": "bottle green",
+            "colorNameNL": "flessengroen",
             "colorRgb": "44-50-34",
             "colorHex": "2C3222",
-            "colorType": "green"
+            "colorGroup": "green"
         },
         {
             "colorCode": "6008",
-            "colorName": "Brown green",
+            "colorName": "brown green",
+            "colorNameNL": "bruingroen",
             "colorRgb": "55-52-42",
             "colorHex": "37342A",
-            "colorType": "green"
+            "colorGroup": "green"
         },
         {
             "colorCode": "6009",
-            "colorName": "Fir green",
+            "colorName": "fir green",
+            "colorNameNL": "dennengroen",
             "colorRgb": "39-53-42",
             "colorHex": "27352A",
-            "colorType": "green"
+            "colorGroup": "green"
         },
         {
             "colorCode": "6010",
-            "colorName": "Grass green",
+            "colorName": "grass green",
+            "colorNameNL": "grasgroen",
             "colorRgb": "77-111-57",
             "colorHex": "4D6F39",
-            "colorType": "green"
+            "colorGroup": "green"
         },
         {
             "colorCode": "6011",
-            "colorName": "Reseda green",
+            "colorName": "reseda green",
+            "colorNameNL": "resedagroen",
             "colorRgb": "108-124-89",
             "colorHex": "6C7C59",
-            "colorType": "green"
+            "colorGroup": "green"
         },
         {
             "colorCode": "6012",
-            "colorName": "Black green",
+            "colorName": "black green",
+            "colorNameNL": "zwartgroen",
             "colorRgb": "48-61-58",
             "colorHex": "303D3A",
-            "colorType": "green"
+            "colorGroup": "green"
         },
         {
             "colorCode": "6013",
-            "colorName": "Reed green",
+            "colorName": "reed green",
+            "colorNameNL": "rietgroen",
             "colorRgb": "125-118-90",
             "colorHex": "7D765A",
-            "colorType": "green"
+            "colorGroup": "green"
         },
         {
             "colorCode": "6014",
-            "colorName": "Yellow olive",
+            "colorName": "yellow olive",
+            "colorNameNL": "geel olijfgroen",
             "colorRgb": "71-65-53",
             "colorHex": "474135",
-            "colorType": "green"
+            "colorGroup": "green"
         },
         {
             "colorCode": "6015",
-            "colorName": "Black olive",
+            "colorName": "black olive",
+            "colorNameNL": "zwart olijfgroen",
             "colorRgb": "61-61-54",
             "colorHex": "3D3D36",
-            "colorType": "green"
+            "colorGroup": "green"
         },
         {
             "colorCode": "6016",
-            "colorName": "Turquoise green",
+            "colorName": "turquoise green",
+            "colorNameNL": "turkooisgroen",
             "colorRgb": "0-105-76",
             "colorHex": "00694C",
-            "colorType": "green"
+            "colorGroup": "green"
         },
         {
             "colorCode": "6017",
-            "colorName": "May green",
+            "colorName": "may green",
+            "colorNameNL": "meigroen",
             "colorRgb": "88-127-64",
             "colorHex": "587F40",
-            "colorType": "green"
+            "colorGroup": "green"
         },
         {
             "colorCode": "6018",
-            "colorName": "Yellow green",
+            "colorName": "yellow green",
+            "colorNameNL": "geelgroen",
             "colorRgb": "97-153-59",
             "colorHex": "61993B",
-            "colorType": "green"
+            "colorGroup": "green"
         },
         {
             "colorCode": "6019",
-            "colorName": "Pastel green",
+            "colorName": "pastel green",
+            "colorNameNL": "witgroen",
             "colorRgb": "185-206-172",
             "colorHex": "B9CEAC",
-            "colorType": "green"
+            "colorGroup": "green"
         },
         {
             "colorCode": "6020",
-            "colorName": "Chrome green",
+            "colorName": "chrome green",
+            "colorNameNL": "chroomoxyde groen",
             "colorRgb": "55-66-47",
             "colorHex": "37422F",
-            "colorType": "green"
+            "colorGroup": "green"
         },
         {
             "colorCode": "6021",
-            "colorName": "Pale green",
+            "colorName": "pale green",
+            "colorNameNL": "bleekgroen",
             "colorRgb": "138-153-119",
             "colorHex": "8A9977",
-            "colorType": "green"
+            "colorGroup": "green"
         },
         {
             "colorCode": "6022",
-            "colorName": "Olive drab",
+            "colorName": "olive drab",
+            "colorNameNL": "bruin olijfgroen",
             "colorRgb": "58-51-39",
             "colorHex": "3A3327",
-            "colorType": "green"
+            "colorGroup": "green"
         },
         {
             "colorCode": "6024",
-            "colorName": "Traffic green",
+            "colorName": "traffic green",
+            "colorNameNL": "verkeersgroen",
             "colorRgb": "0-131-81",
             "colorHex": "008351",
-            "colorType": "green"
+            "colorGroup": "green"
         },
         {
             "colorCode": "6025",
-            "colorName": "Fern green",
+            "colorName": "fern green",
+            "colorNameNL": "varengroen",
             "colorRgb": "94-110-59",
             "colorHex": "5E6E3B",
-            "colorType": "green"
+            "colorGroup": "green"
         },
         {
             "colorCode": "6026",
-            "colorName": "Opal green",
+            "colorName": "opal green",
+            "colorNameNL": "opaalgroen",
             "colorRgb": "0-95-78",
             "colorHex": "005F4E",
-            "colorType": "green"
+            "colorGroup": "green"
         },
         {
             "colorCode": "6027",
-            "colorName": "Light green",
+            "colorName": "light green",
+            "colorNameNL": "lichtgroen",
             "colorRgb": "126-186-181",
             "colorHex": "7EBAB5",
-            "colorType": "green"
+            "colorGroup": "green"
         },
         {
             "colorCode": "6028",
             "colorName": "Pine green",
+            "colorNameNL": "pijnboomgroen",
             "colorRgb": "49-84-66",
             "colorHex": "315442",
-            "colorType": "green"
+            "colorGroup": "green"
         },
         {
             "colorCode": "6029",
-            "colorName": "Mint green",
+            "colorName": "mint green",
+            "colorNameNL": "mintgroen",
             "colorRgb": "0-111-61",
             "colorHex": "006F3D",
-            "colorType": "green"
+            "colorGroup": "green"
         },
         {
             "colorCode": "6032",
-            "colorName": "Signal green",
+            "colorName": "signal green",
+            "colorNameNL": "signaalgroen",
             "colorRgb": "35-127-82",
             "colorHex": "237F52",
-            "colorType": "green"
+            "colorGroup": "green"
         },
         {
             "colorCode": "6033",
-            "colorName": "Mint turquoise",
+            "colorName": "mint turquoise",
+            "colorNameNL": "mintturquoise",
             "colorRgb": "70-135-127",
             "colorHex": "46877F",
-            "colorType": "green"
+            "colorGroup": "green"
         },
         {
             "colorCode": "6034",
-            "colorName": "Pastel turquoise",
+            "colorName": "pastel turquoise",
+            "colorNameNL": "pastelturquoise",
             "colorRgb": "122-172-172",
             "colorHex": "7AACAC",
-            "colorType": "green"
+            "colorGroup": "green"
         },
         {
             "colorCode": "6035",
-            "colorName": "Pearl green",
+            "colorName": "pearl green",
+            "colorNameNL": "parelmoer donkergroen",
             "colorRgb": "25-77-37",
             "colorHex": "194D25",
-            "colorType": "green"
+            "colorGroup": "green"
         },
         {
             "colorCode": "6036",
-            "colorName": "Pearl opal green",
+            "colorName": "pearl opal green",
+            "colorNameNL": "parelmoer lichtgroen",
             "colorRgb": "4-87-75",
             "colorHex": "04574B",
-            "colorType": "green"
+            "colorGroup": "green"
         },
         {
             "colorCode": "6037",
-            "colorName": "Pure green",
+            "colorName": "pure green",
+            "colorNameNL": "zuiver groen",
             "colorRgb": "0-139-41",
             "colorHex": "008B29",
-            "colorType": "green"
+            "colorGroup": "green"
         },
         {
             "colorCode": "6038",
-            "colorName": "Luminous green",
+            "colorName": "luminous green",
+            "colorNameNL": "briljantgroen",
             "colorRgb": "0-181-26",
             "colorHex": "00B51A",
-            "colorType": "green"
+            "colorGroup": "green"
         },
         {
             "colorCode": "7000",
-            "colorName": "Squirrel grey",
+            "colorName": "squirrel grey",
+            "colorNameNL": "pelsgrijs",
             "colorRgb": "122-136-142",
             "colorHex": "7A888E",
-            "colorType": "grey"
+            "colorGroup": "grey"
         },
         {
             "colorCode": "7001",
-            "colorName": "Silver grey",
+            "colorName": "zilver grey",
+            "colorNameNL": "zilvergrijs",
             "colorRgb": "140-150-157",
             "colorHex": "8C969D",
-            "colorType": "grey"
+            "colorGroup": "grey"
         },
         {
             "colorCode": "7002",
-            "colorName": "Olive grey",
+            "colorName": "olive grey",
+            "colorNameNL": "olijfgrijs",
             "colorRgb": "129-120-99",
             "colorHex": "817863",
-            "colorType": "grey"
+            "colorGroup": "grey"
         },
         {
             "colorCode": "7003",
-            "colorName": "Moss grey",
+            "colorName": "moss grey",
+            "colorNameNL": "mosgrijs",
             "colorRgb": "122-118-105",
             "colorHex": "7A7669",
-            "colorType": "grey"
+            "colorGroup": "grey"
         },
         {
             "colorCode": "7004",
-            "colorName": "Signal grey",
+            "colorName": "signal grey",
+            "colorNameNL": "signaalgrijs",
             "colorRgb": "155-155-155",
             "colorHex": "9B9B9B",
-            "colorType": "grey"
+            "colorGroup": "grey"
         },
         {
             "colorCode": "7005",
-            "colorName": "Mouse grey",
+            "colorName": "mouse grey",
+            "colorNameNL": "muisgrijs",
             "colorRgb": "108-110-107",
             "colorHex": "6C6E6B",
-            "colorType": "grey"
+            "colorGroup": "grey"
         },
         {
             "colorCode": "7006",
-            "colorName": "Beige grey",
+            "colorName": "beige grey",
+            "colorNameNL": "beigegrijs",
             "colorRgb": "118-106-94",
             "colorHex": "766A5E",
-            "colorType": "grey"
+            "colorGroup": "grey"
         },
         {
             "colorCode": "7008",
-            "colorName": "Khaki grey",
+            "colorName": "khaki grey",
+            "colorNameNL": "kakigrijs",
             "colorRgb": "116-94-61",
             "colorHex": "745E3D",
-            "colorType": "grey"
+            "colorGroup": "grey"
         },
         {
             "colorCode": "7009",
-            "colorName": "Green grey",
+            "colorName": "green grey",
+            "colorNameNL": "groengrijs",
             "colorRgb": "93-96-88",
             "colorHex": "5D6058",
-            "colorType": "grey"
+            "colorGroup": "grey"
         },
         {
             "colorCode": "7010",
-            "colorName": "Tarpaulin grey",
+            "colorName": "tarpaulin grey",
+            "colorNameNL": "zeildoekgrijs",
             "colorRgb": "88-92-86",
             "colorHex": "585C56",
-            "colorType": "grey"
+            "colorGroup": "grey"
         },
         {
             "colorCode": "7011",
-            "colorName": "Iron grey",
+            "colorName": "iron grey",
+            "colorNameNL": "ijzergrijs",
             "colorRgb": "82-89-93",
             "colorHex": "52595D",
-            "colorType": "grey"
+            "colorGroup": "grey"
         },
         {
             "colorCode": "7012",
-            "colorName": "Basalt grey",
+            "colorName": "basalt grey",
+            "colorNameNL": "bazaltgrijs",
             "colorRgb": "87-93-94",
             "colorHex": "575D5E",
-            "colorType": "grey"
+            "colorGroup": "grey"
         },
         {
             "colorCode": "7013",
-            "colorName": "Brown grey",
+            "colorName": "brown grey",
+            "colorNameNL": "bruingrijs",
             "colorRgb": "87-80-68",
             "colorHex": "575044",
-            "colorType": "grey"
+            "colorGroup": "grey"
         },
         {
             "colorCode": "7015",
-            "colorName": "Slate grey",
+            "colorName": "slate grey",
+            "colorNameNL": "leigrijs",
             "colorRgb": "79-83-88",
             "colorHex": "4F5358",
-            "colorType": "grey"
+            "colorGroup": "grey"
         },
         {
             "colorCode": "7016",
-            "colorName": "Anthracite grey",
+            "colorName": "anthracite grey",
+            "colorNameNL": "antracietgrijs",
             "colorRgb": "56-62-66",
             "colorHex": "383E42",
-            "colorType": "grey"
+            "colorGroup": "grey"
         },
         {
             "colorCode": "7021",
-            "colorName": "Black grey",
+            "colorName": "black grey",
+            "colorNameNL": "zwartgrijs",
             "colorRgb": "47-50-52",
             "colorHex": "2F3234",
-            "colorType": "grey"
+            "colorGroup": "grey"
         },
         {
             "colorCode": "7022",
-            "colorName": "Umbra grey",
+            "colorName": "umbra grey",
+            "colorNameNL": "ombergrijs",
             "colorRgb": "76-74-68",
             "colorHex": "4C4A44",
-            "colorType": "grey"
+            "colorGroup": "grey"
         },
         {
             "colorCode": "7023",
-            "colorName": "Concrete grey",
+            "colorName": "concrete grey",
+            "colorNameNL": "betongrijs",
             "colorRgb": "128-128-118",
             "colorHex": "808076",
-            "colorType": "grey"
+            "colorGroup": "grey"
         },
         {
             "colorCode": "7024",
-            "colorName": "Graphite grey",
+            "colorName": "graphite grey",
+            "colorNameNL": "grafietgrijs",
             "colorRgb": "69-73-78",
             "colorHex": "45494E",
-            "colorType": "grey"
+            "colorGroup": "grey"
         },
         {
             "colorCode": "7026",
-            "colorName": "Granite grey",
+            "colorName": "granite grey",
+            "colorNameNL": "granietgrijs",
             "colorRgb": "55-67-69",
             "colorHex": "374345",
-            "colorType": "grey"
+            "colorGroup": "grey"
         },
         {
             "colorCode": "7030",
             "colorName": "Stone grey",
+            "colorNameNL": "steengrijs",
             "colorRgb": "146-142-133",
             "colorHex": "928E85",
-            "colorType": "grey"
+            "colorGroup": "grey"
         },
         {
             "colorCode": "7031",
-            "colorName": "Blue grey",
+            "colorName": "blue grey",
+            "colorNameNL": "blauwgrijs",
             "colorRgb": "91-104-109",
             "colorHex": "5B686D",
-            "colorType": "grey"
+            "colorGroup": "grey"
         },
         {
             "colorCode": "7032",
             "colorName": "Pebble grey",
+            "colorNameNL": "kiezelgrijs",
             "colorRgb": "181-176-161",
             "colorHex": "B5B0A1",
-            "colorType": "grey"
+            "colorGroup": "grey"
         },
         {
             "colorCode": "7033",
-            "colorName": "Cement grey",
+            "colorName": "cement grey",
+            "colorNameNL": "cementgrijs",
             "colorRgb": "127-130-116",
             "colorHex": "7F8274",
-            "colorType": "grey"
+            "colorGroup": "grey"
         },
         {
             "colorCode": "7034",
-            "colorName": "Yellow grey",
+            "colorName": "yellow grey",
+            "colorNameNL": "geelgrijs",
             "colorRgb": "146-136-111",
             "colorHex": "92886F",
-            "colorType": "grey"
+            "colorGroup": "grey"
         },
         {
             "colorCode": "7035",
-            "colorName": "Light grey",
+            "colorName": "light grey",
+            "colorNameNL": "lichtgrijs",
             "colorRgb": "197-199-196",
             "colorHex": "C5C7C4",
-            "colorType": "grey"
+            "colorGroup": "grey"
         },
         {
             "colorCode": "7036",
-            "colorName": "Platinum grey",
+            "colorName": "platinum grey",
+            "colorNameNL": "platinagrijs",
             "colorRgb": "151-147-146",
             "colorHex": "979392",
-            "colorType": "grey"
+            "colorGroup": "grey"
         },
         {
             "colorCode": "7037",
             "colorName": "Dusty grey",
+            "colorNameNL": "stofgrijs",
             "colorRgb": "122-123-122",
             "colorHex": "7A7B7A",
-            "colorType": "grey"
+            "colorGroup": "grey"
         },
         {
             "colorCode": "7038",
-            "colorName": "Agate grey",
+            "colorName": "agate grey",
+            "colorNameNL": "agaatgrijs",
             "colorRgb": "176-176-169",
             "colorHex": "B0B0A9",
-            "colorType": "grey"
+            "colorGroup": "grey"
         },
         {
             "colorCode": "7039",
-            "colorName": "Quartz grey",
+            "colorName": "quartz grey",
+            "colorNameNL": "kwartsgrijs",
             "colorRgb": "107-102-94",
             "colorHex": "6B665E",
-            "colorType": "grey"
+            "colorGroup": "grey"
         },
         {
             "colorCode": "7040",
-            "colorName": "Window grey",
+            "colorName": "window grey",
+            "colorNameNL": "venstergrijs",
             "colorRgb": "152-158-161",
             "colorHex": "989EA1",
-            "colorType": "grey"
+            "colorGroup": "grey"
         },
         {
             "colorCode": "7042",
-            "colorName": "Traffic grey A",
+            "colorName": "traffic grey A",
+            "colorNameNL": "verkeersgrijs A",
             "colorRgb": "142-146-145",
             "colorHex": "8E9291",
-            "colorType": "grey"
+            "colorGroup": "grey"
         },
         {
             "colorCode": "7043",
-            "colorName": "Traffic grey B",
+            "colorName": "traffic grey B",
+            "colorNameNL": "verkeersgrijs B",
             "colorRgb": "79-82-80",
             "colorHex": "4F5250",
-            "colorType": "grey"
+            "colorGroup": "grey"
         },
         {
             "colorCode": "7044",
-            "colorName": "Silk grey",
+            "colorName": "silk grey",
+            "colorNameNL": "zijdegrijs",
             "colorRgb": "183-179-168",
             "colorHex": "B7B3A8",
-            "colorType": "grey"
+            "colorGroup": "grey"
         },
         {
             "colorCode": "7045",
-            "colorName": "Telegrey 1",
+            "colorName": "telegrey 1",
+            "colorNameNL": "telegrijs 1",
             "colorRgb": "141-146-149",
             "colorHex": "8D9295",
-            "colorType": "grey"
+            "colorGroup": "grey"
         },
         {
             "colorCode": "7046",
-            "colorName": "Telegrey 2",
+            "colorName": "telegrey 2",
+            "colorNameNL": "telegrijs 2",
             "colorRgb": "127-134-138",
             "colorHex": "7F868A",
-            "colorType": "grey"
+            "colorGroup": "grey"
         },
         {
             "colorCode": "7047",
-            "colorName": "Telegrey 4",
+            "colorName": "telegrey 4",
+            "colorNameNL": "telegrijs 4",
             "colorRgb": "200-200-199",
             "colorHex": "C8C8C7",
-            "colorType": "grey"
+            "colorGroup": "grey"
         },
         {
             "colorCode": "7048",
-            "colorName": "Pearl mouse grey",
+            "colorName": "pale green",
+            "colorNameNL": "parelmoer muisgrijs",
             "colorRgb": "129-123-115",
             "colorHex": "817B73",
-            "colorType": "grey"
+            "colorGroup": "grey"
         },
         {
             "colorCode": "8000",
-            "colorName": "Green brown",
+            "colorName": "green brown",
+            "colorNameNL": "groenbruin",
             "colorRgb": "137-105-62",
             "colorHex": "89693E",
-            "colorType": "brown"
+            "colorGroup": "brown"
         },
         {
             "colorCode": "8001",
-            "colorName": "Ochre brown",
+            "colorName": "ochre brown",
+            "colorNameNL": "okerbruin",
             "colorRgb": "157-98-43",
             "colorHex": "9D622B",
-            "colorType": "brown"
+            "colorGroup": "brown"
         },
         {
             "colorCode": "8002",
-            "colorName": "Signal brown",
+            "colorName": "signal brown",
+            "colorNameNL": "signaalbruin",
             "colorRgb": "121-77-62",
             "colorHex": "794D3E",
-            "colorType": "brown"
+            "colorGroup": "brown"
         },
         {
             "colorCode": "8003",
-            "colorName": "Clay brown",
+            "colorName": "clay brown",
+            "colorNameNL": "leembruin",
             "colorRgb": "126-75-38",
             "colorHex": "7E4B26",
-            "colorType": "brown"
+            "colorGroup": "brown"
         },
         {
             "colorCode": "8004",
-            "colorName": "Copper brown",
+            "colorName": "copper brown",
+            "colorNameNL": "koperbruin",
             "colorRgb": "141-73-49",
             "colorHex": "8D4931",
-            "colorType": "brown"
+            "colorGroup": "brown"
         },
         {
             "colorCode": "8007",
-            "colorName": "Fawn brown",
+            "colorName": "fawn brown",
+            "colorNameNL": "reebruin",
             "colorRgb": "112-69-42",
             "colorHex": "70452A",
-            "colorType": "brown"
+            "colorGroup": "brown"
         },
         {
             "colorCode": "8008",
-            "colorName": "Olive brown",
+            "colorName": "olive brown",
+            "colorNameNL": "olijfbruin",
             "colorRgb": "114-74-37",
             "colorHex": "724A25",
-            "colorType": "brown"
+            "colorGroup": "brown"
         },
         {
             "colorCode": "8011",
-            "colorName": "Nut brown",
+            "colorName": "nut brown",
+            "colorNameNL": "notenbruin",
             "colorRgb": "90-56-38",
             "colorHex": "5A3826",
-            "colorType": "brown"
+            "colorGroup": "brown"
         },
         {
             "colorCode": "8012",
             "colorName": "red brown",
+            "colorNameNL": "roodbruin",
             "colorRgb": "102-51-43",
             "colorHex": "66332B",
-            "colorType": "brown"
+            "colorGroup": "brown"
         },
         {
             "colorCode": "8014",
             "colorName": "sepia brown",
+            "colorNameNL": "sepiabruin",
             "colorRgb": "74-53-38",
             "colorHex": "4A3526",
-            "colorType": "brown"
+            "colorGroup": "brown"
         },
         {
             "colorCode": "8015",
-            "colorName": "Chestnut brown",
+            "colorName": "chestnut brown",
+            "colorNameNL": "kastanjebruin",
             "colorRgb": "94-47-38",
             "colorHex": "5E2F26",
-            "colorType": "brown"
+            "colorGroup": "brown"
         },
         {
             "colorCode": "8016",
-            "colorName": "Mahogany brown",
+            "colorName": "mahogany brown",
+            "colorNameNL": "mahoniebruin",
             "colorRgb": "76-43-32",
             "colorHex": "4C2B20",
-            "colorType": "brown"
+            "colorGroup": "brown"
         },
         {
             "colorCode": "8017",
             "colorName": "chocolate brown",
+            "colorNameNL": "chocoladebruin",
             "colorRgb": "68-47-41",
             "colorHex": "442F29",
-            "colorType": "brown"
+            "colorGroup": "brown"
         },
         {
             "colorCode": "8019",
-            "colorName": "Grey brown",
+            "colorName": "grey brown",
+            "colorNameNL": "grijsbruin",
             "colorRgb": "61-54-53",
             "colorHex": "3D3635",
-            "colorType": "brown"
+            "colorGroup": "brown"
         },
         {
             "colorCode": "8022",
-            "colorName": "Black brown",
+            "colorName": "black brown",
+            "colorNameNL": "zwartbruin",
             "colorRgb": "26-23-24",
             "colorHex": "1A1718",
-            "colorType": "brown"
+            "colorGroup": "brown"
         },
         {
             "colorCode": "8023",
-            "colorName": "Orange brown",
+            "colorName": "orange brown",
+            "colorNameNL": "oranjebruin",
             "colorRgb": "164-87-41",
             "colorHex": "A45729",
-            "colorType": "brown"
+            "colorGroup": "brown"
         },
         {
             "colorCode": "8024",
-            "colorName": "Beige brown",
+            "colorName": "beige brown",
+            "colorNameNL": "beigebruin",
             "colorRgb": "121-80-56",
             "colorHex": "795038",
-            "colorType": "brown"
+            "colorGroup": "brown"
         },
         {
             "colorCode": "8025",
-            "colorName": "Pale brown",
+            "colorName": "pale brown",
+            "colorNameNL": "bleekbruin",
             "colorRgb": "117-88-71",
             "colorHex": "755847",
-            "colorType": "brown"
+            "colorGroup": "brown"
         },
         {
             "colorCode": "8028",
-            "colorName": "Terra brown",
+            "colorName": "terra brown",
+            "colorNameNL": "terrabruin",
             "colorRgb": "81-58-42",
             "colorHex": "513A2A",
-            "colorType": "brown"
+            "colorGroup": "brown"
         },
         {
             "colorCode": "8029",
-            "colorName": "Pearl copper",
+            "colorName": "pearl copper",
+            "colorNameNL": "parelmoer koper",
             "colorRgb": "127-64-49",
             "colorHex": "7F4031",
-            "colorType": "brown"
+            "colorGroup": "brown"
         },
         {
             "colorCode": "9001",
-            "colorName": "Cream",
+            "colorName": "cream",
+            "colorNameNL": "crèmewit",
             "colorRgb": "233-224-210",
             "colorHex": "E9E0D2",
-            "colorType": "white"
+            "colorGroup": "white"
         },
         {
             "colorCode": "9002",
-            "colorName": "Grey white",
+            "colorName": "grey white",
+            "colorNameNL": "grijswit",
             "colorRgb": "215-213-203",
             "colorHex": "D7D5CB",
-            "colorType": "white"
+            "colorGroup": "white"
         },
         {
             "colorCode": "9003",
-            "colorName": "Signal white",
+            "colorName": "signal white",
+            "colorNameNL": "signaalwit",
             "colorRgb": "236-236-231",
             "colorHex": "ECECE7",
-            "colorType": "white"
+            "colorGroup": "white"
         },
         {
             "colorCode": "9004",
-            "colorName": "Signal black",
+            "colorName": "signal black",
+            "colorNameNL": "signaalzwart",
             "colorRgb": "43-43-44",
             "colorHex": "2B2B2C",
-            "colorType": "black"
+            "colorGroup": "black"
         },
         {
             "colorCode": "9005",
-            "colorName": "Jet black",
+            "colorName": "jet black",
+            "colorNameNL": "gitzwart",
             "colorRgb": "14-14-16",
             "colorHex": "0E0E10",
-            "colorType": "black"
+            "colorGroup": "black"
         },
         {
             "colorCode": "9006",
-            "colorName": "White aluminium",
+            "colorName": "white aluminium",
+            "colorNameNL": "blank aluminiumkleurig",
             "colorRgb": "161-161-160",
             "colorHex": "A1A1A0",
-            "colorType": "grey"
+            "colorGroup": "grey"
         },
         {
             "colorCode": "9007",
-            "colorName": "Grey aluminium",
+            "colorName": "grey aluminium",
+            "colorNameNL": "grijs aluminiumkleurig",
             "colorRgb": "135-133-129",
             "colorHex": "878581",
-            "colorType": "grey"
+            "colorGroup": "grey"
         },
         {
             "colorCode": "9010",
-            "colorName": "Pure white",
+            "colorName": "pure white",
+            "colorNameNL": "zuiver wit",
             "colorRgb": "241-236-225",
             "colorHex": "F1ECE1",
-            "colorType": "white"
+            "colorGroup": "white"
         },
         {
             "colorCode": "9011",
-            "colorName": "Graphite black",
+            "colorName": "graphite black",
+            "colorNameNL": "grafietzwart",
             "colorRgb": "39-41-43",
             "colorHex": "27292B",
-            "colorType": "black"
+            "colorGroup": "black"
         },
         {
             "colorCode": "9016",
-            "colorName": "Traffic white",
+            "colorName": "traffic white",
+            "colorNameNL": "verkeerswit",
             "colorRgb": "241-240-234",
             "colorHex": "F1F0EA",
-            "colorType": "white"
+            "colorGroup": "white"
         },
         {
             "colorCode": "9017",
-            "colorName": "Traffic black",
+            "colorName": "traffic black",
+            "colorNameNL": "verkeerszwart",
             "colorRgb": "42-41-42",
             "colorHex": "2A292A",
-            "colorType": "black"
+            "colorGroup": "black"
         },
         {
             "colorCode": "9018",
-            "colorName": "Papyrus white",
+            "colorName": "papyrus white",
+            "colorNameNL": "papyruswit",
             "colorRgb": "200-203-196",
             "colorHex": "C8CBC4",
-            "colorType": "grey"
+            "colorGroup": "grey"
         },
         {
             "colorCode": "9022",
-            "colorName": "Pearl light grey",
+            "colorName": "pearl light grey",
+            "colorNameNL": "parelmoer lichtgrijs",
             "colorRgb": "133-133-131",
             "colorHex": "858583",
-            "colorType": "grey"
+            "colorGroup": "grey"
         },
         {
             "colorCode": "9023",
-            "colorName": "Pearl dark grey",
+            "colorName": "pearl dark grey",
+            "colorNameNL": "parelmoer donkergrijs",
             "colorRgb": "121-123-122",
             "colorHex": "797B7A",
-            "colorType": "grey"
+            "colorGroup": "grey"
         }
     ]
 }

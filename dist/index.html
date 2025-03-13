@@ -105,7 +105,7 @@
                             <div class="position-absolute w-100">
                               <div style="letter-spacing: 1.5px;" class="h2 text-center m-0 p-0 mt-4" id="producttitleMobile">
                                 ${title}<br>
-                                 <button id="add-to-cart-button" type="button" style="width: 250px; background-color: #1a5951; color: white;" class="btn btn-success rounded-pill p-1 m-1">
+                                 <button id="add-to-cart-button" type="button" style="width: 250px; color: white;" class="btn btn-dark rounded-pill p-1 m-1">
                                   <span class="productInfoPrice">#</span>
                                 </button>
                               </div>
@@ -135,7 +135,7 @@
 
           // Begin met de HTML-opbouw
           let htmlContent = `
-  <div style="height: 100%; background: #aaaaaa;" class="col-md-6 col-12 vh-100 m-0 p-0" id="modelviewerCol">
+  <div style="height: 100%; background: #d4d4d4;" class="col-md-6 col-12 vh-100 m-0 p-0" id="modelviewerCol">
     <div class="brandlogo position-absolute top-0 start-0 pt-5 ps-5">
       <img src="img/logo_${brand}.svg">
     </div>
@@ -361,16 +361,9 @@
 
               <div class="col-4 p-0 m-0 pt-3">
 
-                <button id="add-to-cart-button" type="button" style="background-color: #1a5951; color: white; letter-spacing: 1.5px;" class="float-end d-flex btn btn-success rounded-pill px-4 download-button">
+                <button id="add-to-cart-button" type="button" style="color: white; letter-spacing: 1.5px;" class="btn btn-dark float-end d-flex rounded-0 btn btn-success px-4 download-button">
                   <span class="material-symbols-outlined mt-1">shopping_cart</span>&nbsp;&nbsp;<span class="mt-1 h6">bestellen</span>
                 </button>
-
-                <style>
-                    .download-button:hover {
-                        background-color: #81dd3f; /* Adjusted hover color */
-                    }
-                </style>
-
                 </div> 
             </div>
           </div>

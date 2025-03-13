@@ -17,7 +17,7 @@ let projectmap = 'projects/tv-wand/';
 export function initThree(containerElem) {
     // Scene setup
     scene = new THREE.Scene();
-    scene.background = new THREE.Color(0xaaaaaa);
+    scene.background = new THREE.Color(0xd4d4d4);
 
     // Camera setup
     camera = new THREE.PerspectiveCamera(60, containerElem.offsetWidth / containerElem.offsetHeight, 0.1, 100);
@@ -56,16 +56,16 @@ export function initThree(containerElem) {
     controls.dampingFactor = 0.05;
     controls.minDistance = 2;
     controls.maxDistance = 10;
-    controls.minPolarAngle = Math.PI / 2;
-    controls.maxPolarAngle = Math.PI / 2 + 0.2;
-    controls.minAzimuthAngle = -Math.PI / 2 + 0.1;
-    controls.maxAzimuthAngle = Math.PI / 2 - 0.1;
+
+    // Verhoog maxPolarAngle iets, maar niet te veel
+    controls.minPolarAngle = Math.PI / 3;  // Minimum in 45 graden
+    controls.maxPolarAngle = Math.PI / 2 + 0.1;  // Verhoog een beetje voor meer vrijheid, maar niet te veel
+
+    controls.minAzimuthAngle = -Math.PI / 2 + 0.05;
+    controls.maxAzimuthAngle = Math.PI / 2 - 0.05;
+
     controls.target.set(0, 1.2, 0);
     controls.update();
-
-
-
-
 
     // desktop version
     if (windowHeight < windowWidth) {
@@ -105,20 +105,17 @@ function createCinewall(width, height, depth, tvSize, wallColor, soundbar, firep
 
     const evaluator = new Evaluator();
 
-    const backwallGeometry = new THREE.PlaneGeometry(20, heightInMeters);
+    const backwallGeometry = new THREE.PlaneGeometry(1000, 20);
     const backwallMaterial = new THREE.MeshStandardMaterial({
-        color: 0xaaaaaa,
-        //side: THREE.FrontSide,
-        //transparent: true,
-        opacity: 1
+        color: '#d2d2d2',
+        side: THREE.FrontSide
     });
     const backwallMesh = new THREE.Mesh(backwallGeometry, backwallMaterial);
-    backwallMesh.position.set(0, heightInMeters/2, 0);
+    backwallMesh.position.set(0, 10, 0);
     scene.add(backwallMesh);
 
     backwallMesh.castShadow = true;
     backwallMesh.receiveShadow = true;
-    
 
     const wallGeometry = new THREE.BoxGeometry(widthInMeters, heightInMeters, depthInMeters);
     const wallMaterial = new THREE.MeshStandardMaterial({ color: '#' + wallColor });
@@ -159,33 +156,44 @@ function createCinewall(width, height, depth, tvSize, wallColor, soundbar, firep
     }
 
     if (fireplaceWidth) {
-        // recess
+        // Maak de recess voor de haard
         const fireplaceRecess = new Brush(new THREE.BoxGeometry(fireplaceWidthInMeters, fireplaceHeightInMeters, 0.30));
         fireplaceRecess.position.set(0, 0.2 - (heightInMeters / 2) + (fireplaceHeightInMeters / 2), (depthInMeters / 2) - 0.075);
         fireplaceRecess.updateMatrixWorld();
-
+    
         wallResult = evaluator.evaluate(wallResult, fireplaceRecess, SUBTRACTION);
-
+    
+        // Video-element ophalen en afspelen
         const fireElement = document.getElementById('optiflame');
-
-        const fireTexture = new THREE.VideoTexture(fireElement);
-        fireTexture.minFilter = THREE.LinearFilter;
-        fireTexture.magFilter = THREE.LinearFilter;
-        fireTexture.format = THREE.RGBFormat;
-
-        const fireMaterial = new THREE.MeshStandardMaterial({
-            map: fireTexture,
-            emissive: 0x555555
-        });
-
-        const fireGeometry = new THREE.BoxGeometry(fireplaceWidthInMeters, fireplaceHeightInMeters, 0.005);
-        const fireMesh = new THREE.Mesh(fireGeometry, fireMaterial);
-        fireMesh.position.set(0, 0.2 + (fireplaceHeightInMeters / 2), depthInMeters / 2 - 0.02);
-        scene.add(fireMesh);
-
-        fireMesh.castShadow = true;
-        fireMesh.receiveShadow = true;
+        fireElement.play().catch(error => console.error("Video afspelen mislukt:", error));
+    
+        // Video-textuur aanmaken
+        const fireplaceTexture = new THREE.VideoTexture(fireElement);
+        fireplaceTexture.minFilter = THREE.LinearFilter;
+        fireplaceTexture.magFilter = THREE.LinearFilter;
+    
+        // Materiaal aanmaken met video als textuur
+        const fireplaceMaterial = new THREE.MeshBasicMaterial({ map: fireplaceTexture });
+    
+        // Geometrie en mesh voor de video-textuur
+        const fireplaceGeometry = new THREE.BoxGeometry(fireplaceWidthInMeters, fireplaceHeightInMeters, 0.005);
+        const fireplaceMesh = new THREE.Mesh(fireplaceGeometry, fireplaceMaterial);
+        fireplaceMesh.position.set(0, 0.2 + (fireplaceHeightInMeters / 2), depthInMeters - 0.15);
+        scene.add(fireplaceMesh);
+    
+        // Frame maken voor de haard
+        const fireplaceFrameMesh = new Brush(new THREE.BoxGeometry(fireplaceWidthInMeters, fireplaceHeightInMeters, 0.3));
+        const fireplaceCutout = new Brush(new THREE.BoxGeometry(fireplaceWidthInMeters - 0.03, fireplaceHeightInMeters - 0.03, 4));
+        const fireplaceFrameResult = evaluator.evaluate(fireplaceFrameMesh, fireplaceCutout, SUBTRACTION);
+    
+        if (fireplaceFrameResult) {
+            const fireplaceMaterial = new THREE.MeshStandardMaterial({ color: 0x000000, roughness: 0.9, metalness: 0.6 });
+            const fireplaceFrameMesh = new THREE.Mesh(fireplaceFrameResult.geometry, fireplaceMaterial);
+            fireplaceFrameMesh.position.set(0, 0.2 + (fireplaceHeightInMeters / 2), depthInMeters - 0.15);
+            scene.add(fireplaceFrameMesh);
+        }
     }
+    
 
     let wallMesh = null;
 
@@ -214,46 +222,17 @@ function createCinewall(width, height, depth, tvSize, wallColor, soundbar, firep
         tvFrameMesh.receiveShadow = true;
     }
 
-// Gebruik de functie in je TV-materiaal
-const tvScreenMaterial = new THREE.MeshStandardMaterial({
-    map: updateVideoTexture(video),
-    emissiveMap: videoTexture,
-    emissive: 0xffffff,
-    emissiveIntensity: 0.5,
-    roughness: 0.1,
-    metalness: 0.5,
-});
-
-// Maak en plaats het TV-scherm
-const tvScreenGeometry = new THREE.BoxGeometry(tvWidth, tvHeight, tvDepth - 0.005);
-const tvScreenMesh = new THREE.Mesh(tvScreenGeometry, tvScreenMaterial);
-tvScreenMesh.position.set(0, 1 + (tvHeight / 2) + 0.015, depthInMeters - 0.02);
-scene.add(tvScreenMesh);
-
-tvScreenMesh.castShadow = true;
-tvScreenMesh.receiveShadow = true;
-/*
-    const videoElement = document.createElement('video');
-    videoElement.src = 'projects/tv-wand/video/' + video + '.mp4';
-
-    videoElement.loop = true;
-    videoElement.muted = true;
-    videoElement.play();
-
-    const videoTexture = new THREE.VideoTexture(videoElement);
-    videoTexture.minFilter = THREE.LinearFilter;
-    videoTexture.magFilter = THREE.LinearFilter;
-    videoTexture.format = THREE.RGBFormat;
-
+    // Gebruik de functie in je TV-materiaal
     const tvScreenMaterial = new THREE.MeshStandardMaterial({
-        map: videoTexture,
-        emissiveMap: videoTexture, // Laat het scherm zelf oplichten
+        map: updateVideoTexture(video),
+        emissiveMap: videoTexture,
         emissive: 0xffffff,
         emissiveIntensity: 0.5,
-        roughness: 0.1, // Lager = glanzender
-        metalness: 0.5, // Hoger = meer reflectie
+        roughness: 0.1,
+        metalness: 0.5,
     });
 
+    // Maak en plaats het TV-scherm
     const tvScreenGeometry = new THREE.BoxGeometry(tvWidth, tvHeight, tvDepth - 0.005);
     const tvScreenMesh = new THREE.Mesh(tvScreenGeometry, tvScreenMaterial);
     tvScreenMesh.position.set(0, 1 + (tvHeight / 2) + 0.015, depthInMeters - 0.02);
@@ -261,7 +240,36 @@ tvScreenMesh.receiveShadow = true;
 
     tvScreenMesh.castShadow = true;
     tvScreenMesh.receiveShadow = true;
-*/
+    /*
+        const videoElement = document.createElement('video');
+        videoElement.src = 'projects/tv-wand/video/' + video + '.mp4';
+    
+        videoElement.loop = true;
+        videoElement.muted = true;
+        videoElement.play();
+    
+        const videoTexture = new THREE.VideoTexture(videoElement);
+        videoTexture.minFilter = THREE.LinearFilter;
+        videoTexture.magFilter = THREE.LinearFilter;
+        videoTexture.format = THREE.RGBFormat;
+    
+        const tvScreenMaterial = new THREE.MeshStandardMaterial({
+            map: videoTexture,
+            emissiveMap: videoTexture, // Laat het scherm zelf oplichten
+            emissive: 0xffffff,
+            emissiveIntensity: 0.5,
+            roughness: 0.1, // Lager = glanzender
+            metalness: 0.5, // Hoger = meer reflectie
+        });
+    
+        const tvScreenGeometry = new THREE.BoxGeometry(tvWidth, tvHeight, tvDepth - 0.005);
+        const tvScreenMesh = new THREE.Mesh(tvScreenGeometry, tvScreenMaterial);
+        tvScreenMesh.position.set(0, 1 + (tvHeight / 2) + 0.015, depthInMeters - 0.02);
+        scene.add(tvScreenMesh);
+    
+        tvScreenMesh.castShadow = true;
+        tvScreenMesh.receiveShadow = true;
+    */
     if (alcoveLeft) {
         // Geometry
         const alcoveLeftGeometry = new Brush(new THREE.BoxGeometry(alcoveLeftWidthInMeters, heightInMeters, depthInMeters - 0.05));
@@ -281,6 +289,35 @@ tvScreenMesh.receiveShadow = true;
 
             alcoveLeft.castShadow = true;
             alcoveLeft.receiveShadow = true;
+
+            const lampCeilingLeftGeometry = new THREE.CylinderGeometry(0.035, 0.035, 0.005, 32);
+            const lampCeilingLeftMaterial = new THREE.MeshStandardMaterial({
+                color: 0xfff5e1,
+                emissive: 0xfff5e1,
+                emissiveIntensity: 1.5,
+                roughness: 0.3
+            });
+            const lampCeilingLeft = new THREE.Mesh(lampCeilingLeftGeometry, lampCeilingLeftMaterial);
+
+            lampCeilingLeft.position.set(-(widthInMeters / 2) - (alcoveLeftWidthInMeters / 2), heightInMeters - 0.2, depthInMeters / 2);
+            scene.add(lampCeilingLeft);
+
+            const ceilingLeftLight = new THREE.SpotLight(0xffcc88, 1.5);
+            ceilingLeftLight.position.copy(lampCeilingLeft.position);
+            ceilingLeftLight.position.y -= -0.2;
+            ceilingLeftLight.angle = Math.PI / 6;
+            ceilingLeftLight.penumbra = 0.5;
+            ceilingLeftLight.decay = 2;
+            ceilingLeftLight.distance = 2;
+
+            ceilingLeftLight.castShadow = false;
+            ceilingLeftLight.shadow.mapSize.width = 1024;
+            ceilingLeftLight.shadow.mapSize.height = 1024;
+
+            ceilingLeftLight.target.position.set(lampCeilingLeft.position.x, lampCeilingLeft.position.y, lampCeilingLeft.position.z);
+
+            scene.add(ceilingLeftLight);
+            scene.add(ceilingLeftLight.target);
         }
 
         for (let i = 0; i < alcoveLeftShelves; i++) {
@@ -290,14 +327,14 @@ tvScreenMesh.receiveShadow = true;
             const shelfStartY = (heightInMeters - 0.4) / (alcoveLeftShelves + 1);
             const shelfY = (shelfStartY * (i + 1) + 0.2);
 
-            alcoveLeftShelve.position.set(-(widthInMeters / 2) - (alcoveLeftWidthInMeters / 2), shelfY, depthInMeters / 2 - 0.025);
+            alcoveLeftShelve.position.set(-(widthInMeters / 2) - (alcoveLeftWidthInMeters / 2), shelfY, depthInMeters / 2 - 0.017);
 
             scene.add(alcoveLeftShelve);
 
             alcoveLeftShelve.castShadow = true;
             alcoveLeftShelve.receiveShadow = true;
 
-            const lampGeometry = new THREE.CylinderGeometry(0.05, 0.05, 0.005, 32);
+            const lampGeometry = new THREE.CylinderGeometry(0.035, 0.035, 0.005, 32);
             const lampMaterial = new THREE.MeshStandardMaterial({
                 color: 0xfff5e1,  // Warm lichtkleur
                 emissive: 0xfff5e1, // Laat de lamp zelf licht uitstralen
@@ -338,10 +375,39 @@ tvScreenMesh.receiveShadow = true;
 
             const alcoveRightResult = evaluator.evaluate(alcoveRightGeometry, alcoveRightRecess, SUBTRACTION);
 
+            const lampCeilingRightGeometry = new THREE.CylinderGeometry(0.035, 0.035, 0.005, 32);
+            const lampCeilingRightMaterial = new THREE.MeshStandardMaterial({
+                color: 0xfff5e1,
+                emissive: 0xfff5e1,
+                emissiveIntensity: 1.5,
+                roughness: 0.3
+            });
+            const lampCeilingRight = new THREE.Mesh(lampCeilingRightGeometry, lampCeilingRightMaterial);
+
+            lampCeilingRight.position.set((widthInMeters / 2) + (alcoveRightWidthInMeters / 2), heightInMeters - 0.2, depthInMeters / 2);
+            scene.add(lampCeilingRight);
+
+            const ceilingRightLight = new THREE.SpotLight(0xffcc88, 1.5);
+            ceilingRightLight.position.copy(lampCeilingRight.position);
+            ceilingRightLight.position.y -= -0.2;
+            ceilingRightLight.angle = Math.PI / 6;
+            ceilingRightLight.penumbra = 0.5;
+            ceilingRightLight.decay = 2;
+            ceilingRightLight.distance = 2;
+
+            ceilingRightLight.castShadow = false;
+            ceilingRightLight.shadow.mapSize.width = 1024;
+            ceilingRightLight.shadow.mapSize.height = 1024;
+
+            ceilingRightLight.target.position.set(lampCeilingRight.position.x, lampCeilingRight.position.y, lampCeilingRight.position.z);
+
+            scene.add(ceilingRightLight);
+            scene.add(ceilingRightLight.target);
+
             if (alcoveRightResult) {
                 const alcoveRight = new THREE.Mesh(alcoveRightResult.geometry, wallMaterial);
                 alcoveRight.position.set((widthInMeters / 2) + (alcoveRightWidthInMeters / 2), heightInMeters / 2, depthInMeters / 2 - 0.025);
-            
+
                 scene.add(alcoveRight);
 
                 alcoveRight.castShadow = true;
@@ -354,14 +420,14 @@ tvScreenMesh.receiveShadow = true;
                 const shelfStartY = (heightInMeters - 0.4) / (alcoveRightShelves + 1);
                 const shelfY = (shelfStartY * (i + 1) + 0.2);
 
-                alcoveRightShelve.position.set((widthInMeters / 2) + (alcoveRightWidthInMeters / 2), shelfY, depthInMeters / 2 - 0.025);
+                alcoveRightShelve.position.set((widthInMeters / 2) + (alcoveRightWidthInMeters / 2), shelfY, depthInMeters / 2 - 0.017);
 
                 scene.add(alcoveRightShelve);
 
                 alcoveRightShelve.castShadow = true;
                 alcoveRightShelve.receiveShadow = true;
 
-                const lampGeometry = new THREE.CylinderGeometry(0.05, 0.05, 0.005, 32);
+                const lampGeometry = new THREE.CylinderGeometry(0.035, 0.035, 0.005, 32);
                 const lampMaterial = new THREE.MeshStandardMaterial({
                     color: 0xfff5e1,
                     emissive: 0xfff5e1,
@@ -386,7 +452,7 @@ tvScreenMesh.receiveShadow = true;
                 shelfLight.shadow.mapSize.height = 1024;
 
                 shelfLight.target.position.set(lamp.position.x, lamp.position.y, lamp.position.z);
-                shelfLight.target.position.set(lamp.position.x, heightInMeters-.4, lamp.position.z);
+
 
                 scene.add(shelfLight);
                 scene.add(shelfLight.target);

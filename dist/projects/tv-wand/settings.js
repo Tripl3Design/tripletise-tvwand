@@ -200,35 +200,58 @@ function updateControlPanel(model, selectedLayer, expandedLayer) {
         showSelected(false);
     });
 
-    document.getElementById('sizeText').textContent = model.width + ' x ' + model.height + ' x ' + model.depth + ' cm';
+    document.getElementById('sizesText').textContent = model.width + ' x ' + model.height + ' x ' + model.depth + ' cm';
 
-    //tv diagonal 
-    document.getElementById("tvSize").value = model.tvSize;
-    document.getElementById("tvSizeInput").value = model.tvSize;
+    //tv diagonal
+    const maxTvWidth = model.width - 23;
+    const maxTvHeight = model.height - 121;
+    const inchToCm = 2.54;
+    const maxWidthInInches = (maxTvWidth / inchToCm) * (18.3576 / 16);
+    const maxHeightInInches = (maxTvHeight / inchToCm) * (18.3576 / 9);
+    const maxDiagonalInInches = Math.sqrt(Math.pow(maxTvWidth / inchToCm, 2) + Math.pow(maxTvHeight / inchToCm, 2));
+    const maxTvSize = Math.floor(Math.min(maxWidthInInches, maxHeightInInches, maxDiagonalInInches));
+    const tvSizeSlider = document.getElementById("tvSize");
+    const tvSizeInput = document.getElementById("tvSizeInput");
+    const minTvSize = 30;
+    tvSizeSlider.setAttribute("min", minTvSize);
+    tvSizeSlider.setAttribute("max", maxTvSize);
+    tvSizeInput.setAttribute("min", minTvSize);
+    tvSizeInput.setAttribute("max", maxTvSize);
 
-    document.getElementById("tvSize").addEventListener("input", function (event) {
-        document.getElementById("tvSizeInput").value = event.target.value;
+    if (maxTvSize < model.tvSize) {
+        model.tvSize = maxTvSize;
+    }
+
+    document.getElementById("minTvInch").textContent = minTvSize;
+    document.getElementById("maxTvInch").textContent = maxTvSize;
+
+    tvSizeSlider.value = model.tvSize;
+    tvSizeInput.value = model.tvSize;
+
+    tvSizeSlider.addEventListener("input", function (event) {
+        tvSizeInput.value = event.target.value;
     });
 
-    document.getElementById("tvSize").addEventListener("change", function (event) {
+    tvSizeSlider.addEventListener("change", function (event) {
         model.tvSize = event.target.value;
 
-        updateControlPanel(model, 'telly');
+        updateControlPanel(model, 'size');
         updateFeaturedModel(model);
         showSelected(false);
     });
 
-    document.getElementById("tvSizeInput").addEventListener("input", function (event) {
+    tvSizeInput.addEventListener("input", function (event) {
+        let newValue = Math.min(event.target.value, maxTvSize);
+        tvSizeInput.value = newValue;
+        tvSizeSlider.value = newValue;
+        model.tvSize = maxTvSize;
 
-        document.getElementById("tvSize").value = event.target.value;
-        model.tvSize = event.target.value;
-
-        updateControlPanel(model, 'telly');
+        updateControlPanel(model, 'size');
         updateFeaturedModel(model);
         showSelected(false);
-
     });
-    document.getElementById('inchText').textContent = model.tvSize + ' inch';
+
+    document.getElementById('inchText').textContent = model.tvSize + ' inch tv';
 
     // soundbar
     let soundbarCheckbox = document.getElementById('soundbar');
@@ -239,6 +262,12 @@ function updateControlPanel(model, selectedLayer, expandedLayer) {
         soundbarCheckbox.checked = false;
     }
 
+    if (soundbarCheckbox.checked) {
+        document.getElementById('soundbarText').textContent = 'soundbar';
+    } else {
+        document.getElementById('soundbarText').textContent = '';
+    }
+
     soundbarCheckbox.addEventListener('click', () => {
         if (soundbarCheckbox.checked) {
             model.soundbar = true;
@@ -246,17 +275,14 @@ function updateControlPanel(model, selectedLayer, expandedLayer) {
             model.soundbar = false;
         }
 
-        updateControlPanel(model, 'telly');
+        updateControlPanel(model, 'options');
         updateFeaturedModel(model);
         showSelected(false);
     });
 
-    if (soundbarCheckbox.checked) {
-        document.getElementById('soundbarText').textContent = 'met soundbar';
-    } else {
-        document.getElementById('soundbarText').textContent = 'geen soundbar';
-    }
 
+
+    /*
     // video
     document.getElementById("video-1").addEventListener("click", function (event) {
         model.video = document.getElementById("video-1").id;
@@ -273,7 +299,7 @@ function updateControlPanel(model, selectedLayer, expandedLayer) {
         updateFeaturedModel(model);
         showSelected(false);
     });
-
+*/
     //alcove
     let alcoveCheckbox = document.getElementById('alcoveToggle');
 
@@ -281,6 +307,12 @@ function updateControlPanel(model, selectedLayer, expandedLayer) {
         alcoveCheckbox.checked = true;
     } else {
         alcoveCheckbox.checked = false;
+    }
+
+    if (alcoveCheckbox.checked) {
+        document.getElementById('alcoveText').textContent = 'vakkenkasten';
+    } else {
+        document.getElementById('alcoveText').textContent = '';
     }
 
     alcoveCheckbox.addEventListener('click', () => {
@@ -292,75 +324,107 @@ function updateControlPanel(model, selectedLayer, expandedLayer) {
             model.alcove.right.width = 0;
         }
 
-        updateControlPanel(model, 'alcove');
+        updateControlPanel(model, undefined, 'options');
         updateFeaturedModel(model);
         showSelected(false);
     });
 
-    if (alcoveCheckbox.checked) {
-        document.getElementById('alcoveText').textContent = 'met vakkenkasten';
-    } else {
-        document.getElementById('alcoveText').textContent = 'geen vakkenkasten';
-    }
+    if (model.alcove.left.width != 0) {
+        document.getElementById("alcove").value = model.alcove.left.width;
+        document.getElementById("alcoveInput").value = model.tvSize;
 
-    document.getElementById("alcove").value = model.alcove.left.width;
-    document.getElementById("alcoveInput").value = model.tvSize;
+        document.getElementById("alcove").addEventListener("input", function (event) {
+            document.getElementById("alcoveInput").value = event.target.value;
+        });
 
-    document.getElementById("alcove").addEventListener("input", function (event) {
-        document.getElementById("alcoveInput").value = event.target.value;
-    });
+        document.getElementById("alcove").addEventListener("change", function (event) {
+            model.alcove.left.width = parseInt(event.target.value);
+            model.alcove.right.width = parseInt(event.target.value);
 
-    document.getElementById("alcove").addEventListener("change", function (event) {
-        model.alcove.left.width = parseInt(event.target.value);
-        model.alcove.right.width = parseInt(event.target.value);
+            updateControlPanel(model, 'alcove');
+            updateFeaturedModel(model);
+            showSelected(false);
+        });
 
-        updateControlPanel(model, 'alcove');
-        updateFeaturedModel(model);
-        showSelected(false);
-    });
+        document.getElementById("shelvesInput").value = model.alcove.left.shelves;
 
-    document.getElementById("shelvesInput").value = model.alcove.left.shelves;
+        document.getElementById("shelvesInput").addEventListener("change", function (event) {
+            model.alcove.left.shelves = parseInt(event.target.value);
+            model.alcove.right.shelves = parseInt(event.target.value);
 
-    document.getElementById("shelvesInput").addEventListener("change", function (event) {
-        model.alcove.left.shelves = parseInt(event.target.value);
-        model.alcove.right.shelves = parseInt(event.target.value);
+            updateControlPanel(model, 'alcove');
+            updateFeaturedModel(model);
+            showSelected(false);
+        });
 
-        updateControlPanel(model, 'alcove');
-        updateFeaturedModel(model);
-        showSelected(false);
-    });
-
-    document.getElementById('alcoveWidthText').textContent = model.alcove.left.width + ' cm';
-    if (model.alcove.left.shelves != 1) {
-        document.getElementById('alcoveShelvesText').textContent = model.alcove.left.shelves + ' planken';
-    } else {
-        document.getElementById('alcoveShelvesText').textContent = model.alcove.left.shelves + ' plank';
+        document.getElementById('alcoveWidthText').textContent = model.alcove.left.width + ' cm';
+        if (model.alcove.left.shelves != 1) {
+            document.getElementById('alcoveShelvesText').textContent = model.alcove.left.shelves + ' planken';
+        } else {
+            document.getElementById('alcoveShelvesText').textContent = model.alcove.left.shelves + ' plank';
+        }
     }
 
     //fireplace
+    let fireplaceCheckbox = document.getElementById('fireplaceToggle');
+
+    if (model.fireplace.width != 0) {
+        fireplaceCheckbox.checked = true;
+    } else {
+        fireplaceCheckbox.checked = false;
+    }
+
+    if (fireplaceCheckbox.checked) {
+        document.getElementById('fireplaceText').textContent = 'sfeerhaard';
+    } else {
+        document.getElementById('fireplaceText').textContent = '';
+    }
+
+    fireplaceCheckbox.addEventListener('click', () => {
+        if (fireplaceCheckbox.checked) {
+            model.fireplace.width = 150;
+            model.fireplace.height = 30;
+            model.fireplace.brand = 'ignite';
+            model.fireplace.type = '500';
+        } else {
+            model.fireplace.width = 0;
+        }
+
+        updateControlPanel(model, undefined, 'options');
+        updateFeaturedModel(model);
+        showSelected(false);
+    });
+
+
+
+
 
 
     //colors  
     const ralColor = model.color.hex;
     let colorIndex = ALLCOLORS.colors.findIndex(item => item.colorHex === ralColor);
-    console.log(colorIndex);
     var colorValue = document.querySelectorAll(`.finishingColors_colorButton`);
-    model.color.name = ALLCOLORS.colors[colorIndex].colorName;
+    model.color.ral = ALLCOLORS.colors[colorIndex].colorCode;
+    model.color.name = ALLCOLORS.colors[colorIndex].colorNameNL;
+    model.color.group = ALLCOLORS.colors[colorIndex].colorGroup;
 
-    if (uap.getDevice().type === 'mobile' || uap.getDevice().type === 'tablet' || uap.getDevice().withFeatureCheck().type === 'tablet') {
+    if (uap.getDevice().type != 'mobile' || uap.getDevice().type != 'tablet' || uap.getDevice().withFeatureCheck().type != 'tablet') {
         colorValue.forEach(item => item.addEventListener('mouseover', () => {
+            console.log('hover');
             colorValue.forEach(item => { item.classList.remove('colorButtonActive') });
             const colorId = item.id.split('_');
             colorIndex = colorId[1];
             document.getElementById(`finishingText`).style.visibility = 'visible';
-            document.getElementById(`colorText`).innerHTML = '<img src="' + ALLCOLORS.colors[colorIndex].colorPathThumb + '" class="rounded-pill shadow" style="width: calc(1rem + 1vw);">&nbsp;&nbsp;&nbsp;&nbsp;' + ALLCOLORS.colors[colorIndex].colorName;
+            document.getElementById(`colorText`).innerHTML = '<img src="img/transparant.png" class="rounded-pill shadow" style="width: calc(1rem + 1vw); background-color: #' + ALLCOLORS.colors[colorIndex].colorHex + ';">&nbsp;&nbsp;&nbsp;&nbsp;' + ALLCOLORS.colors[colorIndex].colorCode + ' ' + ALLCOLORS.colors[colorIndex].colorNameNL;
+            // document.getElementById(`colorText`).innerHTML = '<img src="' + ALLCOLORS.colors[colorIndex].colorPathThumb + '" class="rounded-pill shadow" style="width: calc(1rem + 1vw);">&nbsp;&nbsp;&nbsp;&nbsp;' + ALLCOLORS.colors[colorIndex].colorName;
             document.getElementById(`colorText`).classList.add('fst-italic');
             showSelected(true);
         }));
 
         colorValue.forEach(item => item.addEventListener('mouseout', () => {
             document.getElementById(`finishingText`).style.visibility = 'hidden';
-            document.getElementById(`colorText`).innerHTML = '<img src="' + model.color.pathThumb + '" class="rounded-pill shadow" style="width: calc(1rem + 1vw);">&nbsp;&nbsp;&nbsp;&nbsp;' + model.color.type + ' ' + model.color.name;
+            document.getElementById(`colorText`).innerHTML = '<img src="img/transparant.png" class="rounded-pill shadow" style="width: calc(1rem + 1vw); background-color: #' + model.color.hex + ';">&nbsp;&nbsp;&nbsp;&nbsp;' + model.color.ral + ' ' + model.color.name;
+            // document.getElementById(`colorText`).innerHTML = '<img src="' + model.color.pathThumb + '" class="rounded-pill shadow" style="width: calc(1rem + 1vw);">&nbsp;&nbsp;&nbsp;&nbsp;' + model.color.type + ' ' + model.color.name;
             document.getElementById(`colorText`).classList.remove('fst-italic');
             showSelected(true);
         }));
@@ -378,10 +442,47 @@ function updateControlPanel(model, selectedLayer, expandedLayer) {
         updateFeaturedModel(model);
         showSelected(true);
     }));
-
-    document.getElementById('finishingText').innerHTML = '<img src="img/transparant.png" class="rounded-pill shadow" style="width: calc(1rem + 1vw); background-color: #' + model.color.hex + ';">&nbsp;&nbsp;&nbsp;&nbsp;' + model.color.name;
+    document.getElementById('colorText').innerHTML = '<img src="img/transparant.png" class="rounded-pill shadow" style="width: calc(1rem + 1vw); background-color: #' + model.color.hex + ';">&nbsp;&nbsp;&nbsp;&nbsp;' + model.color.ral + ' ' + model.color.name
     document.getElementById(`finishingColorsIndex_${colorIndex}`).classList.remove('colorButton');
     document.getElementById(`finishingColorsIndex_${colorIndex}`).classList.add('colorButtonActive');
+
+    let selectedColorGroup = model.color.group;
+    document.querySelectorAll(".color-group").forEach(group => {
+        if (group.getAttribute("data-color") === selectedColorGroup) {
+            group.style.display = "block";
+        } else {
+            group.style.display = "none";
+        }
+    });
+
+    document.querySelectorAll(".filter-btn").forEach(button => {
+        if (button.getAttribute("data-color") === selectedColorGroup) {
+            button.classList.add("active");
+        } else {
+            button.classList.remove("active");
+        }
+
+        button.addEventListener("click", function () {
+            let selectedColor = this.getAttribute("data-color");
+
+            document.querySelectorAll(".color-group").forEach(group => {
+                if (group.getAttribute("data-color") === selectedColor) {
+                    group.style.display = "block";
+                } else {
+                    group.style.display = "none";
+                }
+            });
+
+            document.querySelectorAll(".filter-btn").forEach(btn => {
+                btn.classList.remove("active");
+            });
+            this.classList.add("active");
+        });
+    });
+
+
+
+
 
     pricing(model);
 
@@ -455,7 +556,7 @@ function initSettings(model) {
 
     accordions.size = {
         title: "afmeting",
-        options: [],
+        options: ['sizes', 'inch'],
         display: "d-block",
         code: /*html*/`
 
@@ -506,6 +607,30 @@ function initSettings(model) {
                     <span>50</span>
                 </div>
 
+                <div class="mt-3">inchmaat tv:</div>
+                <input class="input-group-text float-end rounded-0 bg-white" type="number" id="tvSizeInput" min="30" max="90" value="#" step="1">
+                <input style="width: 80%" type="range" class="form-range" id="tvSize" min="30" max="90" value="#" step="1">
+                <div style="width: 80%; display: flex; justify-content: space-between; margin-top: -10px; font-size: 11px;">
+                    <span id="minTvInch">30</span>
+                    <span id="maxTvInch">90</span>
+                </div>
+
+                <!-- videos for videotexture, do not remove -->
+                <video id="video-1" style="display: none;" height="100px" autoplay loop muted>
+                    <source src="projects/tv-wand/video/video-1.mp4" type="video/mp4" >
+                    Your browser does not support the video tag.
+                </video>
+            
+                <video id="video-2" style="display: none;" height="100px" autoplay loop muted>
+                    <source src="projects/tv-wand/video/video-2.mp4" type="video/mp4" >
+                    Your browser does not support the video tag.
+                </video>
+
+                <video id="optiflame" style="display: none;" height="100px" autoplay loop muted>
+                    <source src="projects/tv-wand/video/optiflame.mp4" type="video/mp4" >
+                    Your browser does not support the video tag.
+                </video>
+
             </div>
         </div>
     
@@ -535,64 +660,14 @@ function initSettings(model) {
         </style>`
     };
 
-    accordions.telly = {
-        title: "tv uitsparing",
-        options: ['inch'],
-        display: "d-block",
-        code: /*html*/`
-        <div class="row m-0 p-0 pb-xxl-4 pb-xl-4 pb-3">
-            <div class="justify-content-start m-0 p-0">
-
-                <div>inchmaat tv:</div>
-                <input class="input-group-text float-end rounded-0 bg-white" type="number" id="tvSizeInput" min="30" max="90" value="#" step="1">
-                <input style="width: 80%" type="range" class="form-range" id="tvSize" min="30" max="90" value="#" step="1">
-                <div style="width: 80%; display: flex; justify-content: space-between; margin-top: -10px; font-size: 11px;">
-                    <span>30</span>
-                    <span>35</span>
-                    <span>40</span>
-                    <span>45</span>
-                    <span>50</span>
-                    <span>55</span>
-                    <span>60</span>
-                    <span>65</span>
-                    <span>70</span>
-                    <span>75</span>
-                    <span>80</span>
-                    <span>85</span>
-                    <span>90</span>
-                </div>
-
-                <div class="mb-1">kies video (ter indicatie):</div>
-                <div class="d-flex me-3">
-                    <video id="video-1" height="100px" autoplay loop muted>
-                        <source src="projects/tv-wand/video/video-1.mp4" type="video/mp4" >
-                        Your browser does not support the video tag.
-                    </video>
-                
-                    <video id="video-2" height="100px" autoplay loop muted>
-                        <source src="projects/tv-wand/video/video-2.mp4" type="video/mp4" >
-                        Your browser does not support the video tag.
-                    </video>
-
-                    <video id="optiflame" style="display: none;" height="100px" autoplay loop muted>
-                        <source src="projects/tv-wand/video/optiflame.mp4" type="video/mp4" >
-                        Your browser does not support the video tag.
-                    </video>
-                </div>
-                
-            </div>
-        </div>`
-    };
-
     accordions.options = {
         title: "opties",
-        options: ['soundbar', 'alcove'],
+        options: ['soundbar', 'alcove', 'fireplace'],
         display: "d-block",
         code: /*html*/`
         <div class="row m-0 p-0 pb-xxl-4 pb-xl-4 pb-3">
-
-        <!--<div>De uitsparing voor een soundbar maken we in dezelfde breedte als de tv uitsparing.</div>-->
             <div class="justify-content-start m-0 p-0">
+
                 <div class="form-check my-3">
                     <input id="soundbar" name="soundbar" class="form-check-input" type="checkbox">
                     <label class="form-check-label" for="soundbar">
@@ -600,157 +675,152 @@ function initSettings(model) {
                     </label>
                 </div>
 
-        <!--<div>Aan beide zijden van de tv-wand is er de mogelijkheid om vakkenkasten met verlichting te plaatsen.</div>-->
-        <div class="form-check my-3">
+                <div class="form-check my-3">
                     <input id="alcoveToggle" name="soundbar" class="form-check-input" type="checkbox">
                     <label class="form-check-label" for="alcoveToggle">
-                    plaats vakkenkasten
+                    vakkenkasten aan weerszijden
                     </label>
                 </div>
 
-                <!--<div>Aan beide zijden van de tv-wand is er de mogelijkheid om vakkenkasten met verlichting te plaatsen.</div>-->
                 <div class="form-check my-3">
-                            <input id="alcoveToggle" name="soundbar" class="form-check-input" type="checkbox">
-                            <label class="form-check-label" for="alcoveToggle">
-                            sfeerhaard
-                            </label>
-                        </div>
-                
-            </div>
-        </div>`
-    };
-
-    accordions.alcove = {
-        title: "nissen",
-        options: ['alcoveWidth', 'alcoveShelves'],
-        display: "d-block",
-        code: /*html*/`
-        <div class="row m-0 p-0 pb-xxl-4 pb-xl-4 pb-3">
-            <div class="justify-content-start m-0 p-0">
-
-     
-
-                <div>breedte:</div>
-                <input class="input-group-text float-end rounded-0 bg-white" type="number" id="alcoveInput" min="30" max="90" value="#" step="1">
-                <input style="width: 80%" type="range" class="form-range" id="alcove" min="50" max="100" value="#" step="1">
-                <div style="width: 80%; display: flex; justify-content: space-between; margin-top: -10px; font-size: 11px;">
-                    <span>50</span>
-                    <span>60</span>
-                    <span>70</span>
-                    <span>80</span>
-                    <span>90</span>
-                    <span>100</span>
+                    <input id="fireplaceToggle" name="soundbar" class="form-check-input" type="checkbox">
+                    <label class="form-check-label" for="fireplaceToggle">
+                    sfeerhaard
+                    </label>
                 </div>
-
-                <div class="mt-3 mb-2">aantal planken:</div>
-                <input class="input-group-text rounded-0 bg-white" type="number" id="shelvesInput" name="shelvesInput" min="0" max="6" value="0" step="1">
+        
             </div>
         </div>`
     };
 
-    accordions.fireplace = {
-        title: "sfeerhaard",
-        options: [],
-        display: "d-block",
-        code: /*html*/`
-        <div class="row m-0 p-0 pb-xxl-4 pb-xl-4 pb-3">
-            <div class="justify-content-start m-0 p-0">
+    if (model.alcove.left.width != 0) {
+        accordions.alcove = {
+            title: "vakkenkasten",
+            options: ['alcoveWidth', 'alcoveShelves'],
+            display: "d-block",
+            code: /*html*/`
+            <div class="row m-0 p-0 pb-xxl-4 pb-xl-4 pb-3">
+                <div class="justify-content-start m-0 p-0">
 
+                    <div>breedte:</div>
+                    <input class="input-group-text float-end rounded-0 bg-white" type="number" id="alcoveInput" min="30" max="90" value="#" step="1">
+                    <input style="width: 80%" type="range" class="form-range" id="alcove" min="50" max="100" value="#" step="1">
+                    <div style="width: 80%; display: flex; justify-content: space-between; margin-top: -10px; font-size: 11px;">
+                        <span>50</span>
+                        <span>60</span>
+                        <span>70</span>
+                        <span>80</span>
+                        <span>90</span>
+                        <span>100</span>
+                    </div>
 
-                <div>maat:</div>
+                    <div class="mt-3 mb-2">aantal planken:</div>
+                    <input class="input-group-text rounded-0 bg-white" type="number" id="shelvesInput" name="shelvesInput" min="0" max="6" value="0" step="1">
+                </div>
+            </div>`
+        };
+    }
 
-                <select id="fireplaceWidth" class="form-select">
-                <option value="0">geen sfeerhaard</option>
-                <option value="127">Dimplex Ignite XL 50″</option>
-                <option value="152.4">Dimplex Ignite XL 60″</option>
-                <option value="187.96">Dimplex Ignite XL 74″</option>
-                <option value="254">Dimplex Ignite XL 100″</option>
-            </select>
+    if (model.fireplace.width != 0) {
+        accordions.fireplace = {
+            title: "sfeerhaard",
+            options: ['brand', 'type', 'fireplacewidth'],
+            display: "d-block",
+            code: /*html*/`
+            <div class="row m-0 p-0 pb-xxl-4 pb-xl-4 pb-3">
+                <div class="justify-content-start m-0 p-0">
 
-            </div>
-        </div>`
-    };
+                    <div>maat:</div>
+
+                    <select id="fireplaceWidth" class="form-select">
+                    <option value="0">geen sfeerhaard</option>
+                    <option value="127">Dimplex Ignite XL 50″</option>
+                    <option value="152.4">Dimplex Ignite XL 60″</option>
+                    <option value="187.96">Dimplex Ignite XL 74″</option>
+                    <option value="254">Dimplex Ignite XL 100″</option>
+                </select>
+
+                </div>
+            </div>`
+        };
+    }
 
     accordions.finishing = {
         title: "afwerking",
         options: ['color'],
         display: "d-block",
         code: /*html*/`
-            <div>De tv-wand wordt afgewerkt met lakdraagfolie, die u zelf in de gewenste kleur kunt schilderen.<br>Om een indruk te krijgen van het eindresultaat kunt u hier een RAL kleur toepassen.</div>
-                <div class="row m-0 p-0 pb-xxl-4 pb-xl-4 pb-3">
-                    <div class="h6 fw-normal mt-3">wit</div>
-                    <div class="col-12 m-0 p-0">
-                        <div id="colorsWhitePicker" class="m-0 p-0"></div>
-                    </div>
-                    <div class="h6 fw-normal mt-3">grijs</div>
-                    <div class="col-12 m-0 p-0">
-                        <div id="colorsGreyPicker" class="m-0 p-0"></div>
-                    </div>
-                    <div class="h6 fw-normal mt-3">zwart</div>
-                    <div class="col-12 m-0 p-0">
-                        <div id="colorsBlackPicker" class="m-0 p-0"></div>
-                    </div>
-                    <div class="h6 fw-normal mt-3">bruin</div>
-                    <div class="col-12 m-0 p-0">
-                        <div id="colorsBrownPicker" class="m-0 p-0"></div>
-                    </div>
-                    <div class="h6 fw-normal mt-3">geel</div>
-                    <div class="col-12 m-0 p-0">
-                        <div id="colorsYellowPicker" class="m-0 p-0"></div>
-                    </div>
-                    <div class="h6 fw-normal mt-3">oranje</div>
-                    <div class="col-12 m-0 p-0">
-                        <div id="colorsOrangePicker" class="m-0 p-0"></div>
-                    </div>
-                    <div class="h6 fw-normal mt-3">rood</div>
-                    <div class="col-12 m-0 p-0">
-                        <div id="colorsRedPicker" class="m-0 p-0"></div>
-                    </div>
-                    <div class="h6 fw-normal mt-3">violet</div>
-                    <div class="col-12 m-0 p-0">
-                        <div id="colorsVioletPicker" class="m-0 p-0"></div>
-                    </div>
-                    <div class="h6 fw-normal mt-3">blauw</div>
-                    <div class="col-12 m-0 p-0">
-                        <div id="colorsBluePicker" class="m-0 p-0"></div>
-                    </div>
-                    <div class="h6 fw-normal mt-3">groen</div>
-                    <div class="col-12 m-0 p-0">
-                        <div id="colorsGreenPicker" class="m-0 p-0"></div>
-                    </div>                  
-                </div>`,
-        "onload": function () {
-            let containerElemsWhiteColors = document.getElementById(`colorsWhitePicker`);
-            addColors(`finishingColors`, 'white', ALLCOLORS.colors, containerElemsWhiteColors);
+            <div>De tv-wand wordt afgewerkt met lakdraagfolie, die u zelf in de gewenste kleur kunt schilderen.<br>
+                Om een indruk te krijgen van het eindresultaat kunt u hier een RAL kleur toepassen.
+            </div>
 
-            let containerElemsGreyColors = document.getElementById(`colorsGreyPicker`);
-            addColors(`finishingColors`, 'grey', ALLCOLORS.colors, containerElemsGreyColors);
+            <div class="btn-group my-3" role="group">
+                <button class="btn btn-outline-dark filter-btn rounded-0" data-color="white">wit</button>
+                <button class="btn btn-outline-dark filter-btn" data-color="grey">grijs</button>
+                <button class="btn btn-outline-dark filter-btn" data-color="black">zwart</button>
+                <button class="btn btn-outline-dark filter-btn" data-color="brown">bruin</button>
+                <button class="btn btn-outline-dark filter-btn" data-color="yellow">geel</button>
+                <button class="btn btn-outline-dark filter-btn" data-color="orange">oranje</button>
+                <button class="btn btn-outline-dark filter-btn" data-color="red">rood</button>
+                <button class="btn btn-outline-dark filter-btn" data-color="violet">violet</button>
+                <button class="btn btn-outline-dark filter-btn" data-color="blue">blauw</button>
+                <button class="btn btn-outline-dark filter-btn rounded-0" data-color="green">groen</button>
+            </div>
+    
+            <div id="colorOptions" class="mb-3">
+                <div class="color-group" data-color="white">
+                    <div id="colorsWhitePicker"></div>
+                </div>
+                <div class="color-group" data-color="grey">
+                    <div id="colorsGreyPicker"></div>
+                </div>
+                <div class="color-group" data-color="black">
+                    <div id="colorsBlackPicker"></div>
+                </div>
+                <div class="color-group" data-color="brown">
+                    <div id="colorsBrownPicker"></div>
+                </div>
+                <div class="color-group" data-color="yellow">
+                    <div id="colorsYellowPicker"></div>
+                </div>
+                <div class="color-group" data-color="orange">
+                    <div id="colorsOrangePicker"></div>
+                </div>
+                <div class="color-group" data-color="red">
+                    <div id="colorsRedPicker"></div>
+                </div>
+                <div class="color-group" data-color="violet">
+                    <div id="colorsVioletPicker"></div>
+                </div>
+                <div class="color-group" data-color="blue">
+                    <div id="colorsBluePicker"></div>
+                </div>
+                <div class="color-group" data-color="green">
+                    <div id="colorsGreenPicker"></div>
+                </div>
+            </div>
+        `,
+        onload: function () {
+            function addColorsToPicker(colorGroup, elementId) {
+                let container = document.getElementById(elementId);
+                if (container) {
+                    addColors("finishingColors", colorGroup, ALLCOLORS.colors, container);
+                }
+            }
 
-            let containerElemsBlackColors = document.getElementById(`colorsBlackPicker`);
-            addColors(`finishingColors`, 'black', ALLCOLORS.colors, containerElemsBlackColors);
-
-            let containerElemsBrownColors = document.getElementById(`colorsBrownPicker`);
-            addColors(`finishingColors`, 'brown', ALLCOLORS.colors, containerElemsBrownColors);
-
-            let containerElemsYellowColors = document.getElementById(`colorsYellowPicker`);
-            addColors(`finishingColors`, 'yellow', ALLCOLORS.colors, containerElemsYellowColors);
-
-            let containerElemsOrangeColors = document.getElementById(`colorsOrangePicker`);
-            addColors(`finishingColors`, 'orange', ALLCOLORS.colors, containerElemsOrangeColors);
-           
-            let containerElemsRedColors = document.getElementById(`colorsRedPicker`);
-            addColors(`finishingColors`, 'red', ALLCOLORS.colors, containerElemsRedColors);
-                       
-            let containerElemsVioletColors = document.getElementById(`colorsVioletPicker`);
-            addColors(`finishingColors`, 'violet', ALLCOLORS.colors, containerElemsVioletColors);
-                                   
-            let containerElemsBlueColors = document.getElementById(`colorsBluePicker`);
-            addColors(`finishingColors`, 'blue', ALLCOLORS.colors, containerElemsBlueColors);
-                                               
-            let containerElemsGreenColors = document.getElementById(`colorsGreenPicker`);
-            addColors(`finishingColors`, 'green', ALLCOLORS.colors, containerElemsGreenColors);
+            addColorsToPicker("white", "colorsWhitePicker");
+            addColorsToPicker("grey", "colorsGreyPicker");
+            addColorsToPicker("black", "colorsBlackPicker");
+            addColorsToPicker("brown", "colorsBrownPicker");
+            addColorsToPicker("yellow", "colorsYellowPicker");
+            addColorsToPicker("orange", "colorsOrangePicker");
+            addColorsToPicker("red", "colorsRedPicker");
+            addColorsToPicker("violet", "colorsVioletPicker");
+            addColorsToPicker("blue", "colorsBluePicker");
+            addColorsToPicker("green", "colorsGreenPicker");
         }
-    }
+    };
+
 
     return { accordions };
 }

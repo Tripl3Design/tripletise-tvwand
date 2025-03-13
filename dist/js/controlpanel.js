@@ -1,17 +1,17 @@
 "use strict"
-function addColors(name, colorType, colorScheme, containerElem) {
+function addColors(name, colorGroup, colorScheme, containerElem) {
     // Voeg een uniek nummer toe aan elk item in de colorScheme
     let textureItemsWithIndex = colorScheme.map((item, index) => ({
         ...item,
         uniqueId: `${name}Index_${index}` // Voeg een uniek ID toe aan elk item
     }));
 
-    // Filter de items op colorType als dat nodig is
-    const filteredItems = textureItemsWithIndex.filter(item => item.colorType === colorType);
+    // Filter de items op colorGroup als dat nodig is
+    const filteredItems = textureItemsWithIndex.filter(item => item.colorGroup === colorGroup);
 
     // Als er geen items gevonden worden, geef een bericht weer
     if (filteredItems.length === 0) {
-        containerElem.innerHTML = `<p>No items found for colorType: ${colorType}</p>`;
+        containerElem.innerHTML = `<p>No items found for colorGroup: ${colorGroup}</p>`;
         return;
     }
 
@@ -41,19 +41,19 @@ function addColors(name, colorType, colorScheme, containerElem) {
     containerElem.innerHTML = html.join('\n');
 }
 
-function addTextures(name, colorType, colorScheme, containerElem) {
+function addTextures(name, colorGroup, colorScheme, containerElem) {
     // Voeg een uniek nummer toe aan elk item in de colorScheme
     let textureItemsWithIndex = colorScheme.map((item, index) => ({
         ...item,
         uniqueId: `${name}Index_${index}` // Voeg een uniek ID toe aan elk item
     }));
 
-    // Filter de items op colorType als dat nodig is
-    const filteredItems = textureItemsWithIndex.filter(item => item.colorType === colorType);
+    // Filter de items op colorGroup als dat nodig is
+    const filteredItems = textureItemsWithIndex.filter(item => item.colorGroup === colorGroup);
 
     // Als er geen items gevonden worden, geef een bericht weer
     if (filteredItems.length === 0) {
-        containerElem.innerHTML = `<p>No items found for colorType: ${colorType}</p>`;
+        containerElem.innerHTML = `<p>No items found for colorGroup: ${colorGroup}</p>`;
         return;
     }
 
@@ -149,7 +149,7 @@ function controlPanel_updateLayer(name, settings) {
         <div class="col-xxl-4 col-xl-4 col-12 h6 fw-medium m-0 p-0 py-xxl-4 py-xl-4 pt-3 pb-1">${accordion.title}</div>
         `);
     html.push( /*html*/ `
-            <div id="${name}Text" class="col-xxl-6 col-xl-6 col-12 h6 fw-medium m-0 p-0 my-xxl-auto my-xl-auto mb-3 accordion-text fadein">
+            <div id="${name}Text" class="col-xxl-6 col-xl-6 col-12 h6 fw-normal m-0 p-0 my-xxl-auto my-xl-auto mb-3 accordion-text fadein">
             `);
     for (let i = 0; i < accordion.options.length; i++) {
         html.push( /*html*/ `
