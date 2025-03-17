@@ -199,7 +199,7 @@ function updateControlPanel(model, selectedLayer, expandedLayer) {
         updateFeaturedModel(model);
         showSelected(false);
     });
-                                                                        
+
     //document.getElementById('sizesText').textContent = `${(((model.alcove?.left?.width ?? 0) + (model.alcove?.right?.width ?? 0)) + (model.width ?? 0))} (${model.alcove?.left?.width ?? 0}+${model.width}+${model.alcove?.right?.width ?? 0}) x ${model.height} x ${model.depth} cm`;
     document.getElementById('sizesText').textContent = `${(((model.alcove?.left?.width ?? 0) + (model.alcove?.right?.width ?? 0)) + (model.width ?? 0))} x ${model.height} x ${model.depth} cm`;
 
@@ -399,6 +399,7 @@ function updateControlPanel(model, selectedLayer, expandedLayer) {
                 let fireplaceId = event.target.value;
                 selectedFireplace = ALLFIREPLACES.fireplaces.find(f => fireplaceId == f.id);
                 model.fireplace = { ...selectedFireplace };
+                
 
                 fireplaceListenerAdded = true;
 
@@ -430,16 +431,6 @@ function updateControlPanel(model, selectedLayer, expandedLayer) {
     }
 
     if (fireplaceCheckbox.checked) {
-        // Populate dropdown
-        const fireplaceSelect = document.getElementById("fireplace");
-        ALLFIREPLACES.fireplaces.forEach(fireplace => {
-            let opt = document.createElement("option");
-            opt.value = fireplace.id;
-            opt.textContent = `${fireplace.brand} ${fireplace.type} (${fireplace.width} cm, €${fireplace.price})`;
-            fireplaceSelect.appendChild(opt);
-        });
-
-        // Update fireplace text content
         document.getElementById('fireplaceText').textContent = 'sfeerhaard';
         if (model.fireplace) {
             document.getElementById('fireplacebrandandtypeText').textContent = `${model.fireplace.brand} ${model.fireplace.type}`;
@@ -617,55 +608,79 @@ function initSettings(model) {
             <div class="justify-content-start m-0 p-0">
 
                 <div>breedte basiselement:</div>
-                <input class="input-group-text float-end rounded-0 bg-white" type="number" id="wallInputWidth" min="150" max="270" value="#" step="1">
-                <input style="width: 80%" type="range" class="form-range" id="wallWidth" min="150" max="270" value="#" step="1">
-                <div style="width: 80%; display: flex; justify-content: space-between; margin-top: -8px; font-size: 11px;">
-                    <span>150</span>
-                    <span>160</span>
-                    <span>170</span>
-                    <span>180</span>
-                    <span>190</span>
-                    <span>200</span>
-                    <span>210</span>
-                    <span>220</span>
-                    <span>230</span>
-                    <span>240</span>
-                    <span>250</span>
-                    <span>260</span>
-                    <span>270</span>
+                <div class="row">
+                    <div class="col-12 col-lg-9">
+                        <input type="range" class="form-range" id="wallWidth" min="150" max="270" value="#" step="1">
+                        <div style=" display: flex; justify-content: space-between; margin-top: -8px; font-size: 11px;">
+                            <span>150</span>
+                            <span>160</span>
+                            <span>170</span>
+                            <span>180</span>
+                            <span>190</span>
+                            <span>200</span>
+                            <span>210</span>
+                            <span>220</span>
+                            <span>230</span>
+                            <span>240</span>
+                            <span>250</span>
+                            <span>260</span>
+                            <span>270</span>
+                        </div>
+                    </div>      
+                    <div class="col-12 col-lg-3">
+                        <input class="input-group-text mt-3 mt-lg-0 float-lg-end rounded-0 bg-white" type="number" id="wallInputWidth" min="150" max="270" value="#" step="1">
+                    </div>
                 </div>
                 
                 <div class="mt-3">hoogte:</div>
-                <input class="input-group-text float-end rounded-0 bg-white" type="number" id="wallInputHeight" min="200" max="280" value="#" step="1">
-                <input style="width: 53%" type="range" class="form-range" id="wallHeight" min="200" max="280" value="#" step="1">
-                <div style="width: 53%; display: flex; justify-content: space-between; margin-top: -8px; font-size: 11px;">
-                    <span>200</span>
-                    <span>210</span>
-                    <span>220</span>
-                    <span>230</span>
-                    <span>240</span>
-                    <span>250</span>
-                    <span>260</span>
-                    <span>270</span>
-                    <span>280</span>
+                <div class="row">
+                    <div class="col-12 col-lg-9">
+                        <input style="width: 66.6%;" type="range" class="form-range" id="wallHeight" min="200" max="280" value="#" step="1">
+                        <div style="width: 66.6%; display: flex; justify-content: space-between; margin-top: -8px; font-size: 11px;">
+                            <span>200</span>
+                            <span>210</span>
+                            <span>220</span>
+                            <span>230</span>
+                            <span>240</span>
+                            <span>250</span>
+                            <span>260</span>
+                            <span>270</span>
+                            <span>280</span>
+                        </div>
+                    </div>      
+                    <div class="col-12 col-lg-3">
+                        <input class="input-group-text mt-3 mt-lg-0 float-lg-end rounded-0 bg-white" type="number" id="wallInputHeight" min="200" max="280" value="#" step="1">
+                    </div>
                 </div>
-                
+
                 <div class="mt-3">diepte:</div>
-                <input class="input-group-text float-end rounded-0 bg-white" type="number" id="wallInputDepth" min="20" max="50" value="#" step="1">
-                <input style="width: 20%" type="range" class="form-range" id="wallDepth" min="20" max="50" value="#" step="1">
-                <div style="width: 20%; display: flex; justify-content: space-between; margin-top: -8px; font-size: 11px;">
-                    <span>20</span>
-                    <span>30</span>
-                    <span>40</span>
-                    <span>50</span>
+                <div class="row">
+                    <div class="col-12 col-lg-9">
+                        <input style="width: 25%" type="range" class="form-range" id="wallDepth" min="20" max="50" value="#" step="1">
+                        <div style="width: 25%; display: flex; justify-content: space-between; margin-top: -8px; font-size: 11px;">
+                            <span>20</span>
+                            <span>30</span>
+                            <span>40</span>
+                            <span>50</span>
+                        </div>
+                    </div>      
+                    <div class="col-12 col-lg-3">
+                        <input class="input-group-text mt-3 mt-lg-0 float-lg-end rounded-0 bg-white" type="number" id="wallInputDepth" min="20" max="50" value="#" step="1">
+                    </div>
                 </div>
 
                 <div class="mt-3">inchmaat tv:</div>
-                <input class="input-group-text float-end rounded-0 bg-white" type="number" id="tvSizeInput" min="30" max="90" value="#" step="1">
-                <input style="width: 80%" type="range" class="form-range" id="tvSize" min="30" max="90" value="#" step="1">
-                <div style="width: 80%; display: flex; justify-content: space-between; margin-top: -10px; font-size: 11px;">
-                    <span id="minTvInch">30</span>
-                    <span id="maxTvInch">90</span>
+                <div class="row">
+                    <div class="col-12 col-lg-9">
+                        <input type="range" class="form-range" id="tvSize" min="30" max="90" value="#" step="1">
+                        <div style="display: flex; justify-content: space-between; margin-top: -10px; font-size: 11px;">
+                            <span id="minTvInch">30</span>
+                            <span id="maxTvInch">90</span>
+                        </div>
+                    </div>      
+                    <div class="col-12 col-lg-3">
+                        <input class="input-group-text mt-3 mt-lg-0 float-lg-end rounded-0 bg-white" type="number" id="tvSizeInput" min="30" max="90" value="#" step="1">
+                    </div>
                 </div>
 
                 <!-- videos for videotexture, do not remove -->
@@ -756,15 +771,21 @@ function initSettings(model) {
                 <div class="justify-content-start m-0 p-0">
 
                     <div>breedte:</div>
-                    <input class="input-group-text float-end rounded-0 bg-white" type="number" id="alcoveInput" min="50" max="100" value="#" step="1">
-                    <input style="width: 80%" type="range" class="form-range" id="alcove" min="50" max="100" value="#" step="1">
-                    <div style="width: 80%; display: flex; justify-content: space-between; margin-top: -10px; font-size: 11px;">
-                        <span>50</span>
-                        <span>60</span>
-                        <span>70</span>
-                        <span>80</span>
-                        <span>90</span>
-                        <span>100</span>
+                    <div class="row">
+                        <div class="col-12 col-lg-9">
+                            <input type="range" class="form-range" id="alcove" min="50" max="100" value="#" step="1">
+                            <div style="display: flex; justify-content: space-between; margin-top: -10px; font-size: 11px;">
+                                <span>50</span>
+                                <span>60</span>
+                                <span>70</span>
+                                <span>80</span>
+                                <span>90</span>
+                                <span>100</span>
+                            </div>
+                        </div>      
+                        <div class="col-12 col-lg-3">
+                            <input class="input-group-text float-end rounded-0 bg-white" type="number" id="alcoveInput" min="50" max="100" value="#" step="1">
+                        </div>
                     </div>
 
                     <div class="mt-3 mb-2">aantal planken:</div>
@@ -798,8 +819,18 @@ function initSettings(model) {
                 </select>
 
                 </div>
-            </div>`
-        };
+            </div>  `,
+            onload: function () {
+                // Populate dropdown
+                const fireplaceSelect = document.getElementById("fireplace");
+                ALLFIREPLACES.fireplaces.forEach(fireplace => {
+                    let opt = document.createElement("option");
+                    opt.value = fireplace.id;
+                    opt.textContent = `${fireplace.brand} ${fireplace.type} (+ € ${fireplace.price})`;
+                    fireplaceSelect.appendChild(opt);
+                });
+            }
+        }
     }
 
     accordions.finishing = {
@@ -810,19 +841,16 @@ function initSettings(model) {
             <div>De tv-wand wordt afgewerkt met lakdraagfolie, die u zelf in de gewenste kleur kunt schilderen.<br>
                 Om een indruk te krijgen van het eindresultaat kunt u hier een RAL kleur toepassen.
             </div>
-
-            <!--<div class="btn-group my-3" role="group">-->
-                <button class="btn btn-outline-dark btn-sm filter-btn rounded-0 mt-1" data-color="white">wit</button>
-                <button class="btn btn-outline-dark btn-sm filter-btn rounded-0 mt-1" data-color="grey">grijs</button>
-                <button class="btn btn-outline-dark btn-sm filter-btn rounded-0 mt-1" data-color="black">zwart</button>
-                <button class="btn btn-outline-dark btn-sm filter-btn rounded-0 mt-1" data-color="brown">bruin</button>
-                <button class="btn btn-outline-dark btn-sm filter-btn rounded-0 mt-1" data-color="yellow">geel</button>
-                <button class="btn btn-outline-dark btn-sm filter-btn rounded-0 mt-1" data-color="orange">oranje</button>
-                <button class="btn btn-outline-dark btn-sm filter-btn rounded-0 mt-1" data-color="red">rood</button>
-                <button class="btn btn-outline-dark btn-sm filter-btn rounded-0 mt-1" data-color="violet">violet</button>
-                <button class="btn btn-outline-dark btn-sm filter-btn rounded-0 mt-1" data-color="blue">blauw</button>
-                <button class="btn btn-outline-dark btn-sm filter-btn rounded-0 mt-1" data-color="green">groen</button>
-            <!--</div>-->
+            <button class="btn btn-outline-dark btn-sm filter-btn rounded-0 mt-1" data-color="white">wit</button>
+            <button class="btn btn-outline-dark btn-sm filter-btn rounded-0 mt-1" data-color="grey">grijs</button>
+            <button class="btn btn-outline-dark btn-sm filter-btn rounded-0 mt-1" data-color="black">zwart</button>
+            <button class="btn btn-outline-dark btn-sm filter-btn rounded-0 mt-1" data-color="brown">bruin</button>
+            <button class="btn btn-outline-dark btn-sm filter-btn rounded-0 mt-1" data-color="yellow">geel</button>
+            <button class="btn btn-outline-dark btn-sm filter-btn rounded-0 mt-1" data-color="orange">oranje</button>
+            <button class="btn btn-outline-dark btn-sm filter-btn rounded-0 mt-1" data-color="red">rood</button>
+            <button class="btn btn-outline-dark btn-sm filter-btn rounded-0 mt-1" data-color="violet">violet</button>
+            <button class="btn btn-outline-dark btn-sm filter-btn rounded-0 mt-1" data-color="blue">blauw</button>
+            <button class="btn btn-outline-dark btn-sm filter-btn rounded-0 mt-1" data-color="green">groen</button>
     
             <div id="colorOptions" class="mb-3">
                 <div class="color-group" data-color="white">
