@@ -1,7 +1,7 @@
 "use strict"
 var ALLMODELS;
 var ALLCOLORS;
-var ALLCOMPONENTS;
+var ALLFIREPLACES;
 var FEATUREDMODEL;
 
 const urlParams = new URLSearchParams(window.location.search);
@@ -199,8 +199,10 @@ function updateControlPanel(model, selectedLayer, expandedLayer) {
         updateFeaturedModel(model);
         showSelected(false);
     });
+                                                                        
+    //document.getElementById('sizesText').textContent = `${(((model.alcove?.left?.width ?? 0) + (model.alcove?.right?.width ?? 0)) + (model.width ?? 0))} (${model.alcove?.left?.width ?? 0}+${model.width}+${model.alcove?.right?.width ?? 0}) x ${model.height} x ${model.depth} cm`;
+    document.getElementById('sizesText').textContent = `${(((model.alcove?.left?.width ?? 0) + (model.alcove?.right?.width ?? 0)) + (model.width ?? 0))} x ${model.height} x ${model.depth} cm`;
 
-    document.getElementById('sizesText').textContent = model.width + ' x ' + model.height + ' x ' + model.depth + ' cm';
 
     //tv diagonal
     const maxTvWidth = model.width - 23;
@@ -244,7 +246,7 @@ function updateControlPanel(model, selectedLayer, expandedLayer) {
         let newValue = Math.min(event.target.value, maxTvSize);
         tvSizeInput.value = newValue;
         tvSizeSlider.value = newValue;
-        model.tvSize = maxTvSize;
+        model.tvSize = newValue;
 
         updateControlPanel(model, 'size');
         updateFeaturedModel(model);
@@ -303,7 +305,7 @@ function updateControlPanel(model, selectedLayer, expandedLayer) {
     //alcove
     let alcoveCheckbox = document.getElementById('alcoveToggle');
 
-    if (model.alcove.left.width != 0) {
+    if (model.alcove) {
         alcoveCheckbox.checked = true;
     } else {
         alcoveCheckbox.checked = false;
@@ -317,11 +319,15 @@ function updateControlPanel(model, selectedLayer, expandedLayer) {
 
     alcoveCheckbox.addEventListener('click', () => {
         if (alcoveCheckbox.checked) {
+            model.alcove = model.alcove || {};
+            model.alcove.left = model.alcove.left || {};
+            model.alcove.right = model.alcove.right || {};
             model.alcove.left.width = 50;
             model.alcove.right.width = 50;
+            model.alcove.left.shelves = 2;
+            model.alcove.right.shelves = 2;
         } else {
-            model.alcove.left.width = 0;
-            model.alcove.right.width = 0;
+            delete model.alcove;
         }
 
         updateControlPanel(model, undefined, 'options');
@@ -329,9 +335,9 @@ function updateControlPanel(model, selectedLayer, expandedLayer) {
         showSelected(false);
     });
 
-    if (model.alcove.left.width != 0) {
+    if (model.alcove) {
         document.getElementById("alcove").value = model.alcove.left.width;
-        document.getElementById("alcoveInput").value = model.tvSize;
+        document.getElementById("alcoveInput").value = model.alcove.left.width;
 
         document.getElementById("alcove").addEventListener("input", function (event) {
             document.getElementById("alcoveInput").value = event.target.value;
@@ -346,9 +352,19 @@ function updateControlPanel(model, selectedLayer, expandedLayer) {
             showSelected(false);
         });
 
+        document.getElementById("alcoveInput").addEventListener("input", function (event) {
+            document.getElementById("alcove").value = event.target.value;
+            model.alcove.left.width = parseInt(event.target.value);
+            model.alcove.right.width = parseInt(event.target.value);
+
+            updateControlPanel(model, 'alcove');
+            updateFeaturedModel(model);
+            showSelected(false);
+        });
+
         document.getElementById("shelvesInput").value = model.alcove.left.shelves;
 
-        document.getElementById("shelvesInput").addEventListener("change", function (event) {
+        document.getElementById("shelvesInput").addEventListener("input", function (event) {
             model.alcove.left.shelves = parseInt(event.target.value);
             model.alcove.right.shelves = parseInt(event.target.value);
 
@@ -358,42 +374,79 @@ function updateControlPanel(model, selectedLayer, expandedLayer) {
         });
 
         document.getElementById('alcoveWidthText').textContent = model.alcove.left.width + ' cm';
-        if (model.alcove.left.shelves != 1) {
-            document.getElementById('alcoveShelvesText').textContent = model.alcove.left.shelves + ' planken';
-        } else {
+        if (model.alcove.left.shelves == 1) {
             document.getElementById('alcoveShelvesText').textContent = model.alcove.left.shelves + ' plank';
+        } else {
+            document.getElementById('alcoveShelvesText').textContent = model.alcove.left.shelves + ' planken';
         }
     }
 
-    //fireplace
-    let fireplaceCheckbox = document.getElementById('fireplaceToggle');
 
-    if (model.fireplace.width != 0) {
+    //fireplace
+    const fireplaceCheckbox = document.getElementById('fireplaceToggle');
+    const fireplace = document.getElementById('fireplace');
+
+    let fireplaceCheckboxListenerAdded = false;
+    let fireplaceListenerAdded = false;
+
+    let selectedFireplace;
+
+    if (model.fireplace) {
         fireplaceCheckbox.checked = true;
+
+        if (!fireplaceListenerAdded) {
+            fireplace.addEventListener('input', function (event) {
+                let fireplaceId = event.target.value;
+                selectedFireplace = ALLFIREPLACES.fireplaces.find(f => fireplaceId == f.id);
+                model.fireplace = { ...selectedFireplace };
+
+                fireplaceListenerAdded = true;
+
+                updateControlPanel(model, 'fireplace');
+                updateFeaturedModel(model);
+                showSelected(false);
+            });
+        }
+
     } else {
         fireplaceCheckbox.checked = false;
     }
 
+    if (!fireplaceCheckboxListenerAdded) {
+        fireplaceCheckbox.addEventListener('click', () => {
+            if (fireplaceCheckbox.checked) {
+                selectedFireplace = ALLFIREPLACES.fireplaces.find(f => 3 == f.id);
+                model.fireplace = { ...selectedFireplace };
+            } else {
+                delete model.fireplace;
+            }
+
+            fireplaceCheckboxListenerAdded = true;
+
+            updateControlPanel(model, undefined, 'options');
+            updateFeaturedModel(model);
+            showSelected(false);
+        });
+    }
+
     if (fireplaceCheckbox.checked) {
+        // Populate dropdown
+        const fireplaceSelect = document.getElementById("fireplace");
+        ALLFIREPLACES.fireplaces.forEach(fireplace => {
+            let opt = document.createElement("option");
+            opt.value = fireplace.id;
+            opt.textContent = `${fireplace.brand} ${fireplace.type} (${fireplace.width} cm, €${fireplace.price})`;
+            fireplaceSelect.appendChild(opt);
+        });
+
+        // Update fireplace text content
         document.getElementById('fireplaceText').textContent = 'sfeerhaard';
+        if (model.fireplace) {
+            document.getElementById('fireplacebrandandtypeText').textContent = `${model.fireplace.brand} ${model.fireplace.type}`;
+        }
     } else {
         document.getElementById('fireplaceText').textContent = '';
     }
-
-    fireplaceCheckbox.addEventListener('click', () => {
-        if (fireplaceCheckbox.checked) {
-            model.fireplace.width = 150;
-            model.fireplace.height = 30;
-            model.fireplace.brand = 'ignite';
-            model.fireplace.type = '500';
-        } else {
-            model.fireplace.width = 0;
-        }
-
-        updateControlPanel(model, undefined, 'options');
-        updateFeaturedModel(model);
-        showSelected(false);
-    });
 
 
 
@@ -519,8 +572,8 @@ async function handleModelSelection() {
     ALLCOLORS = await colorsPromise;
     const modelsPromise = fetch(`projects/${brand}-${product}/models.json`).then(response => response.json());
     ALLMODELS = await modelsPromise;
-    const componentsPromise = fetch(`projects/${brand}-${product}/components.json`).then(response => response.json());
-    ALLCOMPONENTS = await componentsPromise;
+    const fireplacesPromise = fetch(`projects/${brand}-${product}/fireplaces.json`).then(response => response.json());
+    ALLFIREPLACES = await fireplacesPromise;
 
     let modelIndex;
     let modelId;
@@ -563,7 +616,7 @@ function initSettings(model) {
         <div class="row m-0 p-0 pb-xxl-4 pb-xl-4 pb-3">
             <div class="justify-content-start m-0 p-0">
 
-                <div>breedte:</div>
+                <div>breedte basiselement:</div>
                 <input class="input-group-text float-end rounded-0 bg-white" type="number" id="wallInputWidth" min="150" max="270" value="#" step="1">
                 <input style="width: 80%" type="range" class="form-range" id="wallWidth" min="150" max="270" value="#" step="1">
                 <div style="width: 80%; display: flex; justify-content: space-between; margin-top: -8px; font-size: 11px;">
@@ -693,7 +746,7 @@ function initSettings(model) {
         </div>`
     };
 
-    if (model.alcove.left.width != 0) {
+    if (model.alcove != 0) {
         accordions.alcove = {
             title: "vakkenkasten",
             options: ['alcoveWidth', 'alcoveShelves'],
@@ -703,7 +756,7 @@ function initSettings(model) {
                 <div class="justify-content-start m-0 p-0">
 
                     <div>breedte:</div>
-                    <input class="input-group-text float-end rounded-0 bg-white" type="number" id="alcoveInput" min="30" max="90" value="#" step="1">
+                    <input class="input-group-text float-end rounded-0 bg-white" type="number" id="alcoveInput" min="50" max="100" value="#" step="1">
                     <input style="width: 80%" type="range" class="form-range" id="alcove" min="50" max="100" value="#" step="1">
                     <div style="width: 80%; display: flex; justify-content: space-between; margin-top: -10px; font-size: 11px;">
                         <span>50</span>
@@ -715,29 +768,33 @@ function initSettings(model) {
                     </div>
 
                     <div class="mt-3 mb-2">aantal planken:</div>
-                    <input class="input-group-text rounded-0 bg-white" type="number" id="shelvesInput" name="shelvesInput" min="0" max="6" value="0" step="1">
+                    <select style="width: 100px;" class="form-select rounded-0 bg-white" id="shelvesInput" name="shelvesInput">
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                    </select>
+
                 </div>
             </div>`
         };
     }
 
-    if (model.fireplace.width != 0) {
+    if (model.fireplace) {
         accordions.fireplace = {
             title: "sfeerhaard",
-            options: ['brand', 'type', 'fireplacewidth'],
+            options: ['fireplacebrandandtype'],
             display: "d-block",
             code: /*html*/`
             <div class="row m-0 p-0 pb-xxl-4 pb-xl-4 pb-3">
                 <div class="justify-content-start m-0 p-0">
 
-                    <div>maat:</div>
+                    <div class="mb-2">kies sfeerhaard:</div>
+                    <select style="width: 300px;" class="form-select rounded-0 bg-white" id="fireplace" class="form-select">
 
-                    <select id="fireplaceWidth" class="form-select">
-                    <option value="0">geen sfeerhaard</option>
-                    <option value="127">Dimplex Ignite XL 50″</option>
-                    <option value="152.4">Dimplex Ignite XL 60″</option>
-                    <option value="187.96">Dimplex Ignite XL 74″</option>
-                    <option value="254">Dimplex Ignite XL 100″</option>
                 </select>
 
                 </div>
@@ -754,18 +811,18 @@ function initSettings(model) {
                 Om een indruk te krijgen van het eindresultaat kunt u hier een RAL kleur toepassen.
             </div>
 
-            <div class="btn-group my-3" role="group">
-                <button class="btn btn-outline-dark filter-btn rounded-0" data-color="white">wit</button>
-                <button class="btn btn-outline-dark filter-btn" data-color="grey">grijs</button>
-                <button class="btn btn-outline-dark filter-btn" data-color="black">zwart</button>
-                <button class="btn btn-outline-dark filter-btn" data-color="brown">bruin</button>
-                <button class="btn btn-outline-dark filter-btn" data-color="yellow">geel</button>
-                <button class="btn btn-outline-dark filter-btn" data-color="orange">oranje</button>
-                <button class="btn btn-outline-dark filter-btn" data-color="red">rood</button>
-                <button class="btn btn-outline-dark filter-btn" data-color="violet">violet</button>
-                <button class="btn btn-outline-dark filter-btn" data-color="blue">blauw</button>
-                <button class="btn btn-outline-dark filter-btn rounded-0" data-color="green">groen</button>
-            </div>
+            <!--<div class="btn-group my-3" role="group">-->
+                <button class="btn btn-outline-dark btn-sm filter-btn rounded-0 mt-1" data-color="white">wit</button>
+                <button class="btn btn-outline-dark btn-sm filter-btn rounded-0 mt-1" data-color="grey">grijs</button>
+                <button class="btn btn-outline-dark btn-sm filter-btn rounded-0 mt-1" data-color="black">zwart</button>
+                <button class="btn btn-outline-dark btn-sm filter-btn rounded-0 mt-1" data-color="brown">bruin</button>
+                <button class="btn btn-outline-dark btn-sm filter-btn rounded-0 mt-1" data-color="yellow">geel</button>
+                <button class="btn btn-outline-dark btn-sm filter-btn rounded-0 mt-1" data-color="orange">oranje</button>
+                <button class="btn btn-outline-dark btn-sm filter-btn rounded-0 mt-1" data-color="red">rood</button>
+                <button class="btn btn-outline-dark btn-sm filter-btn rounded-0 mt-1" data-color="violet">violet</button>
+                <button class="btn btn-outline-dark btn-sm filter-btn rounded-0 mt-1" data-color="blue">blauw</button>
+                <button class="btn btn-outline-dark btn-sm filter-btn rounded-0 mt-1" data-color="green">groen</button>
+            <!--</div>-->
     
             <div id="colorOptions" class="mb-3">
                 <div class="color-group" data-color="white">

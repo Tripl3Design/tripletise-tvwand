@@ -155,10 +155,12 @@ function controlPanel_updateLayer(name, settings) {
         html.push( /*html*/ `
             <span id="${accordion.options[i]}Text">#</span>
             `);
-        if (i === 1) { continue; }
-        html.push( /*html*/ `
+        if (i >= 0) {
+            html.push( /*html*/ `
             &nbsp;&nbsp;&nbsp;&nbsp;
             `);
+        }
+
     }
     html.push( /*html*/ `
         </div>

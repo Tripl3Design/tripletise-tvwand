@@ -98,8 +98,15 @@ function createCinewall(width, height, depth, tvSize, wallColor, soundbar, firep
     let widthInMeters = width / 100;
     let heightInMeters = height / 100;
     let depthInMeters = depth / 100;
-    let fireplaceWidthInMeters = fireplaceWidth / 100;
-    let fireplaceHeightInMeters = fireplaceHeight / 100;
+    let fireplaceWidthInMeters;
+    if (fireplaceWidth){
+        fireplaceWidthInMeters = fireplaceWidth / 100;
+    }
+    let fireplaceHeightInMeters;
+    if (fireplaceHeight){
+        fireplaceHeightInMeters = fireplaceHeight / 100;
+    }
+    
     let alcoveRightWidthInMeters = alcoveRight / 100;
     let alcoveLeftWidthInMeters = alcoveLeft / 100;
 
@@ -187,10 +194,13 @@ function createCinewall(width, height, depth, tvSize, wallColor, soundbar, firep
         const fireplaceFrameResult = evaluator.evaluate(fireplaceFrameMesh, fireplaceCutout, SUBTRACTION);
     
         if (fireplaceFrameResult) {
-            const fireplaceMaterial = new THREE.MeshStandardMaterial({ color: 0x000000, roughness: 0.9, metalness: 0.6 });
+            const fireplaceMaterial = new THREE.MeshStandardMaterial({ color: 0x333333, roughness: 0.9, metalness: 0.6 });
             const fireplaceFrameMesh = new THREE.Mesh(fireplaceFrameResult.geometry, fireplaceMaterial);
             fireplaceFrameMesh.position.set(0, 0.2 + (fireplaceHeightInMeters / 2), depthInMeters - 0.15);
             scene.add(fireplaceFrameMesh);
+
+            fireplaceFrameMesh.castShadow = true;
+            fireplaceFrameMesh.receiveShadow = true;
         }
     }
     
@@ -324,8 +334,10 @@ function createCinewall(width, height, depth, tvSize, wallColor, soundbar, firep
             const alcoveLeftShelveGeometry = new THREE.BoxGeometry(alcoveLeftWidthInMeters - 0.2, 0.06, depthInMeters - 0.07);
             const alcoveLeftShelve = new THREE.Mesh(alcoveLeftShelveGeometry, wallMaterial);
 
-            const shelfStartY = (heightInMeters - 0.4) / (alcoveLeftShelves + 1);
-            const shelfY = (shelfStartY * (i + 1) + 0.2);
+            //const shelfStartY = (heightInMeters - 0.4) / (alcoveLeftShelves + 1);
+            //const shelfY = (shelfStartY * (i + 1) + 0.2);
+            const shelfStartY = (heightInMeters - 0.37) / (alcoveLeftShelves + 1);
+            const shelfY = (shelfStartY * (i + 1) + 0.185);
 
             alcoveLeftShelve.position.set(-(widthInMeters / 2) - (alcoveLeftWidthInMeters / 2), shelfY, depthInMeters / 2 - 0.017);
 
@@ -417,8 +429,10 @@ function createCinewall(width, height, depth, tvSize, wallColor, soundbar, firep
                 const alcoveRightShelveGeometry = new THREE.BoxGeometry(alcoveRightWidthInMeters - 0.2, 0.06, depthInMeters - 0.07);
                 const alcoveRightShelve = new THREE.Mesh(alcoveRightShelveGeometry, wallMaterial);
 
-                const shelfStartY = (heightInMeters - 0.4) / (alcoveRightShelves + 1);
-                const shelfY = (shelfStartY * (i + 1) + 0.2);
+                //const shelfStartY = (heightInMeters - 0.4) / (alcoveRightShelves + 1);
+                //const shelfY = (shelfStartY * (i + 1) + 0.2);
+                const shelfStartY = (heightInMeters - 0.37) / (alcoveRightShelves + 1);
+                const shelfY = (shelfStartY * (i + 1) + 0.185);
 
                 alcoveRightShelve.position.set((widthInMeters / 2) + (alcoveRightWidthInMeters / 2), shelfY, depthInMeters / 2 - 0.017);
 
@@ -522,9 +536,24 @@ export async function loadModelData(model) {
     scene.add(directionalLight);
 
     // Ground plane setup
-    addGround();
-
-    createCinewall(model.width, model.height, model.depth, model.tvSize, model.color.hex, model.soundbar, model.fireplace.width ?? 0, model.fireplace.height ?? 0, model.fireplace.type ?? "none", model.video ?? "video-1", model.alcove.right.width ?? undefined, model.alcove.right.shelves ?? 0, model.alcove.left.width ?? undefined, model.alcove.left.shelves ?? 0);
+    addGround();   
+    createCinewall(
+        model.width, 
+        model.height, 
+        model.depth, 
+        model.tvSize, 
+        model.color.hex, 
+        model.soundbar, 
+        model.fireplace?.width ?? 0, 
+        model.fireplace?.height ?? 0, 
+        model.fireplace?.type ?? 0, 
+        model.video ?? "video-1", 
+        model.alcove?.right?.width ?? 0, 
+        model.alcove?.right?.shelves ?? 0, 
+        model.alcove?.left?.width ?? 0, 
+        model.alcove?.left?.shelves ?? 0
+    );
+    
     scene.add(group);
 }
 

@@ -1,0 +1,60 @@
+{
+    "fireplaces": [
+        {
+             "id": 1,
+            "width": 194,
+            "height": 42,
+            "brand": "dimplex",
+            "type": "ignite XL 74\"",
+            "price": 1800
+        },
+        {
+            "id": 2,
+            "width": 156,
+            "height": 40,
+            "brand": "dimplex",
+            "type": "ignite XL 60\"",
+            "price": 1650
+        },
+        {
+            "id": 3,
+            "width": 128,
+            "height": 50,
+            "brand": "dimplex",
+            "type": "ignite XL 50\"",
+            "price": 1330
+        },
+        {
+            "id": 4,
+            "width": 188,
+            "height": 50,
+            "brand": "dimplex",
+            "type": "prism 74\"",
+            "price": 1300
+        },
+        {
+            "id": 5,
+            "width": 128,
+            "height": 50,
+            "brand": "dimplex",
+            "type": "prism 50\"",
+            "price": 800
+        },
+        {
+            "id": 6,
+            "width": 183,
+            "height": 50,
+            "brand": "dimplex",
+            "type": "sierra 72\"",
+            "price": 850
+        },
+        {
+            "id": 7,
+            "width": 152,
+            "height": 50,
+            "brand": "dimplex",
+            "type": "sierra 60\"",
+            "price": 750
+        }
+     ]
+}

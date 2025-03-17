@@ -11,12 +11,6 @@
     "depth": 40,
     "tvSize": 83,
     "soundbar": true,
-    "fireplace": {
-      "width": 0,
-      "height": 30,
-      "brand": "ignite",
-      "type": "ignite"
-    },
     "alcove": {
       "left": {
         "width": 80,
@@ -46,12 +40,6 @@
     "depth": 50,
     "tvSize": 76,
     "soundbar": true,
-    "fireplace": {
-      "width": 0,
-      "height": 30,
-      "brand": "ignite",
-      "type": "ignite"
-    },
     "alcove": {
       "left": {
         "width": 67,

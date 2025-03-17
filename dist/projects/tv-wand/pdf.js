@@ -12,7 +12,7 @@ function createPdf(model, mainImage, title, fsid) {
     const dateString = `${day}-${month}-${year}_${hours}-${minutes}`;
 
     const price = document.getElementById('totalPrice').textContent;
-
+/*
     let upholsteryTable = [
         [{ text: '', fontSize: 10 }, { text: 'type', fontSize: 10, bold: true }, { text: 'collectie', fontSize: 10, bold: true }, { text: 'naam', fontSize: 10, bold: true }, { text: 'prijsgroep', fontSize: 10, bold: true },],
         [{ text: 'zitting en rug', fontSize: 10, bold: true }, { text: 'stof', fontSize: 10 }, { text: model.upholstery.type, fontSize: 10 }, { text: model.upholstery.name, fontSize: 10 }, { text: model.upholstery.pricegroup, fontSize: 10 }]
@@ -23,7 +23,7 @@ function createPdf(model, mainImage, title, fsid) {
             [{ text: 'achterkant rug', fontSize: 10, bold: true }, { text: 'stof', fontSize: 10 }, { text: model.upholsteryDuotone.type, fontSize: 10 }, { text: model.upholsteryDuotone.name, fontSize: 10 }, { text: model.upholsteryDuotone.pricegroup, fontSize: 10 }]
         );
     }
-
+*/
     var docDefinition = {
         pageSize: 'A4',
         pageOrientation: 'portrait',
@@ -34,8 +34,8 @@ function createPdf(model, mainImage, title, fsid) {
 
         content: [
             { image: mainImage, width: 210, absolutePosition: { x: 356, y: 30 } },
-            { text: `${title}`, font: 'Poppins', fontSize: 24, characterSpacing: 1.5, color: '#292929', absolutePosition: { x: 28, y: 30 } },
-            { text: 'Offerte', font: 'Poppins', fontSize: 26, characterSpacing: 1.5, color: '#dfdeda', absolutePosition: { x: 28, y: 60 } },
+            { text: `${title}`, font: 'RobotoDefault', fontSize: 24, characterSpacing: 1.5, color: '#292929', absolutePosition: { x: 28, y: 30 } },
+            { text: 'Offerte', font: 'RobotoDefault', fontSize: 26, characterSpacing: 1.5, color: '#dfdeda', absolutePosition: { x: 28, y: 60 } },
             {
                 text: [
                     { text: 'Scan QR of ' },
@@ -52,7 +52,8 @@ function createPdf(model, mainImage, title, fsid) {
                     lineWidth: 0.2
                 }], margin: [0, 210, 0, 0]
             },
-            { text: 'Type', bold: true, fontSize: 12, margin: [0, 15, 0, 5] },
+            { text: 'Basiselement', bold: true, fontSize: 12, margin: [0, 15, 0, 5] },
+            /*
             {
                 layout: 'noBorders',
                 table: {
@@ -153,6 +154,7 @@ function createPdf(model, mainImage, title, fsid) {
                     ]
                 }, margin: [0, 15, 0, 0]
             },
+            */
             {
                 columns: [
                     {

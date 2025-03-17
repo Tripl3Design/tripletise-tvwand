@@ -17,14 +17,6 @@
     font-style: bold;
 }
 
-
-@font-face {
-    font-family: 'RobotoBold';
-    src: url('../fonts/Poppins-Bold.ttf') format('opentype');
-    font-weight: normal;
-    font-style: normal;
-}
-
 #producttitle {
     font-family: 'RobotoBold', sans-serif; /* Use the font family defined */
     font-size: 32px;
