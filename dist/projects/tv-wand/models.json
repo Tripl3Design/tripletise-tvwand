@@ -2,6 +2,25 @@
   {
     "id": 1,
     "name": "tv-wand",
+    "image": "projects/tv-wand/img/thumbnails/tv-wand150-200-20.png",
+    "background": {
+      "original": "d4d4d4"
+    },
+    "width": 150,
+    "height": 200,
+    "depth": 20,
+    "tvSize": 57,
+    "soundbar": true,
+    "color": {
+      "hex": "4A3526",
+      "name": "sepiabruin",
+      "group": "brown"
+    },
+    "video": "video-1"
+  },
+  {
+    "id": 2,
+    "name": "tv-wand",
     "image": "projects/tv-wand/img/thumbnails/tv-wand200-240-40.png",
     "background": {
       "original": "d4d4d4"
@@ -29,7 +48,7 @@
     "video": "video-1"
   },
   {
-    "id": 2,
+    "id": 3,
     "name": "tv-wand",
     "image": "projects/tv-wand/img/thumbnails/tv-wand200-216-50.png",
     "background": {

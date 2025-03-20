@@ -1,7 +1,7 @@
 {
     "fireplaces": [
         {
-             "id": 1,
+            "id": 1,
             "width": 194,
             "height": 42,
             "brand": "dimplex",
@@ -56,5 +56,5 @@
             "type": "sierra 60\"",
             "price": 750
         }
-     ]
+    ]
 }

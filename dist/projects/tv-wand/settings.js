@@ -200,8 +200,11 @@ function updateControlPanel(model, selectedLayer, expandedLayer) {
         showSelected(false);
     });
 
-    //document.getElementById('sizesText').textContent = `${(((model.alcove?.left?.width ?? 0) + (model.alcove?.right?.width ?? 0)) + (model.width ?? 0))} (${model.alcove?.left?.width ?? 0}+${model.width}+${model.alcove?.right?.width ?? 0}) x ${model.height} x ${model.depth} cm`;
-    document.getElementById('sizesText').textContent = `${(((model.alcove?.left?.width ?? 0) + (model.alcove?.right?.width ?? 0)) + (model.width ?? 0))} x ${model.height} x ${model.depth} cm`;
+    document.getElementById('sizesText').textContent = `${(
+        (+model.alcove?.left?.width || 0) +
+        (+model.alcove?.right?.width || 0) +
+        (+model.width || 0)
+    )} x ${+model.height || 0} x ${+model.depth || 0} cm`;
 
 
     //tv diagonal
@@ -381,7 +384,6 @@ function updateControlPanel(model, selectedLayer, expandedLayer) {
         }
     }
 
-
     //fireplace
     const fireplaceCheckbox = document.getElementById('fireplaceToggle');
     const fireplace = document.getElementById('fireplace');
@@ -393,13 +395,35 @@ function updateControlPanel(model, selectedLayer, expandedLayer) {
 
     if (model.fireplace) {
         fireplaceCheckbox.checked = true;
+        fireplace.value = model.fireplace.id; // Zet de geselecteerde waarde
+
+        fireplace.innerHTML = ""; // Leeg de bestaande opties in de dropdown
+
+        ALLFIREPLACES.fireplaces.forEach(fireplaceOption => {
+            // Sla haarden over die te breed zijn
+            if (fireplaceOption.width > model.width) {
+                return;
+            }
+
+            let opt = document.createElement("option");
+            opt.value = String(fireplaceOption.id); // Gebruik fireplaceOption.id hier
+
+            // Toon de haard met prijs in de optie
+            opt.textContent = `${fireplaceOption.brand} ${fireplaceOption.type} (€ ${fireplaceOption.price})`;
+
+            fireplace.appendChild(opt);
+        });
+
+        // Zorg ervoor dat de juiste optie geselecteerd is na het toevoegen
+        if (model.fireplace) {
+            fireplace.value = String(model.fireplace.id); // Reset de geselecteerde haard
+        }
 
         if (!fireplaceListenerAdded) {
             fireplace.addEventListener('input', function (event) {
                 let fireplaceId = event.target.value;
                 selectedFireplace = ALLFIREPLACES.fireplaces.find(f => fireplaceId == f.id);
                 model.fireplace = { ...selectedFireplace };
-                
 
                 fireplaceListenerAdded = true;
 
@@ -408,7 +432,6 @@ function updateControlPanel(model, selectedLayer, expandedLayer) {
                 showSelected(false);
             });
         }
-
     } else {
         fireplaceCheckbox.checked = false;
     }
@@ -438,10 +461,6 @@ function updateControlPanel(model, selectedLayer, expandedLayer) {
     } else {
         document.getElementById('fireplaceText').textContent = '';
     }
-
-
-
-
 
 
     //colors  
@@ -761,7 +780,7 @@ function initSettings(model) {
         </div>`
     };
 
-    if (model.alcove != 0) {
+    if (model.alcove) {
         accordions.alcove = {
             title: "vakkenkasten",
             options: ['alcoveWidth', 'alcoveShelves'],
@@ -814,22 +833,10 @@ function initSettings(model) {
                 <div class="justify-content-start m-0 p-0">
 
                     <div class="mb-2">kies sfeerhaard:</div>
-                    <select style="width: 300px;" class="form-select rounded-0 bg-white" id="fireplace" class="form-select">
-
-                </select>
+                    <select style="width: 300px;" class="form-select rounded-0 bg-white" id="fireplace" class="form-select"></select>
 
                 </div>
-            </div>  `,
-            onload: function () {
-                // Populate dropdown
-                const fireplaceSelect = document.getElementById("fireplace");
-                ALLFIREPLACES.fireplaces.forEach(fireplace => {
-                    let opt = document.createElement("option");
-                    opt.value = fireplace.id;
-                    opt.textContent = `${fireplace.brand} ${fireplace.type} (+ € ${fireplace.price})`;
-                    fireplaceSelect.appendChild(opt);
-                });
-            }
+            </div>`
         }
     }
 

@@ -484,27 +484,22 @@ function clearScene(video) {
 
 function updateVideoTexture(video) {
     if (!videoElement) {
-        // Maak een nieuw video-element aan als het nog niet bestaat
         videoElement = document.createElement('video');
         videoElement.loop = true;
         videoElement.muted = true;
-        videoElement.setAttribute('playsinline', ''); // Voorkomt problemen op iOS
+        videoElement.setAttribute('playsinline', '');
     }
 
-    // Controleer of de video al wordt afgespeeld en of de bron dezelfde is
     if (videoElement.src.includes(video)) {
-        // Video is al geladen en speelt de juiste video af, doe verder niets
         if (videoElement.paused || videoElement.ended) {
             videoElement.play().catch(error => console.error("Video kan niet automatisch starten:", error));
         }
-        return videoTexture; // Return de bestaande video-texture
+        return videoTexture;
     }
 
-    // Update de videobron en laad de nieuwe video als het niet dezelfde is
     videoElement.src = `projects/tv-wand/video/${video}.mp4`;
-    videoElement.load(); // Laadt de nieuwe video
+    videoElement.load();
 
-    // Maak of update de video-texture
     if (!videoTexture) {
         videoTexture = new THREE.VideoTexture(videoElement);
         videoTexture.minFilter = THREE.LinearFilter;
@@ -512,7 +507,6 @@ function updateVideoTexture(video) {
         videoTexture.format = THREE.RGBFormat;
     }
 
-    // Speel de nieuwe video af
     videoElement.play().catch(error => console.error("Video kan niet automatisch starten:", error));
 
     return videoTexture;
@@ -529,7 +523,7 @@ export async function loadModelData(model) {
     const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
     directionalLight.position.set(3, model.height / 100, 4);
     directionalLight.target.position.set(0, 0, 0);
-    directionalLight.shadow.mapSize.width = 2048; // Standaard is 512
+    directionalLight.shadow.mapSize.width = 2048;
     directionalLight.shadow.mapSize.height = 2048;
 
     directionalLight.castShadow = true;
@@ -695,48 +689,92 @@ if (arButton) {
     console.warn("AR-knop niet gevonden, AR-functionaliteit wordt niet geladen.");
 }
 
+function convertVideoTexturesToImages(scene) {
+    scene.traverse((object) => {
+        if (object.isMesh && object.material && object.material.map instanceof THREE.VideoTexture) {
+            const videoTexture = object.material.map;
+            const videoElement = videoTexture.image; // Dit is het <video> element
+
+            if (videoElement.readyState >= videoElement.HAVE_CURRENT_DATA) {
+                // 1. Maak een canvas om het videoframe te tekenen
+                const canvas = document.createElement('canvas');
+                const context = canvas.getContext('2d');
+
+                // Controleer of video breedte en hoogte heeft
+                if (videoElement.videoWidth > 0 && videoElement.videoHeight > 0) {
+                    canvas.width = videoElement.videoWidth;
+                    canvas.height = videoElement.videoHeight;
+                } else {
+                    canvas.width = 512; // Fallback breedte
+                    canvas.height = 512; // Fallback hoogte
+                }
+
+                // 2. Teken het huidige videoframe op het canvas
+                context.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
+
+                // 3. Maak een nieuwe CanvasTexture van het canvas
+                const imageTexture = new THREE.CanvasTexture(canvas);
+                imageTexture.minFilter = THREE.LinearFilter;
+                imageTexture.magFilter = THREE.LinearFilter;
+                imageTexture.format = THREE.RGBFormat;
+
+                // 4. Vervang de VideoTexture door de gegenereerde CanvasTexture
+                object.material.map = imageTexture;
+                object.material.needsUpdate = true;
+            }
+        }
+    });
+}
+
 async function exportModel() {
     const gltfExporter = new GLTFExporter();
     const usdzExporter = new USDZExporter();
     const options = {
-        binary: true,               // Export as binary GLB
-        includeCustomExtensions: true, // Include custom extensions if applicable
+        binary: true,
+        includeCustomExtensions: true,
     };
 
     try {
         // Temporarily remove the ground object to avoid exporting it
-        scene.remove(ground);
+        if (ground) scene.remove(ground);
 
-        if (uap.getOS().name.toLowerCase().includes("ios") || uap.getBrowser().name.toLowerCase().includes("safari")) {
+   
+        // Check of we een iOS/Safari device hebben
+        const isIOS = uap.getOS().name.toLowerCase().includes("ios");
+        const isSafari = uap.getBrowser().name.toLowerCase().includes("safari");
+
+        if (isIOS || isSafari) {
             // --- Generate USDZ ---
-            const usdzBlob = await usdzExporter.parseAsync(scene); // Use async parsing for reliability
+            const usdzBlob = await usdzExporter.parseAsync(scene);
             console.log('USDZ Blob created:', usdzBlob);
 
-            if (!usdzBlob) {
-                throw new Error('USDZ Blob is undefined. Export failed.');
+            if (!usdzBlob || !(usdzBlob instanceof ArrayBuffer)) {
+                throw new Error('USDZ export failed: Invalid output.');
             }
 
-            // Upload USDZ to storage
-            const metadata = {
-                contentType: 'model/vnd.usdz+zip', // Proper content type for USDZ
-            };
-            const usdzRef = ref(storage, 'usdzModels/model.usdz'); // Adjust path as needed
+            // Upload USDZ naar cloud storage
+            const metadata = { contentType: 'model/vnd.usdz+zip' };
+            const usdzRef = ref(storage, 'usdzModels/model.usdz');
             await uploadBytes(usdzRef, usdzBlob, metadata);
             const usdzURL = await getDownloadURL(usdzRef);
             console.log('USDZ model URL:', usdzURL);
 
-            // Return USDZ URL
             return { usdzURL };
 
         } else {
+            convertVideoTexturesToImages(scene);
             // --- Generate GLB ---
             const glbBlob = await new Promise((resolve, reject) => {
                 gltfExporter.parse(
                     scene,
                     (result) => {
-                        const blob = new Blob([result], { type: 'model/gltf-binary' });
-                        console.log('GLB Blob created:', blob);
-                        resolve(blob);
+                        if (result instanceof ArrayBuffer) {
+                            resolve(new Blob([result], { type: 'model/gltf-binary' }));
+                        } else if (typeof result === 'object') {
+                            resolve(new Blob([JSON.stringify(result)], { type: 'application/json' }));
+                        } else {
+                            reject(new Error('Unexpected GLB export format.'));
+                        }
                     },
                     (error) => {
                         console.error('Error during GLB export:', error);
@@ -746,23 +784,21 @@ async function exportModel() {
                 );
             });
 
-            // Upload GLB to storage
-            const glbRef = ref(storage, 'glbModels/model.glb'); // Adjust path as needed
+            // Upload GLB naar cloud storage
+            const glbRef = ref(storage, 'glbModels/model.glb');
             await uploadBytes(glbRef, glbBlob);
             const glbURL = await getDownloadURL(glbRef);
             console.log('GLB model URL:', glbURL);
 
-            // Return GLB URL
             return { glbURL };
         }
 
     } catch (error) {
-        // Handle any errors during the export process
         console.error('Error during exportModel:', error);
-        throw error; // Re-throw to ensure errors are caught by the caller
+        throw error;
 
     } finally {
-        // Add the ground object back to the scene for consistency
-        addGround();
+        // Zet het ground object terug als het verwijderd was
+        if (ground) scene.add(ground);
     }
 }

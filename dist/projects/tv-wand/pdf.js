@@ -11,19 +11,9 @@ function createPdf(model, mainImage, title, fsid) {
 
     const dateString = `${day}-${month}-${year}_${hours}-${minutes}`;
 
-    const price = document.getElementById('totalPrice').textContent;
-/*
-    let upholsteryTable = [
-        [{ text: '', fontSize: 10 }, { text: 'type', fontSize: 10, bold: true }, { text: 'collectie', fontSize: 10, bold: true }, { text: 'naam', fontSize: 10, bold: true }, { text: 'prijsgroep', fontSize: 10, bold: true },],
-        [{ text: 'zitting en rug', fontSize: 10, bold: true }, { text: 'stof', fontSize: 10 }, { text: model.upholstery.type, fontSize: 10 }, { text: model.upholstery.name, fontSize: 10 }, { text: model.upholstery.pricegroup, fontSize: 10 }]
-    ];
+    //const price = document.getElementById('totalPrice').textContent;
+    const price = document.querySelector('.productInfoPrice').textContent;
 
-    if (model.upholsteryDuotone) {
-        upholsteryTable.push(
-            [{ text: 'achterkant rug', fontSize: 10, bold: true }, { text: 'stof', fontSize: 10 }, { text: model.upholsteryDuotone.type, fontSize: 10 }, { text: model.upholsteryDuotone.name, fontSize: 10 }, { text: model.upholsteryDuotone.pricegroup, fontSize: 10 }]
-        );
-    }
-*/
     var docDefinition = {
         pageSize: 'A4',
         pageOrientation: 'portrait',
@@ -34,8 +24,8 @@ function createPdf(model, mainImage, title, fsid) {
 
         content: [
             { image: mainImage, width: 210, absolutePosition: { x: 356, y: 30 } },
-            { text: `${title}`, font: 'RobotoDefault', fontSize: 24, characterSpacing: 1.5, color: '#292929', absolutePosition: { x: 28, y: 30 } },
-            { text: 'Offerte', font: 'RobotoDefault', fontSize: 26, characterSpacing: 1.5, color: '#dfdeda', absolutePosition: { x: 28, y: 60 } },
+            { text: 'TV Wand', font: 'RobotoDefault', fontSize: 24, characterSpacing: 1.5, bold: true, color: '#292929', absolutePosition: { x: 28, y: 30 } },
+            { text: 'Offerte', font: 'RobotoDefault', fontSize: 26, characterSpacing: 1.5, bold: true, color: '#dfdeda', absolutePosition: { x: 28, y: 60 } },
             {
                 text: [
                     { text: 'Scan QR of ' },
@@ -43,7 +33,7 @@ function createPdf(model, mainImage, title, fsid) {
                     { text: ' om te configureren.' },
                 ], lineHeight: 1.4, fontSize: 10, absolutePosition: { x: 130, y: 207 }
             },
-            { qr: configuratorUrl, fit: 120, absolutePosition: { x: 28, y: 135 } },
+            { qr: configuratorUrl, fit: 100, absolutePosition: { x: 28, y: 135 } },
             {
                 canvas: [{
                     type: 'line',
@@ -53,46 +43,16 @@ function createPdf(model, mainImage, title, fsid) {
                 }], margin: [0, 210, 0, 0]
             },
             { text: 'Basiselement', bold: true, fontSize: 12, margin: [0, 15, 0, 5] },
-            /*
             {
                 layout: 'noBorders',
                 table: {
                     headerRows: 0,
                     widths: [100, 'auto'],
                     body: [
-                        [{ text: 'type', fontSize: 10, bold: true }, { text: `Evan`, fontSize: 10 }],
-                        [{
-                            text: 'artikelnummer',
-                            fontSize: 10,
-                            bold: true
-                        }, {
-                            text: model.footstool
-                                ? `${model.type.substring(3)} (bank) & 9085110 (voetenbank)`
-                                : `${model.type.substring(3)}`,
-                            fontSize: 10
-                        }]
-                    ]
-                },
-                margin: [0, 5, 0, 0]
-            },
-            {
-                canvas: [{
-                    type: 'line',
-                    x1: 0, y1: 0,
-                    x2: 536, y2: 0,
-                    lineWidth: 0.2
-                }], margin: [0, 15, 0, 0]
-            },
-            { text: 'Afmetingen', bold: true, fontSize: 12, margin: [0, 15, 0, 5] },
-            {
-                layout: 'noBorders',
-                table: {
-                    headerRows: 0,
-                    widths: [100, 'auto'],
-                    body: [
-                        [{ text: 'breedte', fontSize: 10, bold: true }, { text: `${ALLCOMPONENTS.elements[model.type].width} cm`, fontSize: 10 }],
-                        [{ text: 'diepte', fontSize: 10, bold: true }, { text: `${ALLCOMPONENTS.elements[model.type].depth} cm`, fontSize: 10 }],
-                        [{ text: 'hoogte', fontSize: 10, bold: true }, { text: `84 cm`, fontSize: 10 }]
+                        [{ text: 'breedte', fontSize: 10, bold: true }, { text: `${model.width} cm`, fontSize: 10 }],
+                        [{ text: 'hoogte', fontSize: 10, bold: true }, { text: `${model.height} cm`, fontSize: 10 }],
+                        [{ text: 'diepte', fontSize: 10, bold: true }, { text: `${model.depth} cm`, fontSize: 10 }],
+                        [{ text: 'uitsparing voor tv', fontSize: 10, bold: true }, { text: `${model.tvSize} inch`, fontSize: 10 }],
                     ]
                 }, margin: [0, 5, 0, 0]
             },
@@ -104,6 +64,7 @@ function createPdf(model, mainImage, title, fsid) {
                     lineWidth: 0.2
                 }], margin: [0, 15, 0, 0]
             },
+
             { text: 'Opties', bold: true, fontSize: 12, margin: [0, 15, 0, 5] },
             {
                 layout: 'noBorders',
@@ -111,26 +72,22 @@ function createPdf(model, mainImage, title, fsid) {
                     headerRows: 0,
                     widths: [100, 'auto'],
                     body: [
-                        [{ text: 'zithoogte', fontSize: 10, bold: true }, { text: `${model.seatHeight} cm`, fontSize: 10 }],
-                        // [{ text: 'voetenbank', fontSize: 10, bold: true }, { text: `${(model.footstool === true) ? 'ja' : 'nee'}`, fontSize: 10 }]
+                        // Soundbar
+                        [{ text: 'soundbar', fontSize: 10, bold: true }, { text: model.soundbar ? `ja, uitsparing voor soundbar` : `geen uitsparing voor soundbar`, fontSize: 10 }],
+
+                        // Vakkenkast (met breedte en aantal planken)
+                        [{ text: 'vakkenkast', fontSize: 10, bold: true },
+                        {
+                            text: model.alcove
+                                ? `breedte: ${model.alcove.left.width} cm, aantal planken: ${model.alcove.left.shelves || '0'}`
+                                : `nee`,
+                            fontSize: 10
+                        }
+                        ],
+
+                        // Sfeerhaard
+                        [{ text: 'sfeerhaard', fontSize: 10, bold: true }, { text: model.fireplace ? `${model.fireplace.brand} ${model.fireplace.type}` : `nee`, fontSize: 10 }],
                     ]
-                }, margin: [0, 5, 0, 0]
-            },
-            {
-                canvas: [{
-                    type: 'line',
-                    x1: 0, y1: 0,
-                    x2: 536, y2: 0,
-                    lineWidth: 0.2
-                }], margin: [0, 15, 0, 0]
-            },
-            { text: 'Bekleding', bold: true, fontSize: 12, margin: [0, 15, 0, 5] },
-            {
-                layout: 'noBorders',
-                table: {
-                    headerRows: 1, // ✅ Zet header row correct
-                    widths: [100, 75, 75, 75, 75],
-                    body: upholsteryTable
                 },
                 margin: [0, 5, 0, 0]
             },
@@ -140,8 +97,7 @@ function createPdf(model, mainImage, title, fsid) {
                     x1: 0, y1: 0,
                     x2: 536, y2: 0,
                     lineWidth: 0.2
-                }],
-                margin: [0, 15, 0, 0]
+                }], margin: [0, 15, 0, 0]
             },
             {
                 layout: 'noBorders',
@@ -149,47 +105,48 @@ function createPdf(model, mainImage, title, fsid) {
                     headerRows: 0,
                     widths: [100, 'auto'],
                     body: [
-                        [{ text: 'Prijs :', fontSize: 12, bold: true }, { text: `${price}`, fontSize: 12, bold: true }],
+                        [{ text: 'Prijs', fontSize: 12, bold: true }, { text: `${price.trim()}`, fontSize: 12, bold: true }],
 
                     ]
-                }, margin: [0, 15, 0, 0]
+                },
+                margin: [0, 15, 0, 5]
             },
-            */
-            {
-                columns: [
-                    {
-                        width: 240,
-                        alignment: 'left',
-                        text: 'Deze offerte is gegenereerd door de TripleTise Configurator', link: 'http://tripledesign.nl', fontSize: 8
-                    },
-                    {
-                        width: '*',
-                        alignment: 'right',
-                        //text: { text: 'LOGO', fontSize: 30, bold: true }
-                        svg: '<svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="400.000000pt" height="101.000000pt" viewBox="0 0 400.000000 101.000000" preserveAspectRatio="xMidYMid meet" ><g transform="translate(0.000000,101.000000) scale(0.100000,-0.100000)" fill="#000000" stroke="none"><path d="M494 983 c2 -10 14 -52 26 -93 12 -41 30 -103 41 -137 20 -61 22 -63 54 -63 l34 0 39 123 c22 67 43 137 47 155 6 30 5 32 -22 32 -26 0 -30 -5 -41 -47 -7 -27 -22 -79 -34 -118 l-21 -70 -14 50 c-56 196 -51 185 -84 185 -24 0 -29 -4 -25 -17z"/><path d="M841 983 c-13 -25 -92 -285 -88 -289 2 -2 14 -5 27 -6 20 -3 26 3 35 37 12 40 12 40 61 40 48 0 48 0 60 -40 6 -22 16 -40 22 -39 7 1 20 2 31 3 17 1 15 13 -28 154 -47 152 -47 152 -78 155 -23 2 -34 -2 -42 -15z m53 -116 l14 -47 -33 0 -33 0 16 50 c9 27 17 48 19 47 2 -2 9 -25 17 -50z"/><path d="M1057 993 c-4 -3 -7 -73 -7 -155 l0 -148 30 0 29 0 3 100 3 100 60 -105 c40 -71 64 -104 73 -100 7 3 20 5 28 5 11 0 14 28 14 156 l0 155 -27 -3 c-28 -3 -28 -3 -33 -99 l-5 -96 -55 98 c-47 86 -58 99 -81 99 -14 0 -29 -3 -32 -7z"/><path d="M1450 978 c1 -13 13 -81 28 -153 l27 -130 34 0 34 0 27 98 c15 54 29 100 32 102 2 2 16 -43 32 -100 l28 -105 33 0 c27 0 34 5 40 27 10 42 55 265 55 275 0 5 -12 8 -27 6 -27 -3 -29 -6 -49 -113 l-21 -110 -12 45 c-49 184 -46 175 -76 175 -27 0 -29 -3 -58 -110 l-31 -110 -20 113 c-19 112 -19 112 -48 112 -22 0 -28 -4 -28 -22z"/><path d="M1921 975 c-39 -33 -54 -83 -49 -156 5 -73 29 -109 86 -129 37 -13 47 -13 84 0 58 21 81 56 86 134 8 120 -33 176 -130 176 -35 0 -54 -6 -77 -25z m123 -44 c25 -27 32 -108 13 -154 -15 -34 -19 -37 -56 -37 -51 0 -63 21 -63 107 0 47 4 69 17 83 23 25 67 26 89 1z"/><path d="M2200 845 l0 -155 90 0 c89 0 90 0 90 25 0 24 -3 25 -60 25 l-60 0 0 40 0 40 40 0 c36 0 40 3 40 25 0 23 -4 25 -40 25 -39 0 -40 1 -40 35 l0 35 54 0 c47 0 54 3 59 22 3 12 4 25 1 30 -3 4 -43 8 -90 8 l-84 0 0 -155z"/><path d="M2447 993 c-4 -3 -7 -73 -7 -155 l0 -148 30 0 30 0 0 60 c0 53 2 60 20 60 13 0 29 -17 49 -52 44 -78 43 -77 73 -71 l27 5 -29 58 c-16 32 -34 61 -40 65 -5 3 2 16 17 29 39 34 39 98 0 132 -24 20 -39 24 -96 24 -37 0 -71 -3 -74 -7z m128 -88 c0 -39 -1 -40 -37 -43 l-38 -3 0 46 0 46 38 -3 c36 -3 37 -4 37 -43z"/><path d="M2720 846 l0 -155 44 -6 c107 -16 174 23 196 115 18 77 -3 148 -55 180 -25 15 -50 20 -109 20 l-76 0 0 -154z m150 86 c15 -12 24 -33 27 -64 10 -89 -14 -128 -78 -128 l-39 0 0 105 0 105 34 0 c19 0 44 -8 56 -18z"/><path d="M3030 845 l0 -156 93 3 c87 3 92 4 95 26 3 21 0 22 -62 22 l-66 0 0 39 c0 40 0 40 43 43 35 2 43 7 45 26 3 20 -1 22 -42 22 -46 0 -46 0 -46 35 l0 34 58 3 c54 3 57 4 60 31 l3 27 -90 0 -91 0 0 -155z"/><path d="M3280 846 l0 -156 25 0 c24 0 24 1 27 107 l3 106 52 -94 c70 -126 72 -129 106 -122 l28 5 -3 152 -3 151 -27 3 -27 3 -3 -102 -3 -102 -55 99 c-51 90 -59 99 -88 102 l-32 3 0 -155z"/><path d="M1580 486 c-55 -14 -83 -33 -115 -76 -76 -103 -51 -321 43 -385 32 -22 47 -25 128 -25 84 0 94 2 131 29 74 54 107 195 73 319 -28 107 -146 169 -260 138z m78 -102 c36 -10 52 -54 52 -143 0 -116 -22 -149 -91 -139 -69 9 -83 244 -16 276 27 13 27 13 55 6z"/><path d="M768 483 c-12 -3 -16 -12 -13 -31 19 -113 59 -329 71 -384 l16 -68 69 0 c67 0 69 1 75 28 3 15 16 70 29 122 13 52 26 109 30 125 6 26 11 14 35 -80 15 -60 33 -129 39 -152 l12 -43 69 0 68 0 10 48 c11 47 68 352 77 403 3 21 -1 28 -18 33 -27 7 -97 8 -97 1 0 -3 -9 -62 -20 -132 -11 -71 -21 -141 -22 -158 -2 -18 -18 33 -41 133 l-39 162 -59 0 c-56 0 -59 -1 -66 -27 -3 -16 -21 -88 -38 -161 l-31 -133 -18 133 c-28 205 -21 188 -75 187 -25 -1 -54 -3 -63 -6z"/><path d="M1963 483 l-23 -4 0 -240 0 -239 66 0 65 0 -3 144 -3 144 75 -144 75 -144 63 0 62 0 0 245 0 245 -60 0 -60 0 0 -135 0 -135 -69 132 -69 133 -49 1 c-26 1 -58 0 -70 -3z"/><path d="M2457 483 c-4 -3 -7 -114 -7 -245 l0 -239 158 3 157 3 3 53 3 52 -90 0 -91 0 0 40 0 40 60 0 60 0 0 55 0 55 -60 0 -60 0 0 40 0 40 79 0 c87 0 91 3 91 78 l0 32 -148 0 c-82 0 -152 -3 -155 -7z"/><path d="M2878 483 c-17 -4 -18 -24 -18 -244 l0 -239 60 0 60 0 0 140 0 141 46 -88 c25 -48 60 -112 76 -141 l30 -53 61 3 62 3 0 240 0 240 -60 0 -60 0 0 -135 0 -136 -33 66 c-19 36 -52 98 -74 138 l-39 72 -47 -1 c-26 -1 -55 -3 -64 -6z"/><path d="M68 336 c-32 -7 -60 -15 -63 -17 -2 -3 3 -31 11 -61 32 -112 103 -141 228 -93 70 26 96 23 96 -11 0 -18 59 -17 115 0 36 11 40 15 37 42 -6 52 -39 112 -71 128 -41 22 -100 20 -163 -4 -68 -26 -76 -25 -90 5 -13 28 -19 29 -100 11z"/><path d="M3840 331 c0 -32 -25 -36 -86 -12 -31 11 -78 21 -106 21 -43 0 -54 -4 -83 -33 -30 -30 -55 -88 -55 -129 0 -12 14 -19 50 -27 78 -17 110 -15 110 8 0 30 25 32 95 6 36 -14 80 -25 98 -25 66 0 120 58 134 145 5 32 4 34 -33 43 -22 6 -58 13 -81 17 -39 6 -43 5 -43 -14z"/></g></svg > ', width: 150, margin: [-20, -20, 0, 0]
 
+        ],
 
-    //svg: '<svg viewBox="0 0 197.4 57.2"><path class="st0" d="m20.9 19.4c-1.2-1.5-2.9-2.7-5.4-2.7-6.3 0-7.6 5.9-7.6 10.8 0 4.8 1.3 10.7 7.6 10.7 2.5 0 4.2-1.2 5.4-2.7 1.6-2.2 2.1-5.2 2.1-8s-0.4-5.9-2.1-8.1m4.3 22.9c-2 1.6-4.8 2.7-8.1 2.7-4 0-7.2-1.4-8.7-3.3v15.2h-8v-46h6.9l0.5 3.7c2-3.1 5.7-4.4 9.3-4.4 3.3 0 6 1.2 8 2.8 4 3.3 5.9 8.3 5.9 14.5 0.2 6.5-1.9 11.6-5.8 14.8m32-12.9-8.5 0.6c-2.5 0.2-4.8 1.6-4.8 4.4 0 2.6 2.3 4.2 4.8 4.2 5 0 8.5-2.7 8.5-7.6v-1.6zm6.7 15.3c-3.5 0-5.4-2.2-5.7-4.7-1.6 2.7-5.4 5-10.1 5-8 0-12.1-5-12.1-10.4 0-6.3 4.9-10 11.3-10.4l9.8-0.7v-2c0-3.1-1.1-5.3-5.7-5.3-3.8 0-5.9 1.6-6.1 4.8h-7.8c0.5-7.5 6.4-10.8 13.8-10.8 5.7 0 10.6 1.8 12.5 6.8 0.8 2.1 1 4.5 1 6.8v12.3c0 1.6 0.5 2.1 1.8 2.1 0.5 0 1-0.1 1-0.1v5.9c-1 0.4-1.8 0.7-3.7 0.7m34-3.5c-2.7 2.7-6.9 3.8-11.4 3.8-4.2 0-8-1.2-10.8-3.8-1.9-1.8-3.5-4.6-3.5-7.8h7.5c0 1.5 0.8 3.1 1.8 3.9 1.3 1 2.7 1.5 5 1.5 2.7 0 6.8-0.5 6.8-4.2 0-1.9-1.3-3.2-3.3-3.5-2.9-0.5-6.3-0.6-9.2-1.3-4.6-1-7.6-4.7-7.6-8.9 0-3.4 1.4-5.8 3.4-7.5 2.5-2.1 5.9-3.3 10.1-3.3 4 0 8 1.3 10.4 3.9 1.8 1.9 2.9 4.4 2.9 6.9h-7.6c0-1.3-0.5-2.3-1.4-3.1-1-1-2.7-1.6-4.4-1.6-1.2 0-2.3 0-3.5 0.5-1.4 0.5-2.6 1.8-2.6 3.5 0 2.4 2 3.1 3.8 3.3 3 0.4 3.8 0.5 7.1 1 5.3 0.8 9.1 4.2 9.1 9.4 0.2 3.2-0.9 5.6-2.6 7.3m22.1 3.5c-6.8 0-10.1-3.8-10.1-10.2v-17h-6.1v-6.6h6.1v-8.5l8-2v10.4h8.4v6.6h-8.4v16.3c0 2.6 1.2 3.7 3.7 3.7 1.6 0 3-0.1 5.2-0.3v6.8c-2.3 0.4-4.5 0.8-6.8 0.8m31.3-25.5c-1.1-1.2-2.9-2.1-5-2.1s-4 1-5 2.1c-1.9 2.1-2.4 5.3-2.4 8.4s0.5 6.3 2.4 8.4c1.1 1.2 2.9 2.1 5 2.1s4-1 5-2.1c1.9-2.1 2.4-5.3 2.4-8.4 0-3.2-0.5-6.3-2.4-8.4m6.6 20.6c-2.3 2.8-6.6 5.2-11.7 5.2-5 0-9.3-2.4-11.7-5.2-2.5-3.1-3.9-6.7-3.9-12.3 0-5.7 1.4-9.1 3.9-12.3 2.3-2.8 6.6-5.2 11.7-5.2 5 0 9.3 2.4 11.7 5.2 2.5 3.1 3.9 6.7 3.9 12.3 0 5.7-1.4 9.2-3.9 12.3m29.7-21.5c-1.1-1.2-2.7-1.9-5-1.9-2.5 0-4.4 1-5.6 2.6-1.2 1.5-1.7 3-1.7 5.2h14.4c-0.1-2.5-0.8-4.4-2.1-5.9m9.4 11.7h-22.3c-0.1 2.6 0.8 5 2.5 6.5 1.2 1.1 2.7 2 4.9 2 2.3 0 3.8-0.5 4.8-1.6 0.7-0.7 1.3-1.6 1.6-2.8h7.7c-0.2 2-1.6 4.6-2.8 6.1-2.8 3.3-7 4.7-11.2 4.7-4.6 0-7.9-1.6-10.5-4.1-3.3-3.2-5.1-7.9-5.1-13.3 0-5.3 1.6-10.1 4.8-13.4 2.5-2.6 6.1-4.2 10.6-4.2 4.9 0 9.4 2 12.2 6.1 2.5 3.7 3 7.4 2.9 11.6-0.1 0.2-0.1 1.7-0.1 2.4"/></svg>', width: 100, margin: [0, 0, 0, 0]
-}
-                ],
-columnGap: 100,
-    margin: [0, 15, 0, 0]
+        footer: function (currentPage, pageCount) {
+            if (currentPage === pageCount) {
+                return {
+                    columns: [
+                        {
+                            width: '*',
+                            alignment: 'left',
+                            text: 'Deze offerte is gegenereerd door de TripleTise Configurator',
+                            link: 'http://tripledesign.nl',
+                            fontSize: 8,
+                            margin: [0, -50, 0, 0]
+                        },
+                        {
+                            width: '*',
+                            alignment: 'right',
+                            svg: '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="141px" height="91px" viewBox="0 0 141 91" version="1.1"><defs><rect id="path-1" x="0" y="0" width="141" height="91"/></defs><g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><g id="logo-tvwand"><polygon id="Path_140" fill="#292747" fill-rule="nonzero" points="50.4927027 0.00341527491 41.4494622 0.00341527491 60.9776192 56.2000563 72.3323072 56.2000563 78.619853 38.1742353 74.0803607 25.1125164 74.0803607 25.1125164 66.7307066 46.7072997 50.7667403 0.00341527491"/><polygon id="Path_141" fill="#292747" fill-rule="nonzero" points="68.9281136 0.00170763746 88.4562706 56.1983487 99.8109586 56.1983487 106.100206 38.1725277 101.560714 25.1039782 101.560714 25.1039782 94.21106 46.6987615 78.2385833 0.00170763746"/><polygon id="Path_142" fill="#292747" fill-rule="nonzero" points="105.441495 0.00341527491 96.3982544 0.00341527491 115.928114 56.2000563 127.282802 56.2000563 133.572049 38.1742353 129.034259 25.1125164 129.034259 25.1125164 121.681201 46.7072997 105.715533 0.00341527491"/><polygon id="Path_143" fill="#292747" fill-rule="nonzero" points="7.4279506 0.00341527491 10.1189657 7.74925877 24.3076449 7.74925877 24.3076449 56.2000563 33.0887625 56.2000563 33.0887625 7.75096641 40.5779886 7.75096641 37.8903777 0.00341527491"/><polygon id="Path_144" fill="#292747" fill-rule="nonzero" points="0 78.5769375 0 80.5321824 3.76503821 80.5321824 3.76503821 90.8343592 6.01010394 90.8343592 6.01010394 80.5304748 9.77344005 80.5304748 9.77344005 78.5752299"/><polygon id="Path_145" fill="#292747" fill-rule="nonzero" points="24.6174266 78.5769375 21.2830189 88.5495403 17.9469091 78.5769375 15.6014196 78.5769375 19.8124072 90.8343592 22.7349075 90.8343592 26.9612139 78.5769375"/><polygon id="Path_146" fill="#292747" fill-rule="nonzero" points="46.7583022 78.5769375 44.4791946 87.7708576 42.096259 78.5769375 39.8171513 78.5769375 37.4240032 87.7981798 35.1619165 78.5769375 32.8998298 78.5769375 36.0197733 90.8343592 38.792489 90.8343592 40.9558541 82.4857196 43.1021982 90.8343592 45.891935 90.8343592 48.9965596 78.5769375"/><path d="M59.2227574,80.8788328 L61.0388947,86.2954588 L57.4066201,86.2954588 L59.2227574,80.8788328 Z M57.7538478,78.5769375 L53.5428602,90.8343592 L55.8866476,90.8343592 L56.7615254,88.2507037 L61.6822873,88.2507037 L62.5571651,90.8343592 L64.9009524,90.8343592 L60.674646,78.5769375 L57.7538478,78.5769375 Z" id="Path_147" fill="#292747" fill-rule="nonzero"/><polygon id="Path_148" fill="#292747" fill-rule="nonzero" points="79.1202694 78.5769375 79.1202694 86.8931319 73.5033499 78.5769375 71.4608337 78.5769375 71.4608337 90.8343592 73.6905805 90.8343592 73.6905805 82.6684369 79.3075001 90.8343592 81.3500163 90.8343592 81.3500163 78.5769375"/><g id="Group_9-Clipped"><mask id="mask-2" fill="white"><use xlink:href="#path-1"/></mask><g id="Rectangle_8"/><g id="Group_9" mask="url(#mask-2)" fill="#292747" fill-rule="nonzero"><g transform="translate(88.512440, 78.575467)"><path d="M0,12.258892 L0,0.00147034584 L4.39140984,0.00147034584 C5.28608674,-0.0182266747 6.17409186,0.160185689 6.99221381,0.524007407 C7.7054031,0.849623892 8.33915015,1.32750125 8.84920146,1.92427012 C9.34181935,2.50441199 9.72014558,3.173129 9.96407489,3.89488374 C10.4594661,5.34422748 10.4594661,6.91784251 9.96407489,8.36718624 C9.72010774,9.08892396 9.34178538,9.75763413 8.84920146,10.3377999 C8.33918782,10.934609 7.70543122,11.4124936 6.99221381,11.7380626 C6.17404091,12.1017233 5.28607196,12.2801284 4.39140984,12.2605996 L0,12.258892 Z M4.29268823,1.97208397 L2.25017202,1.97208397 L2.25017202,10.271202 L4.29268823,10.271202 C5.04842899,10.3015824 5.79419556,10.0898632 6.42201137,9.66669834 C6.97541667,9.27368272 7.40959401,8.73466145 7.67645674,8.10933298 C8.2267705,6.84171404 8.2267705,5.40157193 7.67645674,4.13395299 C7.40928783,3.50880959 6.97517206,2.96986475 6.42201137,2.57658763 C5.79384535,2.15418201 5.04833071,1.94253432 4.29268823,1.97208397" id="Path_149"/><path d="M18.4932821,12.4245328 C18.1436334,12.4346519 17.8066796,12.292708 17.5690436,12.0351915 C17.3324933,11.7886905 17.2022431,11.4586308 17.2064969,11.1164825 C17.2008681,10.7761007 17.3314522,10.4476553 17.5690436,10.2046041 C17.8090933,9.95153365 18.1452325,9.81303814 18.4932821,9.82380099 C18.838206,9.81782069 19.1709694,9.951591 19.4163411,10.194869 C19.6617127,10.438147 19.7989724,10.7703894 19.7970883,11.1164825 C19.8040307,11.4632907 19.670083,11.798017 19.4260312,12.0437297 C19.1818927,12.2959676 18.8436032,12.4340773 18.4932821,12.4245328" id="Path_150"/><polygon id="Path_151" points="27.1109984 12.258892 27.1109984 0.00147034584 29.1535146 0.00147034584 34.7704342 8.31595712 34.7704342 0.00147034584 37.0069895 0.00147034584 37.0069895 12.258892 34.9644733 12.258892 29.3475537 4.09296969 29.3475537 12.258892"/><polygon id="Path_152" points="44.1660088 12.258892 44.1660088 0.00147034584 46.4110745 0.00147034584 46.4110745 10.3036471 52.4875602 10.3036471 52.4875602 12.258892"/></g></g></g></g></g></svg>',
+                            width: 60,
+                            margin: [0, -80, 0, 0]
+                        }
+                    ],
+                    columnGap: 100,
+                    margin: [30, 30, 30, 30]
+                };
             }
-        ]
+        }
     }
-pdfMake.fonts = {
-    Poppins: {
-        normal: 'https://vanwoerdenwonen-levante.web.app/fonts/Poppins-Black.ttf',
-        bold: 'https://vanwoerdenwonen-levante.web.app/fonts/Poppins-Black.ttf',
-        tekst: 'https://vanwoerdenwonen-levante.web.app/fonts/Roboto-Light.ttf',
-        //bold: 'https://vanwoerdenwonen-levante.web.app/fonts/Roboto-Light.ttf',
-    },
-    RobotoDefault: {
-        normal: 'https://pastoe-amsterdammer.web.app/fonts/Roboto-Light.ttf',
-        bold: 'https://pastoe-amsterdammer.web.app/fonts/Roboto-Medium.ttf'
-        //italics: 'https://pastoe-amsterdammer.web.app/fonts/Roboto-Light.ttf',
-        //bold: 'https://pastoe-amsterdammer.web.app/fonts/Roboto-Light.ttf',
-    },
-}
-pdfMake.createPdf(docDefinition).download(`${title}_${dateString}`);
+    pdfMake.fonts = {
+        RobotoDefault: {
+            normal: 'https://pastoe-amsterdammer.web.app/fonts/Roboto-Light.ttf',
+            bold: 'https://pastoe-amsterdammer.web.app/fonts/Roboto-Medium.ttf'
+            //italics: 'https://pastoe-amsterdammer.web.app/fonts/Roboto-Light.ttf',
+            //bold: 'https://pastoe-amsterdammer.web.app/fonts/Roboto-Light.ttf',
+        },
+    }
+    pdfMake.createPdf(docDefinition).download(`TV-Wand_${dateString}`);
 }
