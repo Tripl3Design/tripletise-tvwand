@@ -9,6 +9,7 @@ import { USDZExporter } from 'three/addons/exporters/USDZExporter.js';
 
 let scene, camera, renderer, rgbeLoader, controls;
 let groundGeometry, groundMaterial, ground;
+let backwallGeometry, backwallMaterial, backwall;
 let videoElement = null;
 let videoTexture = null;
 let imageTexture = null;
@@ -86,6 +87,18 @@ function addGround() {
     ground.receiveShadow = true;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     scene.add(ground);
+/*
+    backwallGeometry = new THREE.PlaneGeometry(1000, 20);
+    backwallMaterial = new THREE.MeshStandardMaterial({
+        color: '#d2d2d2',
+        side: THREE.FrontSide
+    });
+    backwall = new THREE.Mesh(backwallGeometry, backwallMaterial);
+    backwall.position.set(0, 10, 0);
+    backwall.castShadow = true;
+    backwall.receiveShadow = true;
+    scene.add(backwall);
+    */
 }
 
 // Desktop versie
@@ -113,17 +126,7 @@ function createCinewall(width, height, depth, tvSize, wallColor, soundbar, firep
 
     const evaluator = new Evaluator();
 
-    const backwallGeometry = new THREE.PlaneGeometry(1000, 20);
-    const backwallMaterial = new THREE.MeshStandardMaterial({
-        color: '#d2d2d2',
-        side: THREE.FrontSide
-    });
-    const backwallMesh = new THREE.Mesh(backwallGeometry, backwallMaterial);
-    backwallMesh.position.set(0, 10, 0);
-    scene.add(backwallMesh);
 
-    backwallMesh.castShadow = true;
-    backwallMesh.receiveShadow = true;
 
     const wallGeometry = new THREE.BoxGeometry(widthInMeters, heightInMeters, depthInMeters);
     const wallMaterial = new THREE.MeshStandardMaterial({ color: '#' + wallColor });
@@ -236,8 +239,8 @@ function createCinewall(width, height, depth, tvSize, wallColor, soundbar, firep
     // Gebruik de functie in je TV-materiaal
     const tvScreenMaterial = new THREE.MeshStandardMaterial({
         map: updateVideoTexture(video),
-        emissive: 0xffffff,
-        emissiveIntensity: 0.5,
+        //color: 0x000000,
+
         roughness: 0.1,
         metalness: 0.5,
     });
@@ -708,6 +711,7 @@ async function exportModel() {
     try {
         // Temporarily remove the ground object to avoid exporting it
         if (ground) scene.remove(ground);
+        scene.remove(backwall);
 
         // Check of we een iOS/Safari device hebben
         const isIOS = uap.getOS().name.toLowerCase().includes("ios");

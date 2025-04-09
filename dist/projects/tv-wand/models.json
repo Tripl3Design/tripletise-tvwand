@@ -16,7 +16,7 @@
       "name": "sepiabruin",
       "group": "brown"
     },
-    "video": "logoAnimation"
+    "video": "projects/tv-wand/video/logoAnimation.png"
   },
   {
     "id": 2,
@@ -45,7 +45,7 @@
       "name": "signaalwit",
       "group": "white"
     },
-    "video": "logoAnimation"
+    "video": "projects/tv-wand/video/logoAnimation.png"
   },
   {
     "id": 3,
