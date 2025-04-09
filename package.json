@@ -1,6 +1,25 @@
 {
   "dependencies": {
+    "firebase": "^11.6.0",
     "postprocessing": "^6.36.7",
     "three": "^0.173.0"
-  }
+  },
+  "name": "tripletise-tvwand",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Tripl3Design/tripletise-tvwand.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Tripl3Design/tripletise-tvwand/issues"
+  },
+  "homepage": "https://github.com/Tripl3Design/tripletise-tvwand#readme",
+  "description": ""
 }

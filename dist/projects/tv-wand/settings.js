@@ -9,6 +9,7 @@ const urlParams = new URLSearchParams(window.location.search);
 let mainModule = null;
 
 async function downloadPdf() {
+    console.log(FEATUREDMODEL, brand, product, title);
     try {
         const { dataURL, blob } = mainModule.captureScreenshot();
 
@@ -703,6 +704,7 @@ function initSettings(model) {
                 </div>
 
                 <!-- videos for videotexture, do not remove -->
+                <!--
                 <video id="video-1" style="display: none;" height="100px" autoplay loop muted>
                     <source src="projects/tv-wand/video/video-1.mp4" type="video/mp4" >
                     Your browser does not support the video tag.
@@ -712,8 +714,14 @@ function initSettings(model) {
                     <source src="projects/tv-wand/video/video-2.mp4" type="video/mp4" >
                     Your browser does not support the video tag.
                 </video>
+-->
+<!-- poster image needed for model export and AR -->
+                <video id="logoAnimation" style="display: none;" height="100px" autoplay loop muted poster="projects/tv-wand/video/logo_relaxury.png">
+                    <source src="projects/tv-wand/video/logoAnimation.mp4" type="video/mp4" >
+                    Your browser does not support the video tag.
+                </video>
 
-                <video id="optiflame" style="display: none;" height="100px" autoplay loop muted>
+                <video id="optiflame" style="display: none;" height="100px" autoplay loop muted poster="projects/tv-wand/video/optiflame.png">
                     <source src="projects/tv-wand/video/optiflame.mp4" type="video/mp4" >
                     Your browser does not support the video tag.
                 </video>

@@ -11,6 +11,7 @@ let scene, camera, renderer, rgbeLoader, controls;
 let groundGeometry, groundMaterial, ground;
 let videoElement = null;
 let videoTexture = null;
+let imageTexture = null;
 
 let projectmap = 'projects/tv-wand/';
 
@@ -235,7 +236,6 @@ function createCinewall(width, height, depth, tvSize, wallColor, soundbar, firep
     // Gebruik de functie in je TV-materiaal
     const tvScreenMaterial = new THREE.MeshStandardMaterial({
         map: updateVideoTexture(video),
-        emissiveMap: videoTexture,
         emissive: 0xffffff,
         emissiveIntensity: 0.5,
         roughness: 0.1,
@@ -250,36 +250,7 @@ function createCinewall(width, height, depth, tvSize, wallColor, soundbar, firep
 
     tvScreenMesh.castShadow = true;
     tvScreenMesh.receiveShadow = true;
-    /*
-        const videoElement = document.createElement('video');
-        videoElement.src = 'projects/tv-wand/video/' + video + '.mp4';
-    
-        videoElement.loop = true;
-        videoElement.muted = true;
-        videoElement.play();
-    
-        const videoTexture = new THREE.VideoTexture(videoElement);
-        videoTexture.minFilter = THREE.LinearFilter;
-        videoTexture.magFilter = THREE.LinearFilter;
-        videoTexture.format = THREE.RGBFormat;
-    
-        const tvScreenMaterial = new THREE.MeshStandardMaterial({
-            map: videoTexture,
-            emissiveMap: videoTexture, // Laat het scherm zelf oplichten
-            emissive: 0xffffff,
-            emissiveIntensity: 0.5,
-            roughness: 0.1, // Lager = glanzender
-            metalness: 0.5, // Hoger = meer reflectie
-        });
-    
-        const tvScreenGeometry = new THREE.BoxGeometry(tvWidth, tvHeight, tvDepth - 0.005);
-        const tvScreenMesh = new THREE.Mesh(tvScreenGeometry, tvScreenMaterial);
-        tvScreenMesh.position.set(0, 1 + (tvHeight / 2) + 0.015, depthInMeters - 0.02);
-        scene.add(tvScreenMesh);
-    
-        tvScreenMesh.castShadow = true;
-        tvScreenMesh.receiveShadow = true;
-    */
+
     if (alcoveLeft) {
         // Geometry
         const alcoveLeftGeometry = new Brush(new THREE.BoxGeometry(alcoveLeftWidthInMeters, heightInMeters, depthInMeters - 0.05));
@@ -482,7 +453,26 @@ function clearScene(video) {
     }
 }
 
-function updateVideoTexture(video) {
+function updateVideoTexture(videoOrImage) {
+    // Controleer of het een afbeelding is
+    if (videoOrImage.endsWith('.png') || videoOrImage.endsWith('.jpg')) {
+        // Maak een HTMLImageElement aan voor de afbeelding
+        const imageElement = new Image();
+        imageElement.src = videoOrImage;
+        console.log(videoOrImage);
+
+        imageElement.onload = () => {
+            // Maak een nieuwe THREE.Texture aan van de HTMLImageElement
+            if (!imageTexture) {
+                imageTexture = new THREE.Texture(imageElement);
+                imageTexture.needsUpdate = true;
+            }
+        };
+
+        return imageTexture;
+    }
+
+    // Als het geen afbeelding is, ga door met het video-proces zoals normaal
     if (!videoElement) {
         videoElement = document.createElement('video');
         videoElement.loop = true;
@@ -490,14 +480,14 @@ function updateVideoTexture(video) {
         videoElement.setAttribute('playsinline', '');
     }
 
-    if (videoElement.src.includes(video)) {
+    if (videoElement.src.includes(videoOrImage)) {
         if (videoElement.paused || videoElement.ended) {
             videoElement.play().catch(error => console.error("Video kan niet automatisch starten:", error));
         }
         return videoTexture;
     }
 
-    videoElement.src = `projects/tv-wand/video/${video}.mp4`;
+    videoElement.src = `projects/tv-wand/video/${videoOrImage}.mp4`;
     videoElement.load();
 
     if (!videoTexture) {
@@ -512,10 +502,9 @@ function updateVideoTexture(video) {
     return videoTexture;
 }
 
-
 export async function loadModelData(model) {
     const group = new THREE.Group();
-    clearScene(model.video ?? "video-1");
+    clearScene(model.video ?? "logoAnimation");
 
     const ambientLight = new THREE.AmbientLight(0xeeeeee, 1);
     scene.add(ambientLight);
@@ -541,7 +530,8 @@ export async function loadModelData(model) {
         model.fireplace?.width ?? 0, 
         model.fireplace?.height ?? 0, 
         model.fireplace?.type ?? 0, 
-        model.video ?? "video-1", 
+        //'projects/tv-wand/video/logoAnimation.png', 
+        model.video ?? "logoAnimation", 
         model.alcove?.right?.width ?? 0, 
         model.alcove?.right?.shelves ?? 0, 
         model.alcove?.left?.width ?? 0, 
@@ -648,7 +638,8 @@ const arButton = document.getElementById("arButton");
 if (arButton) {
     arButton.addEventListener("click", async () => {
         const loader = document.getElementById("loader");
-        loader.style.display = "flex"; // Laat de loader zien
+        loader.style.display = "flex"; 
+        
 
         try {
             const { glbURL, usdzURL } = await exportModel();
@@ -673,7 +664,6 @@ if (arButton) {
                 if (!glbURL) {
                     throw new Error('GLB URL ontbreekt.');
                 }
-
                 const intentUrl = `intent://arvr.google.com/scene-viewer/1.0?file=${encodeURIComponent(glbURL)}&mode=ar_only&resizable=false&disable_occlusion=true#Intent;scheme=https;package=com.google.ar.core;action=android.intent.action.VIEW;S.browser_fallback_url=https://developers.google.com/ar;end;`;
                 console.log('Generated URL (Android):', intentUrl);
                 window.location.href = intentUrl;
@@ -689,43 +679,6 @@ if (arButton) {
     console.warn("AR-knop niet gevonden, AR-functionaliteit wordt niet geladen.");
 }
 
-function convertVideoTexturesToImages(scene) {
-    scene.traverse((object) => {
-        if (object.isMesh && object.material && object.material.map instanceof THREE.VideoTexture) {
-            const videoTexture = object.material.map;
-            const videoElement = videoTexture.image; // Dit is het <video> element
-
-            if (videoElement.readyState >= videoElement.HAVE_CURRENT_DATA) {
-                // 1. Maak een canvas om het videoframe te tekenen
-                const canvas = document.createElement('canvas');
-                const context = canvas.getContext('2d');
-
-                // Controleer of video breedte en hoogte heeft
-                if (videoElement.videoWidth > 0 && videoElement.videoHeight > 0) {
-                    canvas.width = videoElement.videoWidth;
-                    canvas.height = videoElement.videoHeight;
-                } else {
-                    canvas.width = 512; // Fallback breedte
-                    canvas.height = 512; // Fallback hoogte
-                }
-
-                // 2. Teken het huidige videoframe op het canvas
-                context.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
-
-                // 3. Maak een nieuwe CanvasTexture van het canvas
-                const imageTexture = new THREE.CanvasTexture(canvas);
-                imageTexture.minFilter = THREE.LinearFilter;
-                imageTexture.magFilter = THREE.LinearFilter;
-                imageTexture.format = THREE.RGBFormat;
-
-                // 4. Vervang de VideoTexture door de gegenereerde CanvasTexture
-                object.material.map = imageTexture;
-                object.material.needsUpdate = true;
-            }
-        }
-    });
-}
-
 async function exportModel() {
     const gltfExporter = new GLTFExporter();
     const usdzExporter = new USDZExporter();
@@ -734,11 +687,28 @@ async function exportModel() {
         includeCustomExtensions: true,
     };
 
+    createCinewall(
+        FEATUREDMODEL.width, 
+        FEATUREDMODEL.height, 
+        FEATUREDMODEL.depth, 
+        FEATUREDMODEL.tvSize, 
+        FEATUREDMODEL.color.hex, 
+        FEATUREDMODEL.soundbar, 
+        FEATUREDMODEL.fireplace?.width ?? 0, 
+        FEATUREDMODEL.fireplace?.height ?? 0, 
+        FEATUREDMODEL.fireplace?.type ?? 0, 
+        'projects/tv-wand/video/logoAnimation.png', 
+        //FEATUREDMODEL.video ?? "logoAnimation", 
+        FEATUREDMODEL.alcove?.right?.width ?? 0, 
+        FEATUREDMODEL.alcove?.right?.shelves ?? 0, 
+        FEATUREDMODEL.alcove?.left?.width ?? 0, 
+        FEATUREDMODEL.alcove?.left?.shelves ?? 0
+    );
+
     try {
         // Temporarily remove the ground object to avoid exporting it
         if (ground) scene.remove(ground);
 
-   
         // Check of we een iOS/Safari device hebben
         const isIOS = uap.getOS().name.toLowerCase().includes("ios");
         const isSafari = uap.getBrowser().name.toLowerCase().includes("safari");
@@ -762,7 +732,6 @@ async function exportModel() {
             return { usdzURL };
 
         } else {
-            convertVideoTexturesToImages(scene);
             // --- Generate GLB ---
             const glbBlob = await new Promise((resolve, reject) => {
                 gltfExporter.parse(
@@ -802,3 +771,4 @@ async function exportModel() {
         if (ground) scene.add(ground);
     }
 }
+
