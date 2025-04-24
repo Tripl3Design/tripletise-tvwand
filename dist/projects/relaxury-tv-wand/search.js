@@ -1,64 +1,15 @@
 "use strict";
 
-const brand = "pastoe";
-const product = "amsterdammer";
-const title = "a'\dammer";
+const brand = 'relaxury';
+const product = 'tv-wand';
+const title = 'Stel je tv wand samen';
 
-var UNITY_INSTANCE;
 var ALLCOLORS;
 var ALLCOMPONENTS;
-
-var loader = document.createElement('script');
-loader.src = `https://${brand}-${product}.web.app/projects/${brand}-${product}/Build/${brand}-${product}.loader.js`;
-document.head.appendChild(loader);
 
 var pricing = document.createElement('script');
 pricing.src = `https://${brand}-${product}.web.app/projects/${brand}-${product}/pricing.js`;
 document.head.appendChild(pricing);
-
-async function generateRenderTexture(medium, model) {
-    const renderTexture = {
-        medium: medium,
-        angleName: "perspective",
-        widthForImage: model.width,
-        heightForImage: model.height,
-        depthForImage: 37
-    };
-    await UNITY_INSTANCE.SendMessage('VanDoesburg', 'SaveRenderTexture', JSON.stringify(renderTexture));
-}
-
-// used by FromUnityToJavascript.jslib
-async function uploadRenderTexture(blob, medium, fileName) {
-    const result = await blobToBase64(blob);
-    const img = document.querySelector('.productRender');
-
-    img.src = result;
-    img.title = fileName;
-}
-
-function blobToBase64(blob) {
-    return new Promise((resolve, _) => {
-        const reader = new FileReader();
-        reader.onloadend = () => resolve(reader.result);
-        reader.readAsDataURL(blob);
-    });
-}
-
-function addDecor(modelType, modelWidth, modelHeight, modelDepth, TvHeight, TvDistanceFromWall, wallColor, wallPath, floorColor, floorPath) {
-    const decor = {
-        typeForDecor: modelType,
-        widthForDecor: modelWidth,
-        heightForDecor: modelHeight,
-        depthForDecor: modelDepth,
-        heightForTV: TvHeight,
-        distanceFromWall: TvDistanceFromWall,
-        colorForWall: wallColor,
-        pathForWall: wallPath,
-        colorForFloor: floorColor,
-        pathForFloor: floorPath
-    };
-    UNITY_INSTANCE.SendMessage('Amsterdammer', 'AddDecor', JSON.stringify(decor));
-}
 
 async function showSearchImages(modelFromSearch) {
     const widths = [
@@ -208,27 +159,4 @@ async function showSearchImages(modelFromSearch) {
     document.querySelector('.productInfoFamily').textContent = title;
     document.querySelector('.productInfoType').textContent = model.type.replace(/([a-z])([A-Z])/g, '$1 $2').toLowerCase();
     pricing(model);
-}
-
-async function handleModelSelection() {
-    var canvas = document.getElementById("modelviewer");
-    var buildUrl = `https://${brand}-${product}.web.app/projects/${brand}-${product}`;
-    var config = {
-        dataUrl: `${buildUrl}/Build/${brand}-${product}.data`,
-        frameworkUrl: `${buildUrl}/Build/${brand}-${product}.framework.js`,
-        codeUrl: `${buildUrl}/Build/${brand}-${product}.wasm`,
-        //streamingAssetsUrl: "StreamingAssets",
-        companyName: 'TripleDesign',
-        productName: product.charAt(0).toUpperCase() + product.slice(1),
-        productVersion: '0.1',
-    };
-
-    const unityPromise = createUnityInstance(canvas, config, (progress) => {
-        progressBar.style.width = 100 * progress + '%';
-    });
-    const colorsPromise = fetch(`${buildUrl}/colors.json`).then(response => response.json());
-    const componentsPromise = fetch(`${buildUrl}/components.json`).then(response => response.json());
-    UNITY_INSTANCE = await unityPromise;
-    ALLCOLORS = await colorsPromise;
-    ALLCOMPONENTS = await componentsPromise;
 }

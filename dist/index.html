@@ -19,7 +19,6 @@
   <script src="https://cdn.jsdelivr.net/npm/ua-parser-js@2.0.0/dist/ua-parser.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
-
   <!-- Three.js importmap  -->
   <script type="importmap">
     {
@@ -32,11 +31,10 @@
     }
     </script>
 
-
   <script>
     console.log('%cThis configurator is made by TripleDesign. Visit tripledesign.nl for more info!', 'background:red;color:#fff;font-weight: bold;');
-    const brand = 'tv';
-    const product = 'wand';
+    const brand = 'relaxury';
+    const product = 'tv-wand';
     const title = 'Stel je tv wand samen';
 
     const capitalizeFirstLetter = (str) => str.charAt(0).toUpperCase() + str.slice(1);
@@ -404,12 +402,12 @@
   </div>
 
   <!-- Externe scripts met `defer` -->
-  <script src="projects/tv-wand/pdf.js" defer></script>
-  <script src="projects/tv-wand/pricing.js" defer></script>
+  <script src="projects/relaxury-tv-wand/pdf.js" defer></script>
+  <script src="projects/relaxury-tv-wand/pricing.js" defer></script>
   <script src="js/controlpanel.js" defer></script>
   <script src="js/colorChanger.js" defer></script>
 
-  <script src="projects/tv-wand/settings.js" defer></script>
+  <script src="projects/relaxury-tv-wand/settings.js" defer></script>
 
   <!-- PDFMake -->
   <script src="https://cdn.jsdelivr.net/npm/pdfmake@0.2.18/build/pdfmake.min.js"></script>
@@ -424,13 +422,14 @@
     import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
 
     const firebaseConfig = {
-      apiKey: "AIzaSyA9oBVEUxEVroVn_DsZxvw3h-RkMXPDVPQ",
-      authDomain: "tv-wand.firebaseapp.com",
-      projectId: "tv-wand",
-      storageBucket: "tv-wand.firebasestorage.app",
-      messagingSenderId: "620454996182",
-      appId: "1:620454996182:web:45894a06686823e9ec8177"
+      apiKey: "AIzaSyBjFUERj9I2P5-FVXMsyTuIXH_fsVhDqlY",
+      authDomain: "relaxury-tv-wand.firebaseapp.com",
+      projectId: "relaxury-tv-wand",
+      storageBucket: "relaxury-tv-wand.firebasestorage.app",
+      messagingSenderId: "91868218497",
+      appId: "1:91868218497:web:e033fe24ce9ce7a18b3980"
     };
+    
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
     const storage = getStorage(app);

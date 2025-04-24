@@ -1,13 +1,20 @@
 {
   "projects": {
     "default": "tv-wand",
-    "tv-wand": "tv-wand"
+    "tv-wand": "relaxury-tv-wand"
   },
   "targets": {
     "tv-wand": {
       "hosting": {
         "tv-wand": [
           "tv-wand"
+        ]
+      }
+    },
+    "relaxury-tv-wand": {
+      "hosting": {
+        "relaxury-tv-wand": [
+          "relaxury-tv-wand"
         ]
       }
     }

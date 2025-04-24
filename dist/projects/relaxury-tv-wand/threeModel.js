@@ -14,7 +14,7 @@ let videoElement = null;
 let videoTexture = null;
 let imageTexture = null;
 
-let projectmap = 'projects/tv-wand/';
+let projectmap = 'projects/relaxury-tv-wand/';
 
 export function initThree(containerElem) {
     // Scene setup
@@ -490,7 +490,7 @@ function updateVideoTexture(videoOrImage) {
         return videoTexture;
     }
 
-    videoElement.src = `projects/tv-wand/video/${videoOrImage}.mp4`;
+    videoElement.src = `projects/relaxury-tv-wand/video/${videoOrImage}.mp4`;
     videoElement.load();
 
     if (!videoTexture) {
@@ -533,7 +533,6 @@ export async function loadModelData(model) {
         model.fireplace?.width ?? 0, 
         model.fireplace?.height ?? 0, 
         model.fireplace?.type ?? 0, 
-        //'projects/tv-wand/video/logoAnimation.png', 
         model.video ?? "logoAnimation", 
         model.alcove?.right?.width ?? 0, 
         model.alcove?.right?.shelves ?? 0, 
@@ -641,13 +640,12 @@ const arButton = document.getElementById("arButton");
 if (arButton) {
     arButton.addEventListener("click", async () => {
         const loader = document.getElementById("loader");
-        loader.style.display = "flex"; 
-        
+        loader.style.display = "flex"; // Laat de loader zien
 
         try {
             const { glbURL, usdzURL } = await exportModel();
 
-            if (result.os.name.toLowerCase().includes("ios") || result.browser.name.toLowerCase().includes("safari")) {
+            if (uap.getOS().name.toLowerCase().includes("ios") || uap.getBrowser().name.toLowerCase().includes("safari")) {
                 if (!usdzURL) {
                     throw new Error('USDZ URL ontbreekt.');
                 }
@@ -667,7 +665,8 @@ if (arButton) {
                 if (!glbURL) {
                     throw new Error('GLB URL ontbreekt.');
                 }
-                const intentUrl = `intent://arvr.google.com/scene-viewer/1.0?file=${encodeURIComponent(glbURL)}&mode=ar_only&resizable=false&disable_occlusion=true#Intent;scheme=https;package=com.google.ar.core;action=android.intent.action.VIEW;S.browser_fallback_url=https://developers.google.com/ar;end;`;
+
+                const intentUrl = `intent://arvr.google.com/scene-viewer/1.0?file=${encodeURIComponent(glbURL)}&mode=ar_only&resizable=false&disable_occlusion=true&enable_vertical_placement=true#Intent;scheme=https;package=com.google.ar.core;action=android.intent.action.VIEW;S.browser_fallback_url=vanwoerdenwonen.nl/ar;end;`;
                 console.log('Generated URL (Android):', intentUrl);
                 window.location.href = intentUrl;
             }
@@ -700,7 +699,7 @@ async function exportModel() {
         FEATUREDMODEL.fireplace?.width ?? 0, 
         FEATUREDMODEL.fireplace?.height ?? 0, 
         FEATUREDMODEL.fireplace?.type ?? 0, 
-        'projects/tv-wand/video/logoAnimation.png', 
+        'projects/relaxury-tv-wand/video/logoAnimation.png', 
         //FEATUREDMODEL.video ?? "logoAnimation", 
         FEATUREDMODEL.alcove?.right?.width ?? 0, 
         FEATUREDMODEL.alcove?.right?.shelves ?? 0, 

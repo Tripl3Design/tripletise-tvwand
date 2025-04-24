@@ -27,7 +27,7 @@
         ]
       }
     ],
-    "target": "tv-wand",
+    "target": "relaxury-tv-wand",
     "public": "dist",
     "ignore": [
       "firebase.json",
