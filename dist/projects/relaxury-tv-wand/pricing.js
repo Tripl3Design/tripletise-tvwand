@@ -1,3 +1,5 @@
+
+
 //price & articleList
 function pricing(model) {
     let totalPrice = 0;
@@ -11,6 +13,7 @@ function pricing(model) {
 
     // Globale variabelen om prijs en model op te slaan
     currentModel = model;
+    currentTotalPrice = totalPrice.toFixed(0);
 
     const addToCartButton = document.getElementById('add-to-cart-button');
     if (addToCartButton) {
@@ -33,7 +36,7 @@ function pricing(model) {
         } else {
             priceHTML = `
                 <div class="h5 fw-bold">
-                    <span class="original-price" style="color: black;">€ ${totalPrice.toFixed(0)} ,-</span>
+                    <span class="original-price" style="color: black;">€ ${totalPrice.toFixed(0)},-</span>
                 </div>
             `;
         }

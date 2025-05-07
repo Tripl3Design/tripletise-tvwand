@@ -87,18 +87,18 @@ function addGround() {
     ground.receiveShadow = true;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     scene.add(ground);
-/*
-    backwallGeometry = new THREE.PlaneGeometry(1000, 20);
-    backwallMaterial = new THREE.MeshStandardMaterial({
-        color: '#d2d2d2',
-        side: THREE.FrontSide
-    });
-    backwall = new THREE.Mesh(backwallGeometry, backwallMaterial);
-    backwall.position.set(0, 10, 0);
-    backwall.castShadow = true;
-    backwall.receiveShadow = true;
-    scene.add(backwall);
-    */
+    /*
+        backwallGeometry = new THREE.PlaneGeometry(1000, 20);
+        backwallMaterial = new THREE.MeshStandardMaterial({
+            color: '#d2d2d2',
+            side: THREE.FrontSide
+        });
+        backwall = new THREE.Mesh(backwallGeometry, backwallMaterial);
+        backwall.position.set(0, 10, 0);
+        backwall.castShadow = true;
+        backwall.receiveShadow = true;
+        scene.add(backwall);
+        */
 }
 
 // Desktop versie
@@ -113,14 +113,14 @@ function createCinewall(width, height, depth, tvSize, wallColor, soundbar, firep
     let heightInMeters = height / 100;
     let depthInMeters = depth / 100;
     let fireplaceWidthInMeters;
-    if (fireplaceWidth){
+    if (fireplaceWidth) {
         fireplaceWidthInMeters = fireplaceWidth / 100;
     }
     let fireplaceHeightInMeters;
-    if (fireplaceHeight){
+    if (fireplaceHeight) {
         fireplaceHeightInMeters = fireplaceHeight / 100;
     }
-    
+
     let alcoveRightWidthInMeters = alcoveRight / 100;
     let alcoveLeftWidthInMeters = alcoveLeft / 100;
 
@@ -171,32 +171,32 @@ function createCinewall(width, height, depth, tvSize, wallColor, soundbar, firep
         const fireplaceRecess = new Brush(new THREE.BoxGeometry(fireplaceWidthInMeters, fireplaceHeightInMeters, 0.30));
         fireplaceRecess.position.set(0, 0.2 - (heightInMeters / 2) + (fireplaceHeightInMeters / 2), (depthInMeters / 2) - 0.075);
         fireplaceRecess.updateMatrixWorld();
-    
+
         wallResult = evaluator.evaluate(wallResult, fireplaceRecess, SUBTRACTION);
-    
+
         // Video-element ophalen en afspelen
         const fireElement = document.getElementById('optiflame');
         fireElement.play().catch(error => console.error("Video afspelen mislukt:", error));
-    
+
         // Video-textuur aanmaken
         const fireplaceTexture = new THREE.VideoTexture(fireElement);
         fireplaceTexture.minFilter = THREE.LinearFilter;
         fireplaceTexture.magFilter = THREE.LinearFilter;
-    
+
         // Materiaal aanmaken met video als textuur
         const fireplaceMaterial = new THREE.MeshBasicMaterial({ map: fireplaceTexture });
-    
+
         // Geometrie en mesh voor de video-textuur
         const fireplaceGeometry = new THREE.BoxGeometry(fireplaceWidthInMeters, fireplaceHeightInMeters, 0.005);
         const fireplaceMesh = new THREE.Mesh(fireplaceGeometry, fireplaceMaterial);
         fireplaceMesh.position.set(0, 0.2 + (fireplaceHeightInMeters / 2), depthInMeters - 0.15);
         scene.add(fireplaceMesh);
-    
+
         // Frame maken voor de haard
         const fireplaceFrameMesh = new Brush(new THREE.BoxGeometry(fireplaceWidthInMeters, fireplaceHeightInMeters, 0.3));
         const fireplaceCutout = new Brush(new THREE.BoxGeometry(fireplaceWidthInMeters - 0.03, fireplaceHeightInMeters - 0.03, 4));
         const fireplaceFrameResult = evaluator.evaluate(fireplaceFrameMesh, fireplaceCutout, SUBTRACTION);
-    
+
         if (fireplaceFrameResult) {
             const fireplaceMaterial = new THREE.MeshStandardMaterial({ color: 0x333333, roughness: 0.9, metalness: 0.6 });
             const fireplaceFrameMesh = new THREE.Mesh(fireplaceFrameResult.geometry, fireplaceMaterial);
@@ -207,7 +207,7 @@ function createCinewall(width, height, depth, tvSize, wallColor, soundbar, firep
             fireplaceFrameMesh.receiveShadow = true;
         }
     }
-    
+
 
     let wallMesh = null;
 
@@ -464,15 +464,14 @@ function updateVideoTexture(videoOrImage) {
         imageElement.src = videoOrImage;
         console.log(videoOrImage);
 
-        imageElement.onload = () => {
-            // Maak een nieuwe THREE.Texture aan van de HTMLImageElement
-            if (!imageTexture) {
-                imageTexture = new THREE.Texture(imageElement);
-                imageTexture.needsUpdate = true;
-            }
-        };
+        const texture = new THREE.Texture();
 
-        return imageTexture;
+        imageElement.onload = () => {
+            texture.image = imageElement;
+            texture.needsUpdate = true;
+        };
+        
+        return texture;
     }
 
     // Als het geen afbeelding is, ga door met het video-proces zoals normaal
@@ -522,24 +521,24 @@ export async function loadModelData(model) {
     scene.add(directionalLight);
 
     // Ground plane setup
-    addGround();   
+    addGround();
     createCinewall(
-        model.width, 
-        model.height, 
-        model.depth, 
-        model.tvSize, 
-        model.color.hex, 
-        model.soundbar, 
-        model.fireplace?.width ?? 0, 
-        model.fireplace?.height ?? 0, 
-        model.fireplace?.type ?? 0, 
-        model.video ?? "logoAnimation", 
-        model.alcove?.right?.width ?? 0, 
-        model.alcove?.right?.shelves ?? 0, 
-        model.alcove?.left?.width ?? 0, 
+        model.width,
+        model.height,
+        model.depth,
+        model.tvSize,
+        model.color.hex,
+        model.soundbar,
+        model.fireplace?.width ?? 0,
+        model.fireplace?.height ?? 0,
+        model.fireplace?.type ?? 0,
+        model.video ?? "logoAnimation",
+        model.alcove?.right?.width ?? 0,
+        model.alcove?.right?.shelves ?? 0,
+        model.alcove?.left?.width ?? 0,
         model.alcove?.left?.shelves ?? 0
     );
-    
+
     scene.add(group);
 }
 
@@ -652,7 +651,13 @@ if (arButton) {
                 console.log('Generated URL (iOS):', usdzURL);
 
                 const a = document.createElement('a');
-                a.href = usdzURL;
+                //a.href = usdzURL;
+                const arParams = 'allowsContentScaling=0&placement=wall';
+                const finalURL = usdzURL.includes('?')
+                    ? `${usdzURL}&${arParams}`
+                    : `${usdzURL}?${arParams}`;
+                a.href = finalURL;
+
                 a.setAttribute('rel', 'ar');
                 const img = document.createElement('img');
                 img.src = 'img/logo_tv.svg';
@@ -665,7 +670,6 @@ if (arButton) {
                 if (!glbURL) {
                     throw new Error('GLB URL ontbreekt.');
                 }
-
                 const intentUrl = `intent://arvr.google.com/scene-viewer/1.0?file=${encodeURIComponent(glbURL)}&mode=ar_only&resizable=false&disable_occlusion=true&enable_vertical_placement=true#Intent;scheme=https;package=com.google.ar.core;action=android.intent.action.VIEW;S.browser_fallback_url=vanwoerdenwonen.nl/ar;end;`;
                 console.log('Generated URL (Android):', intentUrl);
                 window.location.href = intentUrl;
@@ -689,21 +693,27 @@ async function exportModel() {
         includeCustomExtensions: true,
     };
 
+    const exportStillImage = 'projects/relaxury-tv-wand/video/logoAnimation.png';
+    FEATUREDMODEL.video = exportStillImage;
+
+    // 🔥 LAAD DE AFBEELDING EN WACHT TOT DIE GELADEN IS
+    const tvTexture = await loadImageTexture(exportStillImage); // Zie functie hieronder
+
+    // 👉 Nu pas createCinewall, mét de geladen texture
     createCinewall(
-        FEATUREDMODEL.width, 
-        FEATUREDMODEL.height, 
-        FEATUREDMODEL.depth, 
-        FEATUREDMODEL.tvSize, 
-        FEATUREDMODEL.color.hex, 
-        FEATUREDMODEL.soundbar, 
-        FEATUREDMODEL.fireplace?.width ?? 0, 
-        FEATUREDMODEL.fireplace?.height ?? 0, 
-        FEATUREDMODEL.fireplace?.type ?? 0, 
-        'projects/relaxury-tv-wand/video/logoAnimation.png', 
-        //FEATUREDMODEL.video ?? "logoAnimation", 
-        FEATUREDMODEL.alcove?.right?.width ?? 0, 
-        FEATUREDMODEL.alcove?.right?.shelves ?? 0, 
-        FEATUREDMODEL.alcove?.left?.width ?? 0, 
+        FEATUREDMODEL.width,
+        FEATUREDMODEL.height,
+        FEATUREDMODEL.depth,
+        FEATUREDMODEL.tvSize,
+        FEATUREDMODEL.color.hex,
+        FEATUREDMODEL.soundbar,
+        FEATUREDMODEL.fireplace?.width ?? 0,
+        FEATUREDMODEL.fireplace?.height ?? 0,
+        FEATUREDMODEL.fireplace?.type ?? 0,
+        tvTexture, // gebruik hier de echte texture
+        FEATUREDMODEL.alcove?.right?.width ?? 0,
+        FEATUREDMODEL.alcove?.right?.shelves ?? 0,
+        FEATUREDMODEL.alcove?.left?.width ?? 0,
         FEATUREDMODEL.alcove?.left?.shelves ?? 0
     );
 
@@ -773,5 +783,21 @@ async function exportModel() {
         // Zet het ground object terug als het verwijderd was
         if (ground) scene.add(ground);
     }
+}
+
+function loadImageTexture(path) {
+    return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.crossOrigin = 'anonymous'; // belangrijk als je extern laadt
+        img.src = path;
+
+        img.onload = () => {
+            const texture = new THREE.Texture(img);
+            texture.needsUpdate = true;
+            resolve(texture);
+        };
+
+        img.onerror = () => reject(new Error(`Image failed to load: ${path}`));
+    });
 }
 
