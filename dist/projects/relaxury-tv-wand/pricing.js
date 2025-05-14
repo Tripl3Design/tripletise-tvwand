@@ -17,7 +17,7 @@ function pricing(model) {
 
     const addToCartButton = document.getElementById('add-to-cart-button');
     if (addToCartButton) {
-        addToCartButton.addEventListener('click', handleAddToCartClick, { once: true });
+        addToCartButton.addEventListener('click', handleAddToCartClickTest, { once: true });
     } else {
         console.error("Element met ID 'add-to-cart-button' niet gevonden!");
     }
@@ -46,6 +46,11 @@ function pricing(model) {
     }
 }
 
+
+
+
+
+/*
 function handleAddToCartClick() {
     const { dataURL, blob } = mainModule.captureScreenshot();
     const product = {
@@ -59,5 +64,76 @@ function handleAddToCartClick() {
     parent.postMessage({ action: 'showCheckoutButton' }, '*');
 
     document.getElementById('add-to-cart-button').removeEventListener('click', handleAddToCartClick);
+
+    
+}
+*/
+
+function handleAddToCartClickTest() {
+    const afmeting = `${((+currentModel.alcove?.left?.width || 0) + (+currentModel.alcove?.right?.width || 0) + (+currentModel.width || 0))} x ${+currentModel.height || 0} x ${+currentModel.depth || 0} cm`;
+    document.getElementById('sizesText').textContent = afmeting;
+
+    const soundbarOption = document.getElementById('soundbarText')?.textContent || 'geen soundbar';
+    const alcoveOption = document.getElementById('alcoveText')?.textContent || 'geen vakkenkast';
+    const fireplaceOption = document.getElementById('fireplaceText')?.textContent || 'geen sfeerhaard';
+     
+    const config = {
+        afmeting: afmeting,
+        tvmaat: currentModel.tvSize + ' inch tv',
+        soundbar: soundbarOption,
+        vakkenkasten: alcoveOption,
+        sfeerhaard: fireplaceOption,
+        kleur: currentModel.color.name,
+        prijs: currentTotalPrice
+    };
+
+   /*
+    const { dataURL, blob } = mainModule.captureScreenshot();
+        const config = {
+            name
+            maat: document.getElementById('sizesText').textContent = `${((+currentModel.alcove?.left?.width || 0) + (+currentModel.alcove?.right?.width || 0) + (+currentModel.width || 0))} x ${+currentModel.height || 0} x ${+currentModel.depth || 0} cm`,
+            kleur: currentModel.color.name,
+            motief: 'leuk',
+            prijs: currentTotalPrice,
+            thumbnail: dataURL
+        };
+    
+    */document.getElementById('add-to-cart-button').removeEventListener('click', stuurConfiguratieNaarWooCommerce(config));
+}
+
+async function stuurConfiguratieNaarWooCommerce(config, product_id = 397, domein = "https://veiligheidshesjekopen.nl") {
+    try {
+        const response = await fetch(`${domein}/wp-json/tvwand/v1/generate-url`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ product_id, config })
+        });
+
+        if (!response.ok) {
+            throw new Error(`Server gaf status ${response.status}`);
+        }
+
+        let data;
+        try {
+            data = await response.json();
+        } catch (parseError) {
+            console.error("Fout bij parsen van JSON:", parseError);
+            alert("Ongeldige serverrespons ontvangen.");
+            return;
+        }
+
+        if (data.url) {
+            // Open in nieuw tabblad
+            window.open(data.url, "_blank");
+        } else {
+            console.error("Fout bij genereren URL:", data);
+            alert("Er ging iets mis bij het verwerken van je configuratie.");
+        }
+    } catch (err) {
+        console.error("Verbinding mislukt:", err);
+        alert("Er is een netwerkfout opgetreden.");
+    }
 }
 
