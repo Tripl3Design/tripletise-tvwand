@@ -8,6 +8,7 @@ function pricing(model) {
         + (model.soundbar ? 120 : 0)  // soundbar kost €120, tv gat is gratis
         + (model.alcove?.left?.width ? (model.alcove.left.width - 50) * 30 : 0) //vakkenkast kost € 800 plus €15 per cm aan elke kant
         + (model.alcove?.left?.shelves ? model.alcove.left.shelves * 60 : 0) //plank kost €30 per stuk
+        + (model.alcove?.left?.spots ? (model.alcove.left.shelves * 80) + 180 + 80 : 0) //vakkenkast kost € 800 plus €15 per cm aan elke kant
         + (model.fireplace ? model.fireplace.price : 0)
         ;
 

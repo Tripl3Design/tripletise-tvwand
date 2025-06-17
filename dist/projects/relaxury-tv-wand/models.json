@@ -33,11 +33,13 @@
     "alcove": {
       "left": {
         "width": 80,
-        "shelves": 2
+        "shelves": 2,
+        "spots": true
       },
       "right": {
         "width": 80,
-        "shelves": 2
+        "shelves": 2,
+        "spots": true
       }
     },
     "color": {

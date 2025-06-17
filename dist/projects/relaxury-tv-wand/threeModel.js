@@ -108,7 +108,7 @@ if (windowHeight < windowWidth) {
     });
 }
 
-function createCinewall(width, height, depth, tvSize, wallColor, soundbar, fireplaceWidth, fireplaceHeight, fireplaceType, video, alcoveRight, alcoveRightShelves, alcoveLeft, alcoveLeftShelves) {
+function createCinewall(width, height, depth, tvSize, wallColor, soundbar, fireplaceWidth, fireplaceHeight, fireplaceType, video, alcoveRight, alcoveRightShelves, alcoveRightSpots, alcoveLeft, alcoveLeftShelves, alcoveLeftSpots) {
     let widthInMeters = width / 100;
     let heightInMeters = height / 100;
     let depthInMeters = depth / 100;
@@ -273,7 +273,7 @@ function createCinewall(width, height, depth, tvSize, wallColor, soundbar, firep
 
             alcoveLeft.castShadow = true;
             alcoveLeft.receiveShadow = true;
-
+if (alcoveLeftSpots) {
             const lampCeilingLeftGeometry = new THREE.CylinderGeometry(0.035, 0.035, 0.005, 32);
             const lampCeilingLeftMaterial = new THREE.MeshStandardMaterial({
                 color: 0xfff5e1,
@@ -303,6 +303,7 @@ function createCinewall(width, height, depth, tvSize, wallColor, soundbar, firep
             scene.add(ceilingLeftLight);
             scene.add(ceilingLeftLight.target);
         }
+        }
 
         for (let i = 0; i < alcoveLeftShelves; i++) {
             const alcoveLeftShelveGeometry = new THREE.BoxGeometry(alcoveLeftWidthInMeters - 0.2, 0.06, depthInMeters - 0.07);
@@ -319,35 +320,36 @@ function createCinewall(width, height, depth, tvSize, wallColor, soundbar, firep
 
             alcoveLeftShelve.castShadow = true;
             alcoveLeftShelve.receiveShadow = true;
+            if (alcoveLeftSpots) {
+                const lampGeometry = new THREE.CylinderGeometry(0.035, 0.035, 0.005, 32);
+                const lampMaterial = new THREE.MeshStandardMaterial({
+                    color: 0xfff5e1,  // Warm lichtkleur
+                    emissive: 0xfff5e1, // Laat de lamp zelf licht uitstralen
+                    emissiveIntensity: 1.5,
+                    roughness: 0.3
+                });
+                const lamp = new THREE.Mesh(lampGeometry, lampMaterial);
 
-            const lampGeometry = new THREE.CylinderGeometry(0.035, 0.035, 0.005, 32);
-            const lampMaterial = new THREE.MeshStandardMaterial({
-                color: 0xfff5e1,  // Warm lichtkleur
-                emissive: 0xfff5e1, // Laat de lamp zelf licht uitstralen
-                emissiveIntensity: 1.5,
-                roughness: 0.3
-            });
-            const lamp = new THREE.Mesh(lampGeometry, lampMaterial);
+                lamp.position.set(alcoveLeftShelve.position.x, alcoveLeftShelve.position.y - 0.05, alcoveLeftShelve.position.z + 0.05);
+                scene.add(lamp);
 
-            lamp.position.set(alcoveLeftShelve.position.x, alcoveLeftShelve.position.y - 0.05, alcoveLeftShelve.position.z + 0.05);
-            scene.add(lamp);
+                const shelfLight = new THREE.SpotLight(0xffcc88, 1.5);
+                shelfLight.position.copy(lamp.position);
+                shelfLight.position.y -= -0.2;
+                shelfLight.angle = Math.PI / 6;
+                shelfLight.penumbra = 0.5;
+                shelfLight.decay = 2;
+                shelfLight.distance = 2;
 
-            const shelfLight = new THREE.SpotLight(0xffcc88, 1.5);
-            shelfLight.position.copy(lamp.position);
-            shelfLight.position.y -= -0.2;
-            shelfLight.angle = Math.PI / 6;
-            shelfLight.penumbra = 0.5;
-            shelfLight.decay = 2;
-            shelfLight.distance = 2;
+                shelfLight.castShadow = false;
+                shelfLight.shadow.mapSize.width = 1024;
+                shelfLight.shadow.mapSize.height = 1024;
 
-            shelfLight.castShadow = false;
-            shelfLight.shadow.mapSize.width = 1024;
-            shelfLight.shadow.mapSize.height = 1024;
+                shelfLight.target.position.set(lamp.position.x, lamp.position.y, lamp.position.z);
 
-            shelfLight.target.position.set(lamp.position.x, lamp.position.y, lamp.position.z);
-
-            scene.add(shelfLight);
-            scene.add(shelfLight.target);
+                scene.add(shelfLight);
+                scene.add(shelfLight.target);
+            }
         }
 
         if (alcoveRight) {
@@ -360,35 +362,36 @@ function createCinewall(width, height, depth, tvSize, wallColor, soundbar, firep
             alcoveRightRecess.updateMatrixWorld();
 
             const alcoveRightResult = evaluator.evaluate(alcoveRightGeometry, alcoveRightRecess, SUBTRACTION);
+            if (alcoveRightSpots) {
+                const lampCeilingRightGeometry = new THREE.CylinderGeometry(0.035, 0.035, 0.005, 32);
+                const lampCeilingRightMaterial = new THREE.MeshStandardMaterial({
+                    color: 0xfff5e1,
+                    emissive: 0xfff5e1,
+                    emissiveIntensity: 1.5,
+                    roughness: 0.3
+                });
+                const lampCeilingRight = new THREE.Mesh(lampCeilingRightGeometry, lampCeilingRightMaterial);
 
-            const lampCeilingRightGeometry = new THREE.CylinderGeometry(0.035, 0.035, 0.005, 32);
-            const lampCeilingRightMaterial = new THREE.MeshStandardMaterial({
-                color: 0xfff5e1,
-                emissive: 0xfff5e1,
-                emissiveIntensity: 1.5,
-                roughness: 0.3
-            });
-            const lampCeilingRight = new THREE.Mesh(lampCeilingRightGeometry, lampCeilingRightMaterial);
+                lampCeilingRight.position.set((widthInMeters / 2) + (alcoveRightWidthInMeters / 2), heightInMeters - 0.2, depthInMeters / 2);
+                scene.add(lampCeilingRight);
 
-            lampCeilingRight.position.set((widthInMeters / 2) + (alcoveRightWidthInMeters / 2), heightInMeters - 0.2, depthInMeters / 2);
-            scene.add(lampCeilingRight);
+                const ceilingRightLight = new THREE.SpotLight(0xffcc88, 1.5);
+                ceilingRightLight.position.copy(lampCeilingRight.position);
+                ceilingRightLight.position.y -= -0.2;
+                ceilingRightLight.angle = Math.PI / 6;
+                ceilingRightLight.penumbra = 0.5;
+                ceilingRightLight.decay = 2;
+                ceilingRightLight.distance = 2;
 
-            const ceilingRightLight = new THREE.SpotLight(0xffcc88, 1.5);
-            ceilingRightLight.position.copy(lampCeilingRight.position);
-            ceilingRightLight.position.y -= -0.2;
-            ceilingRightLight.angle = Math.PI / 6;
-            ceilingRightLight.penumbra = 0.5;
-            ceilingRightLight.decay = 2;
-            ceilingRightLight.distance = 2;
+                ceilingRightLight.castShadow = false;
+                ceilingRightLight.shadow.mapSize.width = 1024;
+                ceilingRightLight.shadow.mapSize.height = 1024;
 
-            ceilingRightLight.castShadow = false;
-            ceilingRightLight.shadow.mapSize.width = 1024;
-            ceilingRightLight.shadow.mapSize.height = 1024;
+                ceilingRightLight.target.position.set(lampCeilingRight.position.x, lampCeilingRight.position.y, lampCeilingRight.position.z);
 
-            ceilingRightLight.target.position.set(lampCeilingRight.position.x, lampCeilingRight.position.y, lampCeilingRight.position.z);
-
-            scene.add(ceilingRightLight);
-            scene.add(ceilingRightLight.target);
+                scene.add(ceilingRightLight);
+                scene.add(ceilingRightLight.target);
+            }
 
             if (alcoveRightResult) {
                 const alcoveRight = new THREE.Mesh(alcoveRightResult.geometry, wallMaterial);
@@ -415,35 +418,37 @@ function createCinewall(width, height, depth, tvSize, wallColor, soundbar, firep
                 alcoveRightShelve.castShadow = true;
                 alcoveRightShelve.receiveShadow = true;
 
-                const lampGeometry = new THREE.CylinderGeometry(0.035, 0.035, 0.005, 32);
-                const lampMaterial = new THREE.MeshStandardMaterial({
-                    color: 0xfff5e1,
-                    emissive: 0xfff5e1,
-                    emissiveIntensity: 1.5,
-                    roughness: 0.3
-                });
-                const lamp = new THREE.Mesh(lampGeometry, lampMaterial);
+                if (alcoveRightSpots) {
+                    const lampGeometry = new THREE.CylinderGeometry(0.035, 0.035, 0.005, 32);
+                    const lampMaterial = new THREE.MeshStandardMaterial({
+                        color: 0xfff5e1,
+                        emissive: 0xfff5e1,
+                        emissiveIntensity: 1.5,
+                        roughness: 0.3
+                    });
+                    const lamp = new THREE.Mesh(lampGeometry, lampMaterial);
 
-                lamp.position.set(alcoveRightShelve.position.x, alcoveRightShelve.position.y - 0.05, alcoveRightShelve.position.z + 0.05);
-                scene.add(lamp);
+                    lamp.position.set(alcoveRightShelve.position.x, alcoveRightShelve.position.y - 0.05, alcoveRightShelve.position.z + 0.05);
+                    scene.add(lamp);
 
-                const shelfLight = new THREE.SpotLight(0xffcc88, 1.5);
-                shelfLight.position.copy(lamp.position);
-                shelfLight.position.y -= -0.2;
-                shelfLight.angle = Math.PI / 6;
-                shelfLight.penumbra = 0.5;
-                shelfLight.decay = 2;
-                shelfLight.distance = 2;
+                    const shelfLight = new THREE.SpotLight(0xffcc88, 1.5);
+                    shelfLight.position.copy(lamp.position);
+                    shelfLight.position.y -= -0.2;
+                    shelfLight.angle = Math.PI / 6;
+                    shelfLight.penumbra = 0.5;
+                    shelfLight.decay = 2;
+                    shelfLight.distance = 2;
 
-                shelfLight.castShadow = false;
-                shelfLight.shadow.mapSize.width = 1024;
-                shelfLight.shadow.mapSize.height = 1024;
+                    shelfLight.castShadow = false;
+                    shelfLight.shadow.mapSize.width = 1024;
+                    shelfLight.shadow.mapSize.height = 1024;
 
-                shelfLight.target.position.set(lamp.position.x, lamp.position.y, lamp.position.z);
+                    shelfLight.target.position.set(lamp.position.x, lamp.position.y, lamp.position.z);
 
 
-                scene.add(shelfLight);
-                scene.add(shelfLight.target);
+                    scene.add(shelfLight);
+                    scene.add(shelfLight.target);
+                }
             }
         }
     }
@@ -470,7 +475,7 @@ function updateVideoTexture(videoOrImage) {
             texture.image = imageElement;
             texture.needsUpdate = true;
         };
-        
+
         return texture;
     }
 
@@ -535,8 +540,10 @@ export async function loadModelData(model) {
         model.video ?? "logoAnimation",
         model.alcove?.right?.width ?? 0,
         model.alcove?.right?.shelves ?? 0,
+        model.alcove?.right?.spots ?? false,
         model.alcove?.left?.width ?? 0,
-        model.alcove?.left?.shelves ?? 0
+        model.alcove?.left?.shelves ?? 0,
+        model.alcove?.left?.spots ?? false
     );
 
     scene.add(group);
