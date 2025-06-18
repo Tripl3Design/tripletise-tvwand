@@ -383,36 +383,37 @@ function updateControlPanel(model, selectedLayer, expandedLayer) {
         } else {
             document.getElementById('alcoveShelvesText').textContent = model.alcove.left.shelves + ' planken';
         }
-    }
 
-    //spots in alcove
-    let alcoveSpotsCheckbox = document.getElementById('alcoveSpotsToggle');
-    if (model.alcove) {
-        if (model.alcove.left.spots) {
-            alcoveSpotsCheckbox.checked = true;
-        } else {
-            alcoveSpotsCheckbox.checked = false;
+
+        //spots in alcove
+        let alcoveSpotsCheckbox = document.getElementById('alcoveSpotsToggle');
+        if (model.alcove) {
+            if (model.alcove.left.spots) {
+                alcoveSpotsCheckbox.checked = true;
+            } else {
+                alcoveSpotsCheckbox.checked = false;
+            }
         }
-    }
-    if (alcoveSpotsCheckbox.checked) {
-        document.getElementById('alcoveSpotsText').textContent = 'spots';
-    } else {
-        document.getElementById('alcoveSpotsText').textContent = '';
-    }
-
-    alcoveSpotsCheckbox.addEventListener('click', () => {
         if (alcoveSpotsCheckbox.checked) {
-            model.alcove.left.spots = true;
-            model.alcove.right.spots = true;
+            document.getElementById('alcoveSpotsText').textContent = 'spots';
         } else {
-            model.alcove.left.spots = false;
-            model.alcove.right.spots = false;
+            document.getElementById('alcoveSpotsText').textContent = '';
         }
 
-        updateControlPanel(model, 'options');
-        updateFeaturedModel(model);
-        showSelected(false);
-    });
+        alcoveSpotsCheckbox.addEventListener('click', () => {
+            if (alcoveSpotsCheckbox.checked) {
+                model.alcove.left.spots = true;
+                model.alcove.right.spots = true;
+            } else {
+                model.alcove.left.spots = false;
+                model.alcove.right.spots = false;
+            }
+
+            updateControlPanel(model, 'alcove');
+            updateFeaturedModel(model);
+            showSelected(false);
+        });
+    }
 
     //fireplace
     const fireplaceCheckbox = document.getElementById('fireplaceToggle');
@@ -786,7 +787,7 @@ function initSettings(model) {
 
     accordions.options = {
         title: "opties",
-        options: ['soundbar', 'alcove', 'alcoveSpots', 'fireplace'],
+        options: ['soundbar', 'alcove', 'fireplace'],
         display: "d-block",
         code: /*html*/`
         <div class="row m-0 p-0 pb-xxl-4 pb-xl-4 pb-3">
@@ -807,13 +808,6 @@ function initSettings(model) {
                 </div>
 
                 <div class="form-check my-3">
-                    <input id="alcoveSpotsToggle" name="alcoveSpotsToggle" class="form-check-input" type="checkbox">
-                    <label class="form-check-label" for="alcoveSpotsToggle">
-                    spots in vakkenkasten
-                    </label>
-                </div>
-
-                <div class="form-check my-3">
                     <input id="fireplaceToggle" name="fireplaceToggle" class="form-check-input" type="checkbox">
                     <label class="form-check-label" for="fireplaceToggle">
                     sfeerhaard
@@ -827,7 +821,7 @@ function initSettings(model) {
     if (model.alcove) {
         accordions.alcove = {
             title: "vakkenkasten",
-            options: ['alcoveWidth', 'alcoveShelves'],
+            options: ['alcoveWidth', 'alcoveShelves', 'alcoveSpots'],
             display: "d-block",
             code: /*html*/`
             <div class="row m-0 p-0 pb-xxl-4 pb-xl-4 pb-3">
@@ -861,6 +855,13 @@ function initSettings(model) {
                         <option value="5">5</option>
                         <option value="6">6</option>
                     </select>
+
+                            <div class="form-check my-3">
+                    <input id="alcoveSpotsToggle" name="alcoveSpotsToggle" class="form-check-input" type="checkbox">
+                    <label class="form-check-label" for="alcoveSpotsToggle">
+                    spots in vakken
+                    </label>
+                </div>
 
                 </div>
             </div>`

@@ -1,5 +1,7 @@
 {
-  "projects": {},
+  "projects": {
+    "tv-wand": "relaxury-tv-wand"
+  },
   "targets": {
     "tv-wand": {
       "hosting": {

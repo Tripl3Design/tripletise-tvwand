@@ -273,53 +273,50 @@ function createCinewall(width, height, depth, tvSize, wallColor, soundbar, firep
 
             alcoveLeft.castShadow = true;
             alcoveLeft.receiveShadow = true;
-if (alcoveLeftSpots) {
-            const lampCeilingLeftGeometry = new THREE.CylinderGeometry(0.035, 0.035, 0.005, 32);
-            const lampCeilingLeftMaterial = new THREE.MeshStandardMaterial({
-                color: 0xfff5e1,
-                emissive: 0xfff5e1,
-                emissiveIntensity: 1.5,
-                roughness: 0.3
-            });
-            const lampCeilingLeft = new THREE.Mesh(lampCeilingLeftGeometry, lampCeilingLeftMaterial);
+            if (alcoveLeftSpots) {
+                const lampCeilingLeftGeometry = new THREE.CylinderGeometry(0.035, 0.035, 0.005, 32);
+                const lampCeilingLeftMaterial = new THREE.MeshStandardMaterial({
+                    color: 0xfff5e1,
+                    emissive: 0xfff5e1,
+                    emissiveIntensity: 1.5,
+                    roughness: 0.3
+                });
+                const lampCeilingLeft = new THREE.Mesh(lampCeilingLeftGeometry, lampCeilingLeftMaterial);
 
-            lampCeilingLeft.position.set(-(widthInMeters / 2) - (alcoveLeftWidthInMeters / 2), heightInMeters - 0.2, depthInMeters / 2);
-            scene.add(lampCeilingLeft);
+                lampCeilingLeft.position.set(-(widthInMeters / 2) - (alcoveLeftWidthInMeters / 2), heightInMeters - 0.2, depthInMeters / 2);
+                scene.add(lampCeilingLeft);
 
-            const ceilingLeftLight = new THREE.SpotLight(0xffcc88, 1.5);
-            ceilingLeftLight.position.copy(lampCeilingLeft.position);
-            ceilingLeftLight.position.y -= -0.2;
-            ceilingLeftLight.angle = Math.PI / 6;
-            ceilingLeftLight.penumbra = 0.5;
-            ceilingLeftLight.decay = 2;
-            ceilingLeftLight.distance = 2;
+                const ceilingLeftLight = new THREE.SpotLight(0xffcc88, 1.5);
+                ceilingLeftLight.position.copy(lampCeilingLeft.position);
+                ceilingLeftLight.position.y -= -0.2;
+                ceilingLeftLight.angle = Math.PI / 6;
+                ceilingLeftLight.penumbra = 0.5;
+                ceilingLeftLight.decay = 2;
+                ceilingLeftLight.distance = 2;
 
-            ceilingLeftLight.castShadow = false;
-            ceilingLeftLight.shadow.mapSize.width = 1024;
-            ceilingLeftLight.shadow.mapSize.height = 1024;
+                ceilingLeftLight.castShadow = false;
+                ceilingLeftLight.shadow.mapSize.width = 1024;
+                ceilingLeftLight.shadow.mapSize.height = 1024;
 
-            ceilingLeftLight.target.position.set(lampCeilingLeft.position.x, lampCeilingLeft.position.y, lampCeilingLeft.position.z);
+                ceilingLeftLight.target.position.set(lampCeilingLeft.position.x, lampCeilingLeft.position.y, lampCeilingLeft.position.z);
 
-            scene.add(ceilingLeftLight);
-            scene.add(ceilingLeftLight.target);
-        }
+                scene.add(ceilingLeftLight);
+                scene.add(ceilingLeftLight.target);
+            }
         }
 
         for (let i = 0; i < alcoveLeftShelves; i++) {
             const alcoveLeftShelveGeometry = new THREE.BoxGeometry(alcoveLeftWidthInMeters - 0.2, 0.06, depthInMeters - 0.07);
             const alcoveLeftShelve = new THREE.Mesh(alcoveLeftShelveGeometry, wallMaterial);
 
-            //const shelfStartY = (heightInMeters - 0.4) / (alcoveLeftShelves + 1);
-            //const shelfY = (shelfStartY * (i + 1) + 0.2);
             const shelfStartY = (heightInMeters - 0.37) / (alcoveLeftShelves + 1);
             const shelfY = (shelfStartY * (i + 1) + 0.185);
 
             alcoveLeftShelve.position.set(-(widthInMeters / 2) - (alcoveLeftWidthInMeters / 2), shelfY, depthInMeters / 2 - 0.017);
-
+            alcoveLeftShelve.castShadow = false;
+            alcoveLeftShelve.receiveShadow = false;
             scene.add(alcoveLeftShelve);
 
-            alcoveLeftShelve.castShadow = true;
-            alcoveLeftShelve.receiveShadow = true;
             if (alcoveLeftSpots) {
                 const lampGeometry = new THREE.CylinderGeometry(0.035, 0.035, 0.005, 32);
                 const lampMaterial = new THREE.MeshStandardMaterial({
@@ -330,7 +327,7 @@ if (alcoveLeftSpots) {
                 });
                 const lamp = new THREE.Mesh(lampGeometry, lampMaterial);
 
-                lamp.position.set(alcoveLeftShelve.position.x, alcoveLeftShelve.position.y - 0.05, alcoveLeftShelve.position.z + 0.05);
+                lamp.position.set(alcoveLeftShelve.position.x, alcoveLeftShelve.position.y - 0.03, alcoveLeftShelve.position.z);
                 scene.add(lamp);
 
                 const shelfLight = new THREE.SpotLight(0xffcc88, 1.5);
@@ -406,18 +403,13 @@ if (alcoveLeftSpots) {
                 const alcoveRightShelveGeometry = new THREE.BoxGeometry(alcoveRightWidthInMeters - 0.2, 0.06, depthInMeters - 0.07);
                 const alcoveRightShelve = new THREE.Mesh(alcoveRightShelveGeometry, wallMaterial);
 
-                //const shelfStartY = (heightInMeters - 0.4) / (alcoveRightShelves + 1);
-                //const shelfY = (shelfStartY * (i + 1) + 0.2);
                 const shelfStartY = (heightInMeters - 0.37) / (alcoveRightShelves + 1);
                 const shelfY = (shelfStartY * (i + 1) + 0.185);
 
                 alcoveRightShelve.position.set((widthInMeters / 2) + (alcoveRightWidthInMeters / 2), shelfY, depthInMeters / 2 - 0.017);
-
-                scene.add(alcoveRightShelve);
-
                 alcoveRightShelve.castShadow = true;
                 alcoveRightShelve.receiveShadow = true;
-
+                scene.add(alcoveRightShelve);
                 if (alcoveRightSpots) {
                     const lampGeometry = new THREE.CylinderGeometry(0.035, 0.035, 0.005, 32);
                     const lampMaterial = new THREE.MeshStandardMaterial({
@@ -428,7 +420,7 @@ if (alcoveLeftSpots) {
                     });
                     const lamp = new THREE.Mesh(lampGeometry, lampMaterial);
 
-                    lamp.position.set(alcoveRightShelve.position.x, alcoveRightShelve.position.y - 0.05, alcoveRightShelve.position.z + 0.05);
+                    lamp.position.set(alcoveRightShelve.position.x, alcoveRightShelve.position.y - 0.03, alcoveRightShelve.position.z);
                     scene.add(lamp);
 
                     const shelfLight = new THREE.SpotLight(0xffcc88, 1.5);
@@ -444,7 +436,6 @@ if (alcoveLeftSpots) {
                     shelfLight.shadow.mapSize.height = 1024;
 
                     shelfLight.target.position.set(lamp.position.x, lamp.position.y, lamp.position.z);
-
 
                     scene.add(shelfLight);
                     scene.add(shelfLight.target);
