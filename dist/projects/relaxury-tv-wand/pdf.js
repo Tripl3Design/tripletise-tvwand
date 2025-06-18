@@ -75,11 +75,11 @@ function createPdf(model, mainImage, title, fsid) {
                         // Soundbar
                         [{ text: 'soundbar', fontSize: 10, bold: true }, { text: model.soundbar ? `ja, uitsparing voor soundbar` : `geen uitsparing voor soundbar`, fontSize: 10 }],
 
-                        // Vakkenkast (met breedte en aantal planken)
+                        // Vakkenkast (met breedte en aantal planken en spots)
                         [{ text: 'vakkenkast', fontSize: 10, bold: true },
                         {
                             text: model.alcove
-                                ? `breedte: ${model.alcove.left.width} cm, aantal planken: ${model.alcove.left.shelves || '0'}`
+                                ? `breedte: ${model.alcove.left.width} cm, aantal planken: ${model.alcove.left.shelves || '0'}, spots: ${'ja' || 'nee'}`
                                 : `nee`,
                             fontSize: 10
                         }
