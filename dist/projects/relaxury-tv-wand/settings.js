@@ -886,7 +886,7 @@ function initSettings(model) {
     }
 
     accordions.finishing = {
-        title: "afwerking",
+        title: "kleur impressie",
         options: ['color'],
         display: "d-block",
         code: /*html*/`
