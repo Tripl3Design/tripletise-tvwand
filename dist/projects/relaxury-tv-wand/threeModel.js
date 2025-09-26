@@ -236,9 +236,13 @@ function createCinewall(width, height, depth, tvSize, wallColor, soundbar, firep
         tvFrameMesh.receiveShadow = true;
     }
 
+    // Determine the texture for the TV screen.
+    // If 'video' is already a Texture, use it. Otherwise, create one from the string.
+    const screenTexture = video instanceof THREE.Texture ? video : updateVideoTexture(video);
+
     // Gebruik de functie in je TV-materiaal
     const tvScreenMaterial = new THREE.MeshStandardMaterial({
-        map: updateVideoTexture(video),
+        map: screenTexture, // Use the determined texture
         //color: 0x000000,
 
         roughness: 0.1,
@@ -668,7 +672,7 @@ if (arButton) {
                 if (!glbURL) {
                     throw new Error('GLB URL ontbreekt.');
                 }
-                const intentUrl = `intent://arvr.google.com/scene-viewer/1.0?file=${encodeURIComponent(glbURL)}&mode=ar_only&resizable=false&disable_occlusion=true&enable_vertical_placement=true#Intent;scheme=https;package=com.google.ar.core;action=android.intent.action.VIEW;S.browser_fallback_url=vanwoerdenwonen.nl/ar;end;`;
+                const intentUrl = `intent://arvr.google.com/scene-viewer/1.0?file=${encodeURIComponent(glbURL)}&mode=ar_only&resizable=false&disable_occlusion=true&enable_vertical_placement=true#Intent;scheme=https;package=com.google.ar.core;action=android.intent.action.VIEW;S.browser_fallback_url=tvwand.nl/ar;end;`;
                 console.log('Generated URL (Android):', intentUrl);
                 window.location.href = intentUrl;
             }
@@ -691,32 +695,30 @@ async function exportModel() {
         includeCustomExtensions: true,
     };
 
-    const exportStillImage = 'projects/relaxury-tv-wand/video/logoAnimation.png';
-    FEATUREDMODEL.video = exportStillImage;
+    clearScene();
 
-    // 🔥 LAAD DE AFBEELDING EN WACHT TOT DIE GELADEN IS
-    const tvTexture = await loadImageTexture(exportStillImage); // Zie functie hieronder
+    const tvTexture = await loadImageTexture('projects/relaxury-tv-wand/video/logoAnimation.png');
 
-    // 👉 Nu pas createCinewall, mét de geladen texture
     createCinewall(
         FEATUREDMODEL.width,
         FEATUREDMODEL.height,
         FEATUREDMODEL.depth,
         FEATUREDMODEL.tvSize,
         FEATUREDMODEL.color.hex,
-        FEATUREDMODEL.soundbar,
-        FEATUREDMODEL.fireplace?.width ?? 0,
-        FEATUREDMODEL.fireplace?.height ?? 0,
-        FEATUREDMODEL.fireplace?.type ?? 0,
+        false, // Soundbar-uitsparing niet exporteren voor AR
+        0, // Sfeerhaard niet exporteren voor AR
+        0, // Sfeerhaard niet exporteren voor AR
+        0, // Sfeerhaard niet exporteren voor AR
         tvTexture, // gebruik hier de echte texture
         FEATUREDMODEL.alcove?.right?.width ?? 0,
         FEATUREDMODEL.alcove?.right?.shelves ?? 0,
+        false, // Spots niet exporteren voor AR
         FEATUREDMODEL.alcove?.left?.width ?? 0,
-        FEATUREDMODEL.alcove?.left?.shelves ?? 0
+        FEATUREDMODEL.alcove?.left?.shelves ?? 0,
+        false // Spots niet exporteren voor AR
     );
 
     try {
-        // Temporarily remove the ground object to avoid exporting it
         if (ground) scene.remove(ground);
         scene.remove(backwall);
 
@@ -778,8 +780,8 @@ async function exportModel() {
         throw error;
 
     } finally {
-        // Zet het ground object terug als het verwijderd was
-        if (ground) scene.add(ground);
+        // Herstel de originele scene na de export
+        loadModelData(FEATUREDMODEL);
     }
 }
 
@@ -798,4 +800,3 @@ function loadImageTexture(path) {
         img.onerror = () => reject(new Error(`Image failed to load: ${path}`));
     });
 }
-
