@@ -259,34 +259,104 @@ function updateControlPanel(model, selectedLayer, expandedLayer) {
 
     document.getElementById('inchText').textContent = model.tvSize + ' inch tv';
 
-    // soundbar
-    let soundbarCheckbox = document.getElementById('soundbar');
+    // tvMount
+    let tvMountCheckbox = document.getElementById('tvMount');
 
-    if (model.soundbar) {
-        soundbarCheckbox.checked = true;
+    if (model.tvMount) {
+        tvMountCheckbox.checked = true;
     } else {
-        soundbarCheckbox.checked = false;
+        tvMountCheckbox.checked = false;
     }
 
-    if (soundbarCheckbox.checked) {
-        document.getElementById('soundbarText').textContent = 'soundbar';
+    if (tvMountCheckbox.checked) {
+        document.getElementById('tvMountText').textContent = 'tv-beugel';
     } else {
-        document.getElementById('soundbarText').textContent = '';
+        document.getElementById('tvMountText').textContent = '';
     }
 
-    soundbarCheckbox.addEventListener('click', () => {
-        if (soundbarCheckbox.checked) {
-            model.soundbar = true;
+    tvMountCheckbox.addEventListener('click', () => {
+        if (tvMountCheckbox.checked) {
+            model.tvMount = true;
         } else {
-            model.soundbar = false;
+            model.tvMount = false;
         }
 
+        updateControlPanel(model, 'size');
+        updateFeaturedModel(model);
+        showSelected(false);
+    });
+
+    // hatches
+    let hatchLeftCheckbox = document.getElementById('hatchLeft');
+    let hatchRightCheckbox = document.getElementById('hatchRight');
+
+    if (model.hatchLeft) hatchLeftCheckbox.checked = true;
+    if (model.hatchRight) hatchRightCheckbox.checked = true;
+
+    const updateHatchLabel = () => {
+        let text = [];
+        if (hatchLeftCheckbox.checked) text.push('luikje links');
+        if (hatchRightCheckbox.checked) text.push('luikje rechts');
+        document.getElementById('hatchText').textContent = text.join(' & ');
+    }
+    updateHatchLabel();
+
+    hatchLeftCheckbox.addEventListener('click', () => {
+        model.hatchLeft = hatchLeftCheckbox.checked;
         updateControlPanel(model, 'options');
         updateFeaturedModel(model);
         showSelected(false);
     });
 
+    hatchRightCheckbox.addEventListener('click', () => {
+        model.hatchRight = hatchRightCheckbox.checked;
+        updateControlPanel(model, 'options');
+        updateFeaturedModel(model);
+        showSelected(false);
+    });
 
+    // soundbar
+    let soundbarCheckbox = document.getElementById('soundbar');
+    let soundbarInput = document.getElementById('soundbarInput');
+
+    if (model.soundbar?.active) {
+        soundbarCheckbox.checked = true;
+    } else {
+        soundbarCheckbox.checked = false;
+    }
+
+    const updateSoundbarLabel = () => {
+        if (soundbarCheckbox.checked) {
+            document.getElementById('soundbarText').textContent = 'soundbar';
+            if (document.getElementById('soundbarDetailText')) {
+                document.getElementById('soundbarDetailText').textContent = model.soundbar?.text || '';
+            }
+        } else {
+            document.getElementById('soundbarText').textContent = '';
+        }
+    }
+    updateSoundbarLabel();
+
+    soundbarCheckbox.addEventListener('click', () => {
+        if (!model.soundbar) model.soundbar = { active: false, text: '' };
+        if (soundbarCheckbox.checked) {
+            model.soundbar.active = true;
+        } else {
+            model.soundbar.active = false;
+        }
+
+        updateControlPanel(model, undefined, 'options');
+        updateFeaturedModel(model);
+        showSelected(false);
+    });
+
+    if (soundbarInput) {
+        soundbarInput.addEventListener('input', (e) => {
+            if (!model.soundbar) model.soundbar = { active: true, text: '' };
+            model.soundbar.text = e.target.value;
+            updateSoundbarLabel();
+        });
+    }
 
     /*
     // video
@@ -330,6 +400,10 @@ function updateControlPanel(model, selectedLayer, expandedLayer) {
             model.alcove.right.width = 50;
             model.alcove.left.shelves = 2;
             model.alcove.right.shelves = 2;
+
+            // Disable hatches when alcove is selected
+            model.hatchLeft = false;
+            model.hatchRight = false;
         } else {
             delete model.alcove;
         }
@@ -650,7 +724,7 @@ function initSettings(model) {
 
     accordions.size = {
         title: "afmeting",
-        options: ['sizes', 'inch'],
+        options: ['sizes', 'inch', 'tvMount'],
         display: "d-block",
         code: /*html*/`
 
@@ -660,7 +734,7 @@ function initSettings(model) {
                 <div>breedte basiselement:</div>
                 <div class="row">
                     <div class="col-12 col-lg-9">
-                        <input type="range" class="form-range" id="wallWidth" min="150" max="270" value="#" step="1">
+                        <input type="range" class="form-range" id="wallWidth" min="150" max="270" value="${model.width}" step="1">
                         <div style=" display: flex; justify-content: space-between; margin-top: -8px; font-size: 11px;">
                             <span>150</span>
                             <span>160</span>
@@ -678,14 +752,14 @@ function initSettings(model) {
                         </div>
                     </div>      
                     <div class="col-12 col-lg-3">
-                        <input class="input-group-text mt-3 mt-lg-0 float-lg-end rounded-0 bg-white" type="number" id="wallInputWidth" min="150" max="270" value="#" step="1">
+                        <input class="input-group-text mt-3 mt-lg-0 float-lg-end rounded-0 bg-white" type="number" id="wallInputWidth" min="150" max="270" value="${model.width}" step="1">
                     </div>
                 </div>
                 
                 <div class="mt-3">hoogte:</div>
                 <div class="row">
                     <div class="col-12 col-lg-9">
-                        <input style="width: 66.6%;" type="range" class="form-range" id="wallHeight" min="200" max="280" value="#" step="1">
+                        <input style="width: 66.6%;" type="range" class="form-range" id="wallHeight" min="200" max="280" value="${model.height}" step="1">
                         <div style="width: 66.6%; display: flex; justify-content: space-between; margin-top: -8px; font-size: 11px;">
                             <span>200</span>
                             <span>210</span>
@@ -699,14 +773,14 @@ function initSettings(model) {
                         </div>
                     </div>      
                     <div class="col-12 col-lg-3">
-                        <input class="input-group-text mt-3 mt-lg-0 float-lg-end rounded-0 bg-white" type="number" id="wallInputHeight" min="200" max="280" value="#" step="1">
+                        <input class="input-group-text mt-3 mt-lg-0 float-lg-end rounded-0 bg-white" type="number" id="wallInputHeight" min="200" max="280" value="${model.height}" step="1">
                     </div>
                 </div>
 
                 <div class="mt-3">diepte:</div>
                 <div class="row">
                     <div class="col-12 col-lg-9">
-                        <input style="width: 25%" type="range" class="form-range" id="wallDepth" min="20" max="50" value="#" step="1">
+                        <input style="width: 25%" type="range" class="form-range" id="wallDepth" min="20" max="50" value="${model.depth}" step="1">
                         <div style="width: 25%; display: flex; justify-content: space-between; margin-top: -8px; font-size: 11px;">
                             <span>20</span>
                             <span>30</span>
@@ -715,22 +789,28 @@ function initSettings(model) {
                         </div>
                     </div>      
                     <div class="col-12 col-lg-3">
-                        <input class="input-group-text mt-3 mt-lg-0 float-lg-end rounded-0 bg-white" type="number" id="wallInputDepth" min="20" max="50" value="#" step="1">
+                        <input class="input-group-text mt-3 mt-lg-0 float-lg-end rounded-0 bg-white" type="number" id="wallInputDepth" min="20" max="50" value="${model.depth}" step="1">
                     </div>
                 </div>
 
                 <div class="mt-3">inchmaat tv:</div>
                 <div class="row">
                     <div class="col-12 col-lg-9">
-                        <input type="range" class="form-range" id="tvSize" min="30" max="90" value="#" step="1">
+                        <input type="range" class="form-range" id="tvSize" min="30" max="90" value="${model.tvSize}" step="1">
                         <div style="display: flex; justify-content: space-between; margin-top: -10px; font-size: 11px;">
                             <span id="minTvInch">30</span>
                             <span id="maxTvInch">90</span>
                         </div>
                     </div>      
                     <div class="col-12 col-lg-3">
-                        <input class="input-group-text mt-3 mt-lg-0 float-lg-end rounded-0 bg-white" type="number" id="tvSizeInput" min="30" max="90" value="#" step="1">
+                        <input class="input-group-text mt-3 mt-lg-0 float-lg-end rounded-0 bg-white" type="number" id="tvSizeInput" min="30" max="90" value="${model.tvSize}" step="1">
                     </div>
+                </div>
+                <div class="form-check my-3">
+                    <input id="tvMount" name="tvMount" class="form-check-input" type="checkbox">
+                    <label class="form-check-label" for="tvMount">
+                    tv-beugel toevoegen (+ €250)
+                    </label>
                 </div>
 
                 <!-- videos for videotexture, do not remove -->
@@ -787,36 +867,65 @@ function initSettings(model) {
 
     accordions.options = {
         title: "opties",
-        options: ['soundbar', 'alcove', 'fireplace'],
+        options: ['soundbar', 'alcove', 'fireplace', 'hatch'],
         display: "d-block",
         code: /*html*/`
         <div class="row m-0 p-0 pb-xxl-4 pb-xl-4 pb-3">
             <div class="justify-content-start m-0 p-0">
-
-                <div class="form-check my-3">
+                <div class="form-check mt-3 mb-1">
                     <input id="soundbar" name="soundbar" class="form-check-input" type="checkbox">
                     <label class="form-check-label" for="soundbar">
-                    uitsparing voor sounbar
+                    uitsparing voor soundbar
                     </label>
                 </div>
-
-                <div class="form-check my-3">
-                    <input id="alcoveToggle" name="alcoveToggle" class="form-check-input" type="checkbox">
-                    <label class="form-check-label" for="alcoveToggle">
-                    vakkenkasten aan weerszijden
-                    </label>
-                </div>
-
                 <div class="form-check my-3">
                     <input id="fireplaceToggle" name="fireplaceToggle" class="form-check-input" type="checkbox">
                     <label class="form-check-label" for="fireplaceToggle">
                     sfeerhaard
                     </label>
                 </div>
-        
+                <div class="form-check my-3">
+                    <input id="alcoveToggle" name="alcoveToggle" class="form-check-input" type="checkbox">
+                    <label class="form-check-label" for="alcoveToggle">
+                    vakkenkasten aan weerszijden
+                    </label>
+                </div>
+                <div class="row m-0 p-0">
+                    <div class="col-3 m-0 p-0">
+                        <div class="form-check">
+                            <input id="hatchLeft" name="hatchLeft" class="form-check-input" type="checkbox" ${model.alcove ? 'disabled' : ''}>
+                            <label class="form-check-label" for="hatchLeft">
+                            luikje links
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-3 m-0 p-0">
+                        <div class="form-check">
+                            <input id="hatchRight" name="hatchRight" class="form-check-input" type="checkbox" ${model.alcove ? 'disabled' : ''}>
+                            <label class="form-check-label" for="hatchRight">
+                            luikje rechts
+                            </label>
+                        </div>
+                    </div>
+                </div>                
             </div>
         </div>`
     };
+
+    if (model.soundbar?.active) {
+        accordions.soundbar = {
+            title: "soundbar",
+            options: ['soundbarDetail'],
+            display: "d-block",
+            code: /*html*/`
+            <div class="row m-0 p-0 pb-xxl-4 pb-xl-4 pb-3">
+                <div class="justify-content-start m-0 p-0">
+                     <div class="pb-3">Vul merk en type van uw soundbar in om de juiste uitsparing te maken:</div>
+                     <input type="text" class="form-control form-control-sm rounded-0 border-dark" id="soundbarInput" placeholder="merk en type soundbar" value="${model.soundbar?.text || ''}">
+                </div>
+            </div>`
+        };
+    }
 
     if (model.alcove) {
         accordions.alcove = {
@@ -826,11 +935,10 @@ function initSettings(model) {
             code: /*html*/`
             <div class="row m-0 p-0 pb-xxl-4 pb-xl-4 pb-3">
                 <div class="justify-content-start m-0 p-0">
-
                     <div>breedte:</div>
                     <div class="row">
                         <div class="col-12 col-lg-9">
-                            <input type="range" class="form-range" id="alcove" min="50" max="100" value="#" step="1">
+                            <input type="range" class="form-range" id="alcove" min="50" max="100" value="${model.alcove.left.width}" step="1">
                             <div style="display: flex; justify-content: space-between; margin-top: -10px; font-size: 11px;">
                                 <span>50</span>
                                 <span>60</span>
@@ -841,28 +949,25 @@ function initSettings(model) {
                             </div>
                         </div>      
                         <div class="col-12 col-lg-3">
-                            <input class="input-group-text float-end rounded-0 bg-white" type="number" id="alcoveInput" min="50" max="100" value="#" step="1">
+                            <input class="input-group-text float-end rounded-0 bg-white" type="number" id="alcoveInput" min="50" max="100" value="${model.alcove.left.width}" step="1">
                         </div>
                     </div>
-
                     <div class="mt-3 mb-2">aantal planken:</div>
-                    <select style="width: 100px;" class="form-select rounded-0 bg-white" id="shelvesInput" name="shelvesInput">
-                        <option value="0">0</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                    </select>
-
-                            <div class="form-check my-3">
-                    <input id="alcoveSpotsToggle" name="alcoveSpotsToggle" class="form-check-input" type="checkbox">
-                    <label class="form-check-label" for="alcoveSpotsToggle">
-                    spots in vakken
-                    </label>
-                </div>
-
+                        <select style="width: 100px;" class="form-select rounded-0 bg-white" id="shelvesInput" name="shelvesInput">
+                            <option value="0">0</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                        </select>
+                    <div class="form-check my-3">
+                        <input id="alcoveSpotsToggle" name="alcoveSpotsToggle" class="form-check-input" type="checkbox">
+                        <label class="form-check-label" for="alcoveSpotsToggle">
+                            spots in vakken
+                        </label>
+                    </div>
                 </div>
             </div>`
         };
@@ -877,7 +982,7 @@ function initSettings(model) {
             <div class="row m-0 p-0 pb-xxl-4 pb-xl-4 pb-3">
                 <div class="justify-content-start m-0 p-0">
 
-                    <div class="mb-2">kies sfeerhaard:</div>
+                    <div class="pb-3">Kies uw sfeerhaard:</div>
                     <select style="width: 300px;" class="form-select rounded-0 bg-white" id="fireplace" class="form-select"></select>
 
                 </div>
@@ -890,20 +995,21 @@ function initSettings(model) {
         options: ['color'],
         display: "d-block",
         code: /*html*/`
-            <div>De tv-wand wordt afgewerkt met lakdraagfolie, die u zelf in de gewenste kleur kunt schilderen.<br>
+            <div class="pb-3">De tv-wand wordt afgewerkt met lakdraagfolie, die u zelf in de gewenste kleur kunt schilderen.<br>
                 Om een indruk te krijgen van het eindresultaat kunt u hier een RAL kleur toepassen.
             </div>
-            <button class="btn btn-outline-dark btn-sm filter-btn rounded-0 mt-1" data-color="white">wit</button>
-            <button class="btn btn-outline-dark btn-sm filter-btn rounded-0 mt-1" data-color="grey">grijs</button>
-            <button class="btn btn-outline-dark btn-sm filter-btn rounded-0 mt-1" data-color="black">zwart</button>
-            <button class="btn btn-outline-dark btn-sm filter-btn rounded-0 mt-1" data-color="brown">bruin</button>
-            <button class="btn btn-outline-dark btn-sm filter-btn rounded-0 mt-1" data-color="yellow">geel</button>
-            <button class="btn btn-outline-dark btn-sm filter-btn rounded-0 mt-1" data-color="orange">oranje</button>
-            <button class="btn btn-outline-dark btn-sm filter-btn rounded-0 mt-1" data-color="red">rood</button>
-            <button class="btn btn-outline-dark btn-sm filter-btn rounded-0 mt-1" data-color="violet">violet</button>
-            <button class="btn btn-outline-dark btn-sm filter-btn rounded-0 mt-1" data-color="blue">blauw</button>
-            <button class="btn btn-outline-dark btn-sm filter-btn rounded-0 mt-1" data-color="green">groen</button>
-    
+            <div class="pb-3">
+                        <button class="btn btn-outline-dark btn-sm filter-btn rounded-0 mt-1" data-color="white">wit</button>
+                        <button class="btn btn-outline-dark btn-sm filter-btn rounded-0 mt-1" data-color="grey">grijs</button>
+                        <button class="btn btn-outline-dark btn-sm filter-btn rounded-0 mt-1" data-color="black">zwart</button>
+                        <button class="btn btn-outline-dark btn-sm filter-btn rounded-0 mt-1" data-color="brown">bruin</button>
+                        <button class="btn btn-outline-dark btn-sm filter-btn rounded-0 mt-1" data-color="yellow">geel</button>
+                        <button class="btn btn-outline-dark btn-sm filter-btn rounded-0 mt-1" data-color="orange">oranje</button>
+                        <button class="btn btn-outline-dark btn-sm filter-btn rounded-0 mt-1" data-color="red">rood</button>
+                        <button class="btn btn-outline-dark btn-sm filter-btn rounded-0 mt-1" data-color="violet">violet</button>
+                        <button class="btn btn-outline-dark btn-sm filter-btn rounded-0 mt-1" data-color="blue">blauw</button>
+                        <button class="btn btn-outline-dark btn-sm filter-btn rounded-0 mt-1" data-color="green">groen</button>
+            </div>
             <div id="colorOptions" class="mb-3">
                 <div class="color-group" data-color="white">
                     <div id="colorsWhitePicker"></div>

@@ -108,7 +108,7 @@ if (windowHeight < windowWidth) {
     });
 }
 
-function createCinewall(width, height, depth, tvSize, wallColor, soundbar, fireplaceWidth, fireplaceHeight, fireplaceType, video, alcoveRight, alcoveRightShelves, alcoveRightSpots, alcoveLeft, alcoveLeftShelves, alcoveLeftSpots) {
+function createCinewall(width, height, depth, tvSize, wallColor, soundbar, fireplaceWidth, fireplaceHeight, fireplaceFrontTexture, video, alcoveRight, alcoveRightShelves, alcoveRightSpots, alcoveLeft, alcoveLeftShelves, alcoveLeftSpots) {
     let widthInMeters = width / 100;
     let heightInMeters = height / 100;
     let depthInMeters = depth / 100;
@@ -131,7 +131,7 @@ function createCinewall(width, height, depth, tvSize, wallColor, soundbar, firep
     const wallGeometry = new THREE.BoxGeometry(widthInMeters, heightInMeters, depthInMeters);
     const wallMaterial = new THREE.MeshStandardMaterial({ color: '#' + wallColor });
 
-    let wall = new Brush(wallGeometry);
+    let wall = new Brush(wallGeometry, wallMaterial);
     wall.updateMatrixWorld();
 
     const tvWidth = tvSize * (16 / 18.3576) * 0.0254;
@@ -139,27 +139,32 @@ function createCinewall(width, height, depth, tvSize, wallColor, soundbar, firep
     const recessWidth = tvWidth + 0.03;
     const recessHeight = tvHeight + 0.03;
 
-    const tvRecess = new Brush(new THREE.BoxGeometry(recessWidth, recessHeight, 0.15));
+    const tvRecess = new Brush(new THREE.BoxGeometry(recessWidth, recessHeight, 0.15), wallMaterial);
     tvRecess.position.set(0, 1 - (heightInMeters / 2) + (recessHeight / 2), depthInMeters / 2);
     tvRecess.updateMatrixWorld();
 
     let wallResult = evaluator.evaluate(wall, tvRecess, SUBTRACTION);
 
-    if (soundbar) {
-        // recess
-        const soundbarRecess = new Brush(new THREE.BoxGeometry(recessWidth, 0.1, 0.15));
-        soundbarRecess.position.set(0, 0.8 - (heightInMeters / 2) + 0.05, (depthInMeters / 2) - 0.075);
+    if (soundbar && soundbar.active) {
+        const soundbarWidthInMeters = (soundbar.width || 1000) / 1000; // mm to m, default 1m
+        const soundbarHeightInMeters = (soundbar.height || 100) / 1000; // mm to m, default 10cm
+        const soundbarDepthInMeters = (soundbar.depth || 150) / 1000; // mm to m, default 15cm
+
+        // Recess for the soundbar, with 3cm clearance
+        const soundbarRecess = new Brush(new THREE.BoxGeometry(soundbarWidthInMeters + 0.03, soundbarHeightInMeters + 0.03, soundbarDepthInMeters), wallMaterial);
+        // Position the recess relative to the wall brush (which is centered at origin before being moved)
+        soundbarRecess.position.set(0, 0.8 - (heightInMeters / 2) + (soundbarHeightInMeters / 2), (depthInMeters / 2) - (soundbarDepthInMeters / 2));
         soundbarRecess.updateMatrixWorld();
 
         wallResult = evaluator.evaluate(wallResult, soundbarRecess, SUBTRACTION);
 
-        // geometry
-        const soundbarGeometry = new THREE.CylinderGeometry(0.04, 0.04, recessWidth - 0.03, 32);;
+        // Soundbar geometry itself
+        const soundbarGeometry = new THREE.BoxGeometry(soundbarWidthInMeters, soundbarHeightInMeters, soundbarDepthInMeters - 0.03);
         const soundbarMaterial = new THREE.MeshStandardMaterial({ color: 0x555555 });
 
         const soundbarMesh = new THREE.Mesh(soundbarGeometry, soundbarMaterial);
-        soundbarMesh.rotation.z = Math.PI / 2;
-        soundbarMesh.position.set(0, .84, (depthInMeters) - 0.075);
+        // Position the mesh in world coordinates, inside the recess
+        soundbarMesh.position.set(0, 0.8 + (soundbarHeightInMeters / 2), depthInMeters - (soundbarDepthInMeters / 2));
         scene.add(soundbarMesh);
 
         soundbarMesh.castShadow = true;
@@ -168,7 +173,8 @@ function createCinewall(width, height, depth, tvSize, wallColor, soundbar, firep
 
     if (fireplaceWidth) {
         // Maak de recess voor de haard
-        const fireplaceRecess = new Brush(new THREE.BoxGeometry(fireplaceWidthInMeters, fireplaceHeightInMeters, 0.30));
+        const blackMaterial = new THREE.MeshStandardMaterial({ color: 0x000000 });
+        const fireplaceRecess = new Brush(new THREE.BoxGeometry(fireplaceWidthInMeters, fireplaceHeightInMeters, 0.30), blackMaterial);
         fireplaceRecess.position.set(0, 0.2 - (heightInMeters / 2) + (fireplaceHeightInMeters / 2), (depthInMeters / 2) - 0.075);
         fireplaceRecess.updateMatrixWorld();
 
@@ -192,19 +198,15 @@ function createCinewall(width, height, depth, tvSize, wallColor, soundbar, firep
         fireplaceMesh.position.set(0, 0.2 + (fireplaceHeightInMeters / 2), depthInMeters - 0.15);
         scene.add(fireplaceMesh);
 
-        // Frame maken voor de haard
-        const fireplaceFrameMesh = new Brush(new THREE.BoxGeometry(fireplaceWidthInMeters, fireplaceHeightInMeters, 0.3));
-        const fireplaceCutout = new Brush(new THREE.BoxGeometry(fireplaceWidthInMeters - 0.03, fireplaceHeightInMeters - 0.03, 4));
-        const fireplaceFrameResult = evaluator.evaluate(fireplaceFrameMesh, fireplaceCutout, SUBTRACTION);
+        if (fireplaceFrontTexture) {
+            const fireplaceFrontMaterial = new THREE.MeshStandardMaterial({ map: fireplaceFrontTexture, transparent: true });
+            const fireplaceFrontGeometry = new THREE.PlaneGeometry(fireplaceWidthInMeters, fireplaceHeightInMeters);
+            const fireplaceFront = new THREE.Mesh(fireplaceFrontGeometry, fireplaceFrontMaterial);
+            fireplaceFront.position.set(0, 0.2 + (fireplaceHeightInMeters / 2), depthInMeters + 0.001);
+            scene.add(fireplaceFront);
 
-        if (fireplaceFrameResult) {
-            const fireplaceMaterial = new THREE.MeshStandardMaterial({ color: 0x333333, roughness: 0.9, metalness: 0.6 });
-            const fireplaceFrameMesh = new THREE.Mesh(fireplaceFrameResult.geometry, fireplaceMaterial);
-            fireplaceFrameMesh.position.set(0, 0.2 + (fireplaceHeightInMeters / 2), depthInMeters - 0.15);
-            scene.add(fireplaceFrameMesh);
-
-            fireplaceFrameMesh.castShadow = true;
-            fireplaceFrameMesh.receiveShadow = true;
+            fireplaceFront.castShadow = true;
+            fireplaceFront.receiveShadow = true;
         }
     }
 
@@ -212,7 +214,7 @@ function createCinewall(width, height, depth, tvSize, wallColor, soundbar, firep
     let wallMesh = null;
 
     if (wallResult) {
-        wallMesh = new THREE.Mesh(wallResult.geometry, wallMaterial);
+        wallMesh = new THREE.Mesh(wallResult.geometry, wallResult.material);
         wallMesh.position.set(0, heightInMeters / 2, depthInMeters / 2);
         scene.add(wallMesh);
 
@@ -363,6 +365,7 @@ function createCinewall(width, height, depth, tvSize, wallColor, soundbar, firep
             alcoveRightRecess.updateMatrixWorld();
 
             const alcoveRightResult = evaluator.evaluate(alcoveRightGeometry, alcoveRightRecess, SUBTRACTION);
+
             if (alcoveRightSpots) {
                 const lampCeilingRightGeometry = new THREE.CylinderGeometry(0.035, 0.035, 0.005, 32);
                 const lampCeilingRightMaterial = new THREE.MeshStandardMaterial({
@@ -520,6 +523,15 @@ export async function loadModelData(model) {
     directionalLight.castShadow = true;
     scene.add(directionalLight);
 
+    let fireplaceFrontTexture = null;
+    if (model.fireplace) {
+        try {
+            fireplaceFrontTexture = await loadImageTexture(projectmap + 'video/' + (model.fireplace.brand + '_' + model.fireplace.type.replace(/ /g, '_').replace(/"/g, '')).toLowerCase() + '.png');
+        } catch (error) {
+            console.warn('Fireplace texture not found');
+        }
+    }
+
     // Ground plane setup
     addGround();
     createCinewall(
@@ -531,7 +543,7 @@ export async function loadModelData(model) {
         model.soundbar,
         model.fireplace?.width ?? 0,
         model.fireplace?.height ?? 0,
-        model.fireplace?.type ?? 0,
+        fireplaceFrontTexture,
         model.video ?? "logoAnimation",
         model.alcove?.right?.width ?? 0,
         model.alcove?.right?.shelves ?? 0,
@@ -683,8 +695,6 @@ if (arButton) {
             loader.style.display = "none"; // Verberg de loader
         }
     });
-} else {
-    console.warn("AR-knop niet gevonden, AR-functionaliteit wordt niet geladen.");
 }
 
 async function exportModel() {
@@ -705,10 +715,10 @@ async function exportModel() {
         FEATUREDMODEL.depth,
         FEATUREDMODEL.tvSize,
         FEATUREDMODEL.color.hex,
-        false, // Soundbar-uitsparing niet exporteren voor AR
+        null, // Soundbar-uitsparing niet exporteren voor AR
         0, // Sfeerhaard niet exporteren voor AR
         0, // Sfeerhaard niet exporteren voor AR
-        0, // Sfeerhaard niet exporteren voor AR
+        null, // Sfeerhaard niet exporteren voor AR
         tvTexture, // gebruik hier de echte texture
         FEATUREDMODEL.alcove?.right?.width ?? 0,
         FEATUREDMODEL.alcove?.right?.shelves ?? 0,

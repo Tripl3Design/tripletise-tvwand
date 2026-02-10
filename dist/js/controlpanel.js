@@ -149,17 +149,12 @@ function controlPanel_updateLayer(name, settings) {
         <div class="col-xxl-4 col-xl-4 col-12 h6 fw-medium m-0 p-0 py-xxl-4 py-xl-4 pt-3 pb-1">${accordion.title}</div>
         `);
     html.push( /*html*/ `
-            <div id="${name}Text" class="col-xxl-6 col-xl-6 col-12 h6 fw-normal m-0 p-0 my-xxl-auto my-xl-auto mb-3 accordion-text fadein">
+            <div id="${name}Text" class="col-xxl-6 col-xl-6 col-12 h6 fw-normal m-0 p-0 my-xxl-auto my-xl-auto mb-3 accordion-text fadein d-flex flex-wrap gap-2">
             `);
     for (let i = 0; i < accordion.options.length; i++) {
         html.push( /*html*/ `
             <span id="${accordion.options[i]}Text">#</span>
             `);
-        if (i >= 0) {
-            html.push( /*html*/ `
-            &nbsp;&nbsp;&nbsp;&nbsp;
-            `);
-        }
 
     }
     html.push( /*html*/ `
@@ -204,6 +199,16 @@ function controlPanel_addLayer(name, settings, collapsed) {
 
 function controlPanel(settings, allModels, containerElem, expandedLayer) {
     const html = [];
+    html.push( /*html*/ `
+    <style>
+        .accordion-text span:empty {
+            display: none;
+        }
+        .accordion-text span:not(:empty) ~ span:not(:empty)::before {
+            content: "| ";
+        }
+    </style>
+    `);
     if (uap.getDevice().type != 'mobile' || uap.getDevice().type != 'tablet' || uap.getDevice().withFeatureCheck().type != 'tablet') {
         html.push( /*html*/ `
     <div class="row m-0 p-0">
@@ -314,6 +319,3 @@ function setCarouselActive(slide) {
         slide2.classList.add("active");
     }
 }
-
-
-

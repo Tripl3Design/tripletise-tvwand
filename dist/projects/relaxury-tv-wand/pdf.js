@@ -72,8 +72,13 @@ function createPdf(model, mainImage, title, fsid) {
                     headerRows: 0,
                     widths: [100, 'auto'],
                     body: [
+                        // TV Mount
+                        [{ text: 'tv-beugel', fontSize: 10, bold: true }, { text: model.tvMount ? 'ja' : 'nee', fontSize: 10 }],
+                        // Hatches
+                        [{ text: 'luikje links', fontSize: 10, bold: true }, { text: model.hatchLeft ? 'ja' : 'nee', fontSize: 10 }],
+                        [{ text: 'luikje rechts', fontSize: 10, bold: true }, { text: model.hatchRight ? 'ja' : 'nee', fontSize: 10 }],
                         // Soundbar
-                        [{ text: 'soundbar', fontSize: 10, bold: true }, { text: model.soundbar ? `ja, uitsparing voor soundbar` : `geen uitsparing voor soundbar`, fontSize: 10 }],
+                        [{ text: 'soundbar', fontSize: 10, bold: true }, { text: model.soundbar?.active ? `ja, uitsparing voor soundbar${model.soundbar.text ? ' (' + model.soundbar.text + ')' : ''}` : `geen uitsparing voor soundbar`, fontSize: 10 }],
 
                         // Vakkenkast (met breedte en aantal planken en spots)
                         [{ text: 'vakkenkast', fontSize: 10, bold: true },

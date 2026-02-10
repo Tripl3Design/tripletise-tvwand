@@ -5,7 +5,10 @@ function pricing(model) {
     let totalPrice = 0;
 
     totalPrice = ((model.width - 150) * 5) + ((model.height - 200) * 5) + ((model.depth - 20) * 5) + 1000 //tv-wand kost € 1000 plus €5 per cm voor elke extra lengte, breedte, hoogte cm
-        + (model.soundbar ? 120 : 0)  // soundbar kost €120, tv gat is gratis
+        + (model.tvMount ? 250 : 0)  // tv-beugel kost €250
+        + (model.hatchLeft ? 100 : 0) // luikje links kost €100
+        + (model.hatchRight ? 100 : 0) // luikje rechts kost €100
+        + (model.soundbar?.active ? 120 : 0)  // soundbar kost €120, tv gat is gratis
         + (model.alcove?.left?.width ? (model.alcove.left.width - 50) * 30 : 0) //vakkenkast kost € 800 plus €15 per cm aan elke kant
         + (model.alcove?.left?.shelves ? model.alcove.left.shelves * 60 : 0) //plank kost €30 per stuk
         + (model.alcove?.left?.spots ? (model.alcove.left.shelves * 80) + 180 + 80 : 0) //vakkenkast kost € 800 plus €15 per cm aan elke kant
@@ -74,15 +77,19 @@ function handleAddToCartClickTest() {
     const afmeting = `${((+currentModel.alcove?.left?.width || 0) + (+currentModel.alcove?.right?.width || 0) + (+currentModel.width || 0))} x ${+currentModel.height || 0} x ${+currentModel.depth || 0} cm`;
     document.getElementById('sizesText').textContent = afmeting;
 
-    const soundbarOption = document.getElementById('soundbarText')?.textContent || 'geen soundbar';
+    const soundbarOption = currentModel.soundbar?.active ? ('soundbar' + (currentModel.soundbar.text ? ` (${currentModel.soundbar.text})` : '')) : 'geen soundbar';
     const alcoveOption = document.getElementById('alcoveText')?.textContent || 'geen vakkenkast';
     const fireplaceOption = document.getElementById('fireplaceText')?.textContent || 'geen sfeerhaard';
-     
+    const hatchLeftOption = currentModel.hatchLeft ? 'ja' : 'nee';
+    const hatchRightOption = currentModel.hatchRight ? 'ja' : 'nee';
+
     const config = {
         afmeting: afmeting,
         tvmaat: currentModel.tvSize + ' inch tv',
         soundbar: soundbarOption,
         vakkenkasten: alcoveOption,
+        luikje_links: hatchLeftOption,
+        luikje_rechts: hatchRightOption,
         sfeerhaard: fireplaceOption,
         kleur: currentModel.color.name,
         prijs: currentTotalPrice
@@ -137,4 +144,3 @@ async function stuurConfiguratieNaarWooCommerce(config, product_id = 397, domein
         alert("Er is een netwerkfout opgetreden.");
     }
 }
-

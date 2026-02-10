@@ -1,0 +1,92 @@
+{
+    "soundbars": [
+        {
+            "id": 1,
+            "brand": "Sonos",
+            "type": "Arc / Arc Ultra",
+            "width": 1142,
+            "height": 87,
+            "depth": 116
+        },
+        {
+            "id": 2,
+            "brand": "Sonos",
+            "type": "Beam (Gen 2)",
+            "width": 651,
+            "height": 69,
+            "depth": 100
+        },
+        {
+            "id": 3,
+            "brand": "Sonos",
+            "type": "Ray",
+            "width": 559,
+            "height": 71,
+            "depth": 95
+        },
+        {
+            "id": 4,
+            "brand": "Samsung",
+            "type": "HW-Q990 (serie)",
+            "width": 1232,
+            "height": 70,
+            "depth": 138
+        },
+        {
+            "id": 5,
+            "brand": "Samsung",
+            "type": "HW-Q800 (serie)",
+            "width": 1111,
+            "height": 60,
+            "depth": 120
+        },
+        {
+            "id": 6,
+            "brand": "Samsung",
+            "type": "HW-S800/S801 (Ultra Slim)",
+            "width": 1160,
+            "height": 38,
+            "depth": 40
+        },
+        {
+            "id": 7,
+            "brand": "Bose",
+            "type": "Smart Ultra Soundbar",
+            "width": 1045,
+            "height": 58,
+            "depth": 107
+        },
+        {
+            "id": 8,
+            "brand": "Bose",
+            "type": "Soundbar 600",
+            "width": 694,
+            "height": 56,
+            "depth": 104
+        },
+        {
+            "id": 9,
+            "brand": "JBL",
+            "type": "Bar 500 / 800",
+            "width": 1017,
+            "height": 56,
+            "depth": 104
+        },
+        {
+            "id": 10,
+            "brand": "Sony",
+            "type": "HT-A7000",
+            "width": 1300,
+            "height": 80,
+            "depth": 142
+        },
+        {
+            "id": 11,
+            "brand": "Sony",
+            "type": "HT-S2000",
+            "width": 800,
+            "height": 64,
+            "depth": 124
+        }
+    ]
+}

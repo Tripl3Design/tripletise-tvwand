@@ -2,79 +2,106 @@
   {
     "id": 1,
     "name": "tv-wand",
-    "image": "projects/relaxury-tv-wand/img/thumbnails/tv-wand150-200-20.png",
+    "image": "projects/relaxury-tv-wand/img/thumbnails/one.png",
     "background": {
       "original": "d4d4d4"
     },
     "width": 150,
     "height": 200,
     "depth": 20,
-    "tvSize": 57,
-    "soundbar": true,
+    "tvSize": 55,
+    "tvMount": false,
+    "hatchLeft": false,
+    "hatchRight": false,
+    "soundbar": {
+      "active": true,
+      "text": "merk en type"
+    },
     "color": {
-      "hex": "4A3526",
-      "name": "sepiabruin",
-      "group": "brown"
+      "hex": "ECECE7",
+      "name": "signaalwit",
+      "group": "white",
+      "ral": "9003"
     },
     "video": "logoAnimation"
   },
   {
     "id": 2,
     "name": "tv-wand",
-    "image": "projects/relaxury-tv-wand/img/thumbnails/tv-wand200-240-40.png",
+    "image": "projects/relaxury-tv-wand/img/thumbnails/two.png",
     "background": {
       "original": "d4d4d4"
     },
     "width": 200,
     "height": 240,
     "depth": 40,
-    "tvSize": 83,
-    "soundbar": true,
-    "alcove": {
-      "left": {
-        "width": 80,
-        "shelves": 2,
-        "spots": true
-      },
-      "right": {
-        "width": 80,
-        "shelves": 2,
-        "spots": true
-      }
+    "tvSize": 65,
+    "tvMount": false,
+    "hatchLeft": false,
+    "hatchRight": false,
+    "soundbar": {
+      "active": true,
+      "text": "merk en type"
+    },
+    "fireplace": {
+      "brand": "dimplex",
+      "height": 40,
+      "id": 2,
+      "price": 1650,
+      "type": "ignite XL 60\"",
+      "width": 156
     },
     "color": {
       "hex": "ECECE7",
       "name": "signaalwit",
-      "group": "white"
+      "group": "white",
+      "ral": "9003"
     },
     "video": "logoAnimation"
   },
   {
     "id": 3,
     "name": "tv-wand",
-    "image": "projects/relaxury-tv-wand/img/thumbnails/tv-wand200-216-50.png",
+    "image": "projects/relaxury-tv-wand/img/thumbnails/three.png",
     "background": {
       "original": "d4d4d4"
     },
     "width": 200,
-    "height": 216,
-    "depth": 50,
+    "height": 240,
+    "depth": "40",
     "tvSize": 76,
-    "soundbar": true,
+    "tvMount": false,
+    "hatchLeft": false,
+    "hatchRight": false,
+    "soundbar": {
+      "active": true,
+      "text": "merk en type"
+    },
     "alcove": {
       "left": {
-        "width": 67,
-        "shelves": 2
+        "width": 80,
+        "shelves": 2,
+        "spots": true
       },
       "right": {
-        "width": 67,
-        "shelves": 2
+        "width": 80,
+        "shelves": 2,
+        "spots": true
       }
     },
+    "fireplace": {
+      "brand": "dimplex",
+      "height": 42,
+      "id": 1,
+      "price": 1800,
+      "type": "ignite XL 74\"",
+      "width": 194
+    },
     "color": {
-      "hex": "7D765A",
-      "name": "rietgroen",
-      "group": "green"
+      "hex": "ECECE7",
+      "name": "signaalwit",
+      "group": "white",
+      "ral": "9003"
     },
     "video": "logoAnimation"
   }
