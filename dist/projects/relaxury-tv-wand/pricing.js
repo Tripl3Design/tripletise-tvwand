@@ -15,7 +15,6 @@ function pricing(model) {
         + (model.fireplace ? model.fireplace.price : 0)
         ;
 
-    // Globale variabelen om prijs en model op te slaan
     currentModel = model;
     currentTotalPrice = totalPrice.toFixed(0);
 
@@ -45,102 +44,112 @@ function pricing(model) {
             `;
         }
 
-        // Insert the price HTML into the price element
         priceElement.innerHTML = priceHTML;
     }
 }
 
-
-
-
-
-/*
-function handleAddToCartClick() {
-    const { dataURL, blob } = mainModule.captureScreenshot();
-    const product = {
-        model: currentModel,
-        price: currentTotalPrice,
-        imageUrl: dataURL
-    };
-
-    parent.postMessage({ action: 'showSidebar' }, '*');
-    parent.postMessage({ action: 'addToCart', product: product }, '*');
-    parent.postMessage({ action: 'showCheckoutButton' }, '*');
-
-    document.getElementById('add-to-cart-button').removeEventListener('click', handleAddToCartClick);
-
-    
-}
-*/
-
 function handleAddToCartClickTest() {
-    const afmeting = `${((+currentModel.alcove?.left?.width || 0) + (+currentModel.alcove?.right?.width || 0) + (+currentModel.width || 0))} x ${+currentModel.height || 0} x ${+currentModel.depth || 0} cm`;
-    document.getElementById('sizesText').textContent = afmeting;
+    const loader = document.getElementById("loader");
+    if (loader) loader.style.display = "flex";
 
-    const soundbarOption = currentModel.soundbar?.active ? ('soundbar' + (currentModel.soundbar.text ? ` (${currentModel.soundbar.text})` : '')) : 'geen soundbar';
-    const alcoveOption = document.getElementById('alcoveText')?.textContent || 'geen vakkenkast';
-    const fireplaceOption = document.getElementById('fireplaceText')?.textContent || 'geen sfeerhaard';
-    const hatchLeftOption = currentModel.hatchLeft ? 'ja' : 'nee';
-    const hatchRightOption = currentModel.hatchRight ? 'ja' : 'nee';
+    const totalWidth = (+currentModel.alcove?.left?.width || 0) + (+currentModel.alcove?.right?.width || 0) + (+currentModel.width || 0);
+    const afmeting = `${totalWidth} x ${+currentModel.height || 0} x ${+currentModel.depth || 0} cm`;
+
+    const soundbarOption = currentModel.soundbar?.active
+        ? 'Ja' + (currentModel.soundbar.text ? ` (${currentModel.soundbar.text})` : '')
+        : 'Nee';
+
+    let alcoveDetails = 'Nee';
+    if (currentModel.alcove) {
+        alcoveDetails = `Ja, breedte: ${currentModel.alcove.left.width} cm, planken: ${currentModel.alcove.left.shelves || '0'}, spots: ${currentModel.alcove.left.spots ? 'Ja' : 'Nee'}`;
+    }
+
+    const fireplaceOption = currentModel.fireplace ? `${currentModel.fireplace.brand} ${currentModel.fireplace.type}` : 'Nee';
 
     const config = {
-        afmeting: afmeting,
-        tvmaat: currentModel.tvSize + ' inch tv',
-        soundbar: soundbarOption,
-        vakkenkasten: alcoveOption,
-        luikje_links: hatchLeftOption,
-        luikje_rechts: hatchRightOption,
-        sfeerhaard: fireplaceOption,
-        kleur: currentModel.color.name,
-        prijs: currentTotalPrice
+        'Afmeting': afmeting,
+        'TV-maat': currentModel.tvSize + ' inch',
+        'TV-beugel': currentModel.tvMount ? 'Ja' : 'Nee',
+        'Uitsparing soundbar': soundbarOption,
+        'Vakkenkasten': alcoveDetails,
+        'Luikje links': currentModel.hatchLeft ? 'Ja' : 'Nee',
+        'Luikje rechts': currentModel.hatchRight ? 'Ja' : 'Nee',
+        'Sfeerhaard': fireplaceOption,
+        'Kleur (impressie)': `${currentModel.color.name} (${currentModel.color.ral})`
     };
 
-   /*
-    const { dataURL, blob } = mainModule.captureScreenshot();
-        const config = {
-            name
-            maat: document.getElementById('sizesText').textContent = `${((+currentModel.alcove?.left?.width || 0) + (+currentModel.alcove?.right?.width || 0) + (+currentModel.width || 0))} x ${+currentModel.height || 0} x ${+currentModel.depth || 0} cm`,
-            kleur: currentModel.color.name,
-            motief: 'leuk',
-            prijs: currentTotalPrice,
-            thumbnail: dataURL
-        };
-    
-    */document.getElementById('add-to-cart-button').removeEventListener('click', stuurConfiguratieNaarWooCommerce(config));
+    sendConfigurationToWooCommerce(config, currentTotalPrice);
 }
 
-async function stuurConfiguratieNaarWooCommerce(config, product_id = 397, domein = "https://veiligheidshesjekopen.nl") {
+async function createHmacSha256(message, secret) {
+    const encoder = new TextEncoder();
+    const keyData = encoder.encode(secret);
+    const messageData = encoder.encode(message);
+
+    const key = await window.crypto.subtle.importKey(
+        "raw",
+        keyData,
+        { name: "HMAC", hash: "SHA-256" },
+        false,
+        ["sign"]
+    );
+
+    const signatureBuffer = await window.crypto.subtle.sign("HMAC", key, messageData);
+
+    return Array.from(new Uint8Array(signatureBuffer))
+        .map(b => b.toString(16).padStart(2, '0'))
+        .join('');
+}
+
+async function sendConfigurationToWooCommerce(config, price) {
+    const endpoint = "https://iom-develop.nl/tvwand/wp-json/tvwand/v2/session";
+    const secretKey = "7uN$e48pX@aQ!39k2R";
+    const productId = 713;
+    const loader = document.getElementById("loader");
+
     try {
-        const response = await fetch(`${domein}/wp-json/tvwand/v1/generate-url`, {
+        const timestamp = Math.floor(Date.now() / 1000).toString();
+        const nonce = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+
+        const body = {
+            product_id: productId,
+            price: parseFloat(price),
+            config: config
+        };
+        const rawJsonBody = JSON.stringify(body);
+
+        const canonicalString = `${timestamp}\n${nonce}\n${rawJsonBody}`;
+
+        const signature = await createHmacSha256(canonicalString, secretKey);
+
+        const response = await fetch(endpoint, {
             method: "POST",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "X-TVWAND-Timestamp": timestamp,
+                "X-TVWAND-Nonce": nonce,
+                "X-TVWAND-Signature": signature
             },
-            body: JSON.stringify({ product_id, config })
+            body: rawJsonBody
         });
 
         if (!response.ok) {
-            throw new Error(`Server gaf status ${response.status}`);
+            const errorText = await response.text();
+            throw new Error(`Server gaf status ${response.status}: ${errorText}`);
         }
 
-        let data;
-        try {
-            data = await response.json();
-        } catch (parseError) {
-            console.error("Fout bij parsen van JSON:", parseError);
-            alert("Ongeldige serverrespons ontvangen.");
-            return;
-        }
+        const data = await response.json();
 
-        if (data.url) {
-            // Open in nieuw tabblad
-            window.open(data.url, "_blank");
+        if (data.checkout_url) {
+            window.location.href = data.checkout_url;
         } else {
-            console.error("Fout bij genereren URL:", data);
+            console.error("Fout: checkout_url niet gevonden in response:", data);
             alert("Er ging iets mis bij het verwerken van je configuratie.");
+            if (loader) loader.style.display = "none";
         }
     } catch (err) {
         console.error("Verbinding mislukt:", err);
-        alert("Er is een netwerkfout opgetreden.");
+        alert("Er is een netwerkfout opgetreden. Controleer de console voor details.");
+        if (loader) loader.style.display = "none";
     }
 }

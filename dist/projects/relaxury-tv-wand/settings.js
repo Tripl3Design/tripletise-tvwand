@@ -138,7 +138,17 @@ function updateControlPanel(model, selectedLayer, expandedLayer) {
     document.getElementById("wallWidth").addEventListener("change", function (event) {
         model.width = event.target.value;
 
-        updateControlPanel(model, 'size');
+        let refreshAll = false;
+        if (model.fireplace && model.fireplace.width > parseInt(model.width) - 10) {
+            delete model.fireplace;
+            refreshAll = true;
+        }
+
+        if (refreshAll) {
+            updateControlPanel(model, undefined, 'size');
+        } else {
+            updateControlPanel(model, 'size');
+        }
         updateFeaturedModel(model);
         showSelected(false);
     });
@@ -147,7 +157,18 @@ function updateControlPanel(model, selectedLayer, expandedLayer) {
         document.getElementById("wallWidth").value = event.target.value;
         model.width = event.target.value;
 
-        updateControlPanel(model, 'size');
+        let refreshAll = false;
+        if (model.fireplace && model.fireplace.width > parseInt(model.width) - 10) {
+            delete model.fireplace;
+            refreshAll = true;
+        }
+
+        if (refreshAll) {
+            updateControlPanel(model, undefined, 'size');
+            setTimeout(() => { const el = document.getElementById("wallInputWidth"); if (el) el.focus(); }, 0);
+        } else {
+            updateControlPanel(model, 'size');
+        }
         updateFeaturedModel(model);
         showSelected(false);
     });
@@ -303,14 +324,20 @@ function updateControlPanel(model, selectedLayer, expandedLayer) {
 
     hatchLeftCheckbox.addEventListener('click', () => {
         model.hatchLeft = hatchLeftCheckbox.checked;
-        updateControlPanel(model, 'options');
+        if (hatchLeftCheckbox.checked) {
+            delete model.alcove;
+        }
+        updateControlPanel(model, undefined, 'options');
         updateFeaturedModel(model);
         showSelected(false);
     });
 
     hatchRightCheckbox.addEventListener('click', () => {
         model.hatchRight = hatchRightCheckbox.checked;
-        updateControlPanel(model, 'options');
+        if (hatchRightCheckbox.checked) {
+            delete model.alcove;
+        }
+        updateControlPanel(model, undefined, 'options');
         updateFeaturedModel(model);
         showSelected(false);
     });
@@ -506,7 +533,7 @@ function updateControlPanel(model, selectedLayer, expandedLayer) {
 
         ALLFIREPLACES.fireplaces.forEach(fireplaceOption => {
             // Sla haarden over die te breed zijn
-            if (fireplaceOption.width > model.width) {
+            if (fireplaceOption.width > model.width - 10) {
                 return;
             }
 
@@ -885,7 +912,7 @@ function initSettings(model) {
                     </label>
                 </div>
                 <div class="form-check my-3">
-                    <input id="alcoveToggle" name="alcoveToggle" class="form-check-input" type="checkbox">
+                    <input id="alcoveToggle" name="alcoveToggle" class="form-check-input" type="checkbox" ${model.hatchLeft || model.hatchRight ? 'disabled' : ''}>
                     <label class="form-check-label" for="alcoveToggle">
                     vakkenkasten aan weerszijden
                     </label>

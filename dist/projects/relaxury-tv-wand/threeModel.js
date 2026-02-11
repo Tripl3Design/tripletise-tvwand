@@ -13,6 +13,8 @@ let backwallGeometry, backwallMaterial, backwall;
 let videoElement = null;
 let videoTexture = null;
 let imageTexture = null;
+let interactables = [];
+let raycaster, mouse;
 
 let projectmap = 'projects/relaxury-tv-wand/';
 
@@ -69,6 +71,10 @@ export function initThree(containerElem) {
     controls.target.set(0, 1.2, 0);
     controls.update();
 
+    raycaster = new THREE.Raycaster();
+    mouse = new THREE.Vector2();
+    containerElem.addEventListener('click', onMouseClick);
+
     // desktop version
     if (windowHeight < windowWidth) {
         document.getElementById('fullscreen').addEventListener('click', fullscreenToggle);
@@ -108,7 +114,7 @@ if (windowHeight < windowWidth) {
     });
 }
 
-function createCinewall(width, height, depth, tvSize, wallColor, soundbar, fireplaceWidth, fireplaceHeight, fireplaceFrontTexture, video, alcoveRight, alcoveRightShelves, alcoveRightSpots, alcoveLeft, alcoveLeftShelves, alcoveLeftSpots) {
+function createCinewall(width, height, depth, tvSize, wallColor, soundbar, fireplaceWidth, fireplaceHeight, fireplaceFrontTexture, video, alcoveRight, alcoveRightShelves, alcoveRightSpots, alcoveLeft, alcoveLeftShelves, alcoveLeftSpots, hatchLeft, hatchRight) {
     let widthInMeters = width / 100;
     let heightInMeters = height / 100;
     let depthInMeters = depth / 100;
@@ -208,6 +214,86 @@ function createCinewall(width, height, depth, tvSize, wallColor, soundbar, firep
             fireplaceFront.castShadow = true;
             fireplaceFront.receiveShadow = true;
         }
+    }
+
+    if (hatchLeft && !alcoveLeft) {
+        const hatchHeight = 0.40; // 40cm
+        const hatchSideMargin = 0.04; // 4cm
+        const hatchWidth = depthInMeters - (2 * hatchSideMargin);
+        const hatchRecessDepth = 0.025; // 2.5cm recess
+
+        // Dark material for the inside of the niche to create contrast
+        const shadowMaterial = new THREE.MeshStandardMaterial({ color: 0x1a1a1a, roughness: 0.8 });
+
+        const hatchCutout = new Brush(new THREE.BoxGeometry(hatchRecessDepth, hatchHeight, hatchWidth), shadowMaterial);
+        hatchCutout.position.set(
+            -widthInMeters / 2 + (hatchRecessDepth / 2), // recess from left side
+            -heightInMeters / 2 + 0.20 + (hatchHeight / 2), // 20cm from bottom of wall
+            0 // centered in depth
+        );
+        hatchCutout.updateMatrixWorld();
+        wallResult = evaluator.evaluate(wallResult, hatchCutout, SUBTRACTION);
+
+        // Add a door
+        const doorThickness = 0.018;
+        const doorGeometry = new THREE.BoxGeometry(doorThickness, hatchHeight - 0.006, hatchWidth - 0.006);
+        const door = new THREE.Mesh(doorGeometry, wallMaterial);
+
+        const pivotGroup = new THREE.Group();
+        pivotGroup.position.set(
+            -widthInMeters / 2 + (doorThickness / 2),
+            0.20 + (hatchHeight / 2),
+            hatchSideMargin
+        );
+        door.position.set(0, 0, (depthInMeters / 2) - hatchSideMargin);
+        pivotGroup.add(door);
+        pivotGroup.userData = { isOpen: false, targetRotation: 0, openRotation: -Math.PI / 2 };
+        door.userData = { group: pivotGroup };
+
+        door.castShadow = true;
+        door.receiveShadow = true;
+        scene.add(pivotGroup);
+        interactables.push(door);
+    }
+
+    if (hatchRight && !alcoveRight) {
+        const hatchHeight = 0.40; // 40cm
+        const hatchSideMargin = 0.04; // 4cm
+        const hatchWidth = depthInMeters - (2 * hatchSideMargin);
+        const hatchRecessDepth = 0.025; // 2.5cm recess
+
+        // Dark material for the inside of the niche to create contrast
+        const shadowMaterial = new THREE.MeshStandardMaterial({ color: 0x1a1a1a, roughness: 0.8 });
+
+        const hatchCutout = new Brush(new THREE.BoxGeometry(hatchRecessDepth, hatchHeight, hatchWidth), shadowMaterial);
+        hatchCutout.position.set(
+            widthInMeters / 2 - (hatchRecessDepth / 2), // recess from right side
+            -heightInMeters / 2 + 0.20 + (hatchHeight / 2), // 20cm from bottom of wall
+            0 // centered in depth
+        );
+        hatchCutout.updateMatrixWorld();
+        wallResult = evaluator.evaluate(wallResult, hatchCutout, SUBTRACTION);
+
+        // Add a door
+        const doorThickness = 0.02; // 2cm
+        const doorGeometry = new THREE.BoxGeometry(doorThickness, hatchHeight - 0.004, hatchWidth - 0.004);
+        const door = new THREE.Mesh(doorGeometry, wallMaterial);
+
+        const pivotGroup = new THREE.Group();
+        pivotGroup.position.set(
+            widthInMeters / 2 - (doorThickness / 2) - 0.002, // Recess 2mm
+            0.20 + (hatchHeight / 2),
+            hatchSideMargin
+        );
+        door.position.set(0, 0, (depthInMeters / 2) - hatchSideMargin);
+        pivotGroup.add(door);
+        pivotGroup.userData = { isOpen: false, targetRotation: 0, openRotation: Math.PI / 2 };
+        door.userData = { group: pivotGroup };
+
+        door.castShadow = true;
+        door.receiveShadow = true;
+        scene.add(pivotGroup);
+        interactables.push(door);
     }
 
 
@@ -457,6 +543,7 @@ function clearScene(video) {
         let child = scene.children[0];
         scene.remove(child);
     }
+    interactables = [];
 }
 
 function updateVideoTexture(videoOrImage) {
@@ -550,7 +637,9 @@ export async function loadModelData(model) {
         model.alcove?.right?.spots ?? false,
         model.alcove?.left?.width ?? 0,
         model.alcove?.left?.shelves ?? 0,
-        model.alcove?.left?.spots ?? false
+        model.alcove?.left?.spots ?? false,
+        model.hatchLeft ?? false,
+        model.hatchRight ?? false
     );
 
     scene.add(group);
@@ -559,6 +648,14 @@ export async function loadModelData(model) {
 function render() {
     renderer.setAnimationLoop((timestamp, frame) => {
         controls.update();
+
+        interactables.forEach(door => {
+            const group = door.userData.group;
+            if (group) {
+                group.rotation.y += (group.userData.targetRotation - group.rotation.y) * 0.1;
+            }
+        });
+
         renderer.render(scene, camera);
     });
 }
@@ -603,6 +700,24 @@ export function fullscreenToggle() {
     // Update the camera aspect ratio and projection matrix
     camera.aspect = newWidth / newHeight;
     camera.updateProjectionMatrix();
+}
+
+function onMouseClick(event) {
+    const rect = renderer.domElement.getBoundingClientRect();
+    mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+    mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+
+    raycaster.setFromCamera(mouse, camera);
+    const intersects = raycaster.intersectObjects(interactables);
+
+    if (intersects.length > 0) {
+        const group = intersects[0].object.userData.group;
+
+        if (group) {
+            group.userData.isOpen = !group.userData.isOpen;
+            group.userData.targetRotation = group.userData.isOpen ? group.userData.openRotation : 0;
+        }
+    }
 }
 
 function dataURLToBlob(dataURL) {
@@ -725,7 +840,9 @@ async function exportModel() {
         false, // Spots niet exporteren voor AR
         FEATUREDMODEL.alcove?.left?.width ?? 0,
         FEATUREDMODEL.alcove?.left?.shelves ?? 0,
-        false // Spots niet exporteren voor AR
+        false, // Spots niet exporteren voor AR
+        FEATUREDMODEL.hatchLeft ?? false,
+        FEATUREDMODEL.hatchRight ?? false
     );
 
     try {
