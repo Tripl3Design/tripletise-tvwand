@@ -1,5 +1,9 @@
 
 
+// Global variables to store current state
+let currentModel = {};
+let currentTotalPrice = "0";
+
 //price & articleList
 function pricing(model) {
     let totalPrice = 0;
@@ -20,7 +24,8 @@ function pricing(model) {
 
     const addToCartButton = document.getElementById('add-to-cart-button');
     if (addToCartButton) {
-        addToCartButton.addEventListener('click', handleAddToCartClickTest, { once: true });
+        // Use onclick to prevent stacking listeners if pricing() is called multiple times
+        addToCartButton.onclick = handleAddToCartClickTest;
     } else {
         console.error("Element met ID 'add-to-cart-button' niet gevonden!");
     }
@@ -52,85 +57,25 @@ function handleAddToCartClickTest() {
     const loader = document.getElementById("loader");
     if (loader) loader.style.display = "flex";
 
-    const totalWidth = (+currentModel.alcove?.left?.width || 0) + (+currentModel.alcove?.right?.width || 0) + (+currentModel.width || 0);
-    const afmeting = `${totalWidth} x ${+currentModel.height || 0} x ${+currentModel.depth || 0} cm`;
-
-    const soundbarOption = currentModel.soundbar?.active
-        ? 'Ja' + (currentModel.soundbar.text ? ` (${currentModel.soundbar.text})` : '')
-        : 'Nee';
-
-    let alcoveDetails = 'Nee';
-    if (currentModel.alcove) {
-        alcoveDetails = `Ja, breedte: ${currentModel.alcove.left.width} cm, planken: ${currentModel.alcove.left.shelves || '0'}, spots: ${currentModel.alcove.left.spots ? 'Ja' : 'Nee'}`;
-    }
-
-    const fireplaceOption = currentModel.fireplace ? `${currentModel.fireplace.brand} ${currentModel.fireplace.type}` : 'Nee';
-
-    const config = {
-        'Afmeting': afmeting,
-        'TV-maat': currentModel.tvSize + ' inch',
-        'TV-beugel': currentModel.tvMount ? 'Ja' : 'Nee',
-        'Uitsparing soundbar': soundbarOption,
-        'Vakkenkasten': alcoveDetails,
-        'Luikje links': currentModel.hatchLeft ? 'Ja' : 'Nee',
-        'Luikje rechts': currentModel.hatchRight ? 'Ja' : 'Nee',
-        'Sfeerhaard': fireplaceOption,
-        'Kleur (impressie)': `${currentModel.color.name} (${currentModel.color.ral})`
-    };
-
-    sendConfigurationToWooCommerce(config, currentTotalPrice);
-}
-
-async function createHmacSha256(message, secret) {
-    const encoder = new TextEncoder();
-    const keyData = encoder.encode(secret);
-    const messageData = encoder.encode(message);
-
-    const key = await window.crypto.subtle.importKey(
-        "raw",
-        keyData,
-        { name: "HMAC", hash: "SHA-256" },
-        false,
-        ["sign"]
-    );
-
-    const signatureBuffer = await window.crypto.subtle.sign("HMAC", key, messageData);
-
-    return Array.from(new Uint8Array(signatureBuffer))
-        .map(b => b.toString(16).padStart(2, '0'))
-        .join('');
+    sendConfigurationToWooCommerce(currentModel, currentTotalPrice);
 }
 
 async function sendConfigurationToWooCommerce(config, price) {
-    const endpoint = "https://iom-develop.nl/tvwand/wp-json/tvwand/v2/session";
-    const secretKey = "7uN$e48pX@aQ!39k2R";
-    const productId = 713;
+    const endpoint = "https://createcheckoutsession-5x73s65jta-uc.a.run.app";
     const loader = document.getElementById("loader");
 
     try {
-        const timestamp = Math.floor(Date.now() / 1000).toString();
-        const nonce = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-
         const body = {
-            product_id: productId,
             price: parseFloat(price),
             config: config
         };
-        const rawJsonBody = JSON.stringify(body);
-
-        const canonicalString = `${timestamp}\n${nonce}\n${rawJsonBody}`;
-
-        const signature = await createHmacSha256(canonicalString, secretKey);
 
         const response = await fetch(endpoint, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                "X-TVWAND-Timestamp": timestamp,
-                "X-TVWAND-Nonce": nonce,
-                "X-TVWAND-Signature": signature
             },
-            body: rawJsonBody
+            body: JSON.stringify(body)
         });
 
         if (!response.ok) {
@@ -141,7 +86,8 @@ async function sendConfigurationToWooCommerce(config, price) {
         const data = await response.json();
 
         if (data.checkout_url) {
-            window.location.href = data.checkout_url;
+            // Stuur de hele pagina (parent) door naar de checkout, niet alleen de iframe.
+            window.parent.location.href = data.checkout_url;
         } else {
             console.error("Fout: checkout_url niet gevonden in response:", data);
             alert("Er ging iets mis bij het verwerken van je configuratie.");

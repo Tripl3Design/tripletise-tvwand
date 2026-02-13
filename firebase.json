@@ -1,4 +1,7 @@
 {
+  "functions": {
+    "source": "functions"
+  },
   "hosting": {
     "headers": [
       {
@@ -6,11 +9,7 @@
         "headers": [
           {
             "key": "Content-Security-Policy",
-            "value": "frame-ancestors https://www.tripledesign.nl https://tripledesign.nl https://www.tvwand.nl https://tvwand.nl http://127.0.0.1:5000 https://iom-develop.nl https://iom-develop.nl/tvwand https://iom-develop.nl/tvwand/configurator/"
-          },
-          {
-            "key": "Access-Control-Allow-Origin",
-            "value": "*"
+            "value": "frame-ancestors https://www.tripledesign.nl https://tripledesign.nl https://www.tvwand.nl https://tvwand.nl http://127.0.0.1:5000 https://iom-develop.nl"
           },
           {
             "key": "Permissions-Policy",
