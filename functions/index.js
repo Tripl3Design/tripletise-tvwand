@@ -32,9 +32,11 @@ exports.createCheckoutSession = onRequest(
             }
 
             // 1) Neem config + prijs aan van configurator (browser -> cloud function)
-            const { config, price, line_items } = req.body || {};
-            if (!config || typeof config !== "object" || price === undefined) {
-                return res.status(400).json({ error: "config and price are required" });
+            const { config, price, line_items, image, configuration_url, pdf } = req.body || {};
+            console.log("Request ontvangen:", { config, price, line_items });
+
+            if (!config || typeof config !== "object" || price === undefined || price === null || isNaN(Number(price))) {
+                return res.status(400).json({ error: "config and a valid price are required" });
             }
 
             // 2) Bouw payload voor WP plugin
@@ -43,6 +45,9 @@ exports.createCheckoutSession = onRequest(
                 price: Number(price),
                 config,
                 line_items: Array.isArray(line_items) ? line_items : undefined,
+                image,
+                configuration_url,
+                pdf,
             };
 
             // Verwijder undefined keys

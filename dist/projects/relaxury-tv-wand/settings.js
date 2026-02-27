@@ -105,6 +105,7 @@ function updateFeaturedModel(model) {
             if (!mainModule) {
                 main.initThree(viewer);
                 mainModule = main;
+                window.mainModule = main;
             }
             if (mainModule && typeof mainModule.loadModelData === 'function') {
                 mainModule.loadModelData(model);
@@ -117,6 +118,23 @@ function updateFeaturedModel(model) {
             console.error('Error loading module:', error);
         });
 }
+
+window.saveConfiguration = async function (model) {
+    try {
+        const docRef = await addDoc(collection(db, "clientModels"), {
+            brand: brand,
+            product: product,
+            from: document.referrer,
+            model: model,
+            timestamp: serverTimestamp()
+        });
+        console.log("Configuration saved with ID: ", docRef.id);
+        return `${document.referrer}?brand=${brand}&product=${product}&fsid=${docRef.id}`;
+    } catch (e) {
+        console.error("Error saving configuration for checkout: ", e);
+        return null;
+    }
+};
 
 function updateControlPanel(model, selectedLayer, expandedLayer) {
     const settings = initSettings(model);

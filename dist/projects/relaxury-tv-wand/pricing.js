@@ -19,6 +19,11 @@ function pricing(model) {
         + (model.fireplace ? model.fireplace.price : 0)
         ;
 
+    if (isNaN(totalPrice)) {
+        console.error("Fout: Prijsberekening resulteerde in NaN. Controleer of alle model-eigenschappen (width, height, etc.) aanwezig zijn.", model);
+        totalPrice = 0;
+    }
+
     currentModel = model;
     currentTotalPrice = totalPrice.toFixed(0);
 
@@ -53,21 +58,93 @@ function pricing(model) {
     }
 }
 
-function handleAddToCartClickTest() {
+async function handleAddToCartClickTest() {
     const loader = document.getElementById("loader");
     if (loader) loader.style.display = "flex";
 
-    sendConfigurationToWooCommerce(currentModel, currentTotalPrice);
+    let screenshot = null;
+    if (window.mainModule && typeof window.mainModule.captureScreenshot === 'function') {
+        const { dataURL } = window.mainModule.captureScreenshot();
+        screenshot = dataURL;
+    }
+
+    let configUrl = null;
+    let fsid = null;
+    if (typeof window.saveConfiguration === 'function') {
+        configUrl = await window.saveConfiguration(currentModel);
+        if (configUrl) {
+            try {
+                const url = new URL(configUrl);
+                fsid = url.searchParams.get("fsid");
+            } catch (e) {
+                console.error("Kon fsid niet uit de configuratie-URL halen:", e);
+            }
+        }
+    }
+
+    let pdfDataUrl = null;
+    // Generate PDF if we have the necessary data
+    if (fsid && screenshot && typeof generatePdfDataUrl === 'function') {
+        // The 'title' variable is globally available from index.html/search.js
+        pdfDataUrl = await generatePdfDataUrl(currentModel, screenshot, title, fsid);
+    }
+
+    sendConfigurationToWooCommerce(currentModel, currentTotalPrice, screenshot, configUrl, pdfDataUrl);
 }
 
-async function sendConfigurationToWooCommerce(config, price) {
+function flattenConfigForWooCommerce(model) {
+    const flatConfig = {};
+
+    // Basic properties
+    flatConfig['Breedte'] = `${model.width} cm`;
+    flatConfig['Hoogte'] = `${model.height} cm`;
+    flatConfig['Diepte'] = `${model.depth} cm`;
+    flatConfig['TV Formaat'] = `${model.tvSize} inch`;
+
+    // Color
+    //if (model.color) {
+    //    flatConfig['Kleur (impressie)'] = `${model.color.name} (${model.color.ral})`;
+    //}
+
+    // TV Mount
+    flatConfig['TV beugel'] = model.tvMount ? 'Ja' : 'Nee';
+
+    // Soundbar
+    flatConfig['Uitsparing soundbar'] = model.soundbar?.active ? `Ja ${model.soundbar.text ? '(voor: ' + model.soundbar.text + ')' : ''}`.trim() : 'Nee';
+
+    // Fireplace
+    flatConfig['Sfeerhaard'] = model.fireplace ? `${model.fireplace.brand} ${model.fireplace.type}` : 'Nee';
+
+    // Alcove
+    flatConfig['Vakkenkasten'] = model.alcove ? `Ja, ${model.alcove.left.width} cm breed` : 'Nee';
+    if (model.alcove) {
+        flatConfig['Aantal planken per kast'] = model.alcove.left.shelves;
+        flatConfig['Spots in vakkenkasten'] = model.alcove.left.spots ? 'Ja' : 'Nee';
+    }
+
+    // Hatches
+    if (!model.alcove) { // Hatches are disabled if alcove is active
+        flatConfig['Luikje links'] = model.hatchLeft ? 'Ja' : 'Nee';
+        flatConfig['Luikje rechts'] = model.hatchRight ? 'Ja' : 'Nee';
+    }
+
+    return flatConfig;
+}
+
+async function sendConfigurationToWooCommerce(config, price, image, configUrl, pdf) {
     const endpoint = "https://createcheckoutsession-5x73s65jta-uc.a.run.app";
     const loader = document.getElementById("loader");
 
     try {
+        const displayConfig = flattenConfigForWooCommerce(config);
+        console.log("Versturen naar WooCommerce (platte data):", { price, config: displayConfig });
+
         const body = {
             price: parseFloat(price),
-            config: config
+            config: displayConfig,
+            image: image,
+            configuration_url: configUrl,
+            pdf: pdf
         };
 
         const response = await fetch(endpoint, {
@@ -86,8 +163,11 @@ async function sendConfigurationToWooCommerce(config, price) {
         const data = await response.json();
 
         if (data.checkout_url) {
-            // Stuur de hele pagina (parent) door naar de checkout, niet alleen de iframe.
+            // Stuur de hele pagina (parent) door naar de checkout.
+            // Dit sluit effectief de configurator (iframe/modal) en navigeert de shop naar de checkout.
             window.parent.location.href = data.checkout_url;
+
+            if (loader) loader.style.display = "none";
         } else {
             console.error("Fout: checkout_url niet gevonden in response:", data);
             alert("Er ging iets mis bij het verwerken van je configuratie.");

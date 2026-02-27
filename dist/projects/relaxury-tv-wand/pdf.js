@@ -1,20 +1,9 @@
-function createPdf(model, mainImage, title, fsid) {
+function getPdfDocDefinition(model, mainImage, title, fsid) {
     const configuratorUrl = `${document.referrer}?brand=${brand}&product=${product}&fsid=${fsid}`;
-    const now = new Date();
-    const padToTwoDigits = (number) => (number < 10 ? '0' + number : number);
-    // Datum en tijd formatteren als DD-MM-YYYY_HH-MM
-    const day = padToTwoDigits(now.getDate());
-    const month = padToTwoDigits(now.getMonth() + 1); // Maanden zijn 0-indexed
-    const year = now.getFullYear();
-    const hours = padToTwoDigits(now.getHours());
-    const minutes = padToTwoDigits(now.getMinutes());
-
-    const dateString = `${day}-${month}-${year}_${hours}-${minutes}`;
-
     //const price = document.getElementById('totalPrice').textContent;
     const price = document.querySelector('.productInfoPrice').textContent;
 
-    var docDefinition = {
+    return {
         pageSize: 'A4',
         pageOrientation: 'portrait',
         pageMargins: [30, 30, 30, 30],
@@ -143,15 +132,44 @@ function createPdf(model, mainImage, title, fsid) {
                     margin: [30, 30, 30, 30]
                 };
             }
-        }
-    }
+        },
+    };
+}
+
+function createPdf(model, mainImage, title, fsid) {
+    const docDefinition = getPdfDocDefinition(model, mainImage, title, fsid);
+
+    const now = new Date();
+    const padToTwoDigits = (number) => (number < 10 ? '0' + number : number);
+    const day = padToTwoDigits(now.getDate());
+    const month = padToTwoDigits(now.getMonth() + 1);
+    const year = now.getFullYear();
+    const hours = padToTwoDigits(now.getHours());
+    const minutes = padToTwoDigits(now.getMinutes());
+    const dateString = `${day}-${month}-${year}_${hours}-${minutes}`;
+
     pdfMake.fonts = {
         RobotoDefault: {
             normal: 'https://pastoe-amsterdammer.web.app/fonts/Roboto-Light.ttf',
             bold: 'https://pastoe-amsterdammer.web.app/fonts/Roboto-Medium.ttf'
-            //italics: 'https://pastoe-amsterdammer.web.app/fonts/Roboto-Light.ttf',
-            //bold: 'https://pastoe-amsterdammer.web.app/fonts/Roboto-Light.ttf',
         },
     }
     pdfMake.createPdf(docDefinition).download(`TV-Wand_${dateString}`);
+}
+
+async function generatePdfDataUrl(model, mainImage, title, fsid) {
+    const docDefinition = getPdfDocDefinition(model, mainImage, title, fsid);
+
+    pdfMake.fonts = {
+        RobotoDefault: {
+            normal: 'https://pastoe-amsterdammer.web.app/fonts/Roboto-Light.ttf',
+            bold: 'https://pastoe-amsterdammer.web.app/fonts/Roboto-Medium.ttf'
+        },
+    };
+
+    return new Promise(resolve => {
+        pdfMake.createPdf(docDefinition).getDataUrl(dataUrl => {
+            resolve(dataUrl);
+        });
+    });
 }
